@@ -14,6 +14,7 @@ import Message from "./pages/Messages";
 import PandaLogin from "./pages/PandaLogin";
 import Sidebar from "./components/Sidebar";
 import AddGig from "./pages/AddGig";
+import AllJobs from "./pages/AllJobs.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import Loading from "./components/Loading.js";
 import AdminSidebar from "./components/AdminSidebar.js";
@@ -215,7 +216,8 @@ function App() {
                       <Route exact path="/managepayout" element={<ManagePayout />} />
                       <Route exact path="/managePdf" element={<CreateContract />} />
                       <Route path="/addstudies" element={<AddGig />} />
-                      <Route path="/analytics" element={<UpdateContract />} />
+                      {/* <Route path="/analytics" element={<UpdateContract />} /> */}
+                      <Route path="/analytics" element={<AllJobs />} />
                     </>
                   )}
 

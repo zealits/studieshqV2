@@ -1,0 +1,70 @@
+/* AllJobs.css */
+
+.all-jobs {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .all-jobs-title {
+    
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .jobs-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .job-item {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .job-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .job-title {
+    font-size: 1.5em;
+    color: #007bff;
+    margin: 0 0 10px;
+  }
+  
+  .job-company,
+  .job-location,
+  .job-salary,
+  .job-summary,
+  .job-posted-date {
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .job-divider {
+    border: none;
+    border-top: 1px solid #eaeaea;
+    margin: 15px 0;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .error {
+    text-align: center;
+    font-size: 1.2em;
+    color: red;
+  }
+  
