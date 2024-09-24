@@ -67,4 +67,16 @@
     font-size: 1.2em;
     color: red;
   }
+  .share-button {
+    background-color: #007bff; /* Example color for the button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .share-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
   

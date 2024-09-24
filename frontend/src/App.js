@@ -15,6 +15,7 @@ import PandaLogin from "./pages/PandaLogin";
 import Sidebar from "./components/Sidebar";
 import AddGig from "./pages/AddGig";
 import AllJobs from "./pages/AllJobs.js";
+import JobDetails from "./pages/JobDetails.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import Loading from "./components/Loading.js";
 import AdminSidebar from "./components/AdminSidebar.js";
@@ -200,6 +201,8 @@ function App() {
                       <Route path="/my-gigs" element={<MyGigs />} />
                       <Route path="/available-gigs" element={<AvailableGigs />} />
                       <Route path="/profile" element={<Profile />} />
+                      <Route path="/available-jobs" element={<AllJobs />} />
+                      <Route path="/jobs/:id" element={<JobDetails />} />
                       <Route path="/earnings" element={<Earnings />} />
                       <Route path="/preferences" element={<Preferences />} />
                       <Route path="/message" element={<Message />} />
@@ -217,7 +220,7 @@ function App() {
                       <Route exact path="/managePdf" element={<CreateContract />} />
                       <Route path="/addstudies" element={<AddGig />} />
                       {/* <Route path="/analytics" element={<UpdateContract />} /> */}
-                      <Route path="/analytics" element={<AllJobs />} />
+                      {/* <Route path="/analytics" element={<AllJobs />} /> */}
                     </>
                   )}
 

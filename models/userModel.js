@@ -251,7 +251,7 @@ userSchema.methods.verifyOTP = async function (enteredOtp) {
   const hashedOtp = crypto.createHash("sha256").update(enteredOtp).digest("hex");
   // console.log("Entered OTP:", enteredOtp); // Log the entered OTP
   // console.log("Hashed Entered OTP:", hashedOtp); // Log the hashed entered OTP
-  // console.log("Stored Hashed OTP:",/ this.verificationCode); // Log the stored hashed OTP
+  // console.log("Stored Hashed OTP:",/ this.verificationCode); //Log the stored hashed OTP
 
   if (hashedOtp === this.verificationCode && this.verificationCodeExpire > Date.now()) {
     this.isVerified = true;
