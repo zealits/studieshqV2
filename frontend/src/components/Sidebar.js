@@ -77,6 +77,16 @@ const Sidebar = () => {
           <span className="tooltip">Available studies</span>
         </li>
         <li>
+  <Link to="/available-jobs" className="linke">
+    <i className="bx bx-chat">
+      <FaBriefcase className="icon" />
+    </i>
+    <span className="links_name">Available Jobs</span>
+  </Link>
+  <span className="tooltip">Available Jobs</span>
+</li>
+
+        <li>
           <Link to="/profile" className="linke">
             <i className="bx bx-pie-chart-alt-2">
               <FaUser className="icon " />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./AllJobs.css";
 
@@ -11,7 +12,6 @@ const AllJobs = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get("/aak/l1/jobs"); // Adjust the endpoint as needed
-        console.log(response);
         setJobs(response.data.jobs);
       } catch (err) {
         setError("Failed to fetch jobs");
@@ -22,6 +22,22 @@ const AllJobs = () => {
 
     fetchJobs();
   }, []);
+
+  const handleShare = async (job) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: job.jobTitle,
+          text: `Check out this job at ${job.companyName}: ${job.jobTitle}`,
+          url: `${window.location.origin}/jobs/${job._id}`,
+        });
+      } catch (error) {
+        console.error("Error sharing job:", error);
+      }
+    } else {
+      alert("Sharing is not supported in this browser.");
+    }
+  };
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -37,7 +53,9 @@ const AllJobs = () => {
       <ul className="jobs-list">
         {jobs.map((job) => (
           <li key={job._id} className="job-item">
-            <h2 className="job-title">{job.jobTitle}</h2>
+            <Link to={`/jobs/${job._id}`}>
+              <h2 className="job-title">{job.jobTitle}</h2>
+            </Link>
             <p className="job-company">
               <strong>Company:</strong> {job.companyName}
             </p>
@@ -53,6 +71,9 @@ const AllJobs = () => {
             <p className="job-posted-date">
               <strong>Posted Date:</strong> {new Date(job.postedDate).toLocaleDateString()}
             </p>
+            <button className="share-button" onClick={() => handleShare(job)}>
+              Share Job
+            </button>
             <hr className="job-divider" />
           </li>
         ))}
