@@ -53,20 +53,46 @@ const JobDetails = () => {
   return (
     <div className="job-details">
       <h1 className="job-details-title">{job.jobTitle}</h1>
-      <p><strong>Company:</strong> {job.companyName}</p>
-      <p><strong>Location:</strong> {job.location}</p>
-      <p><strong>Salary Range:</strong> {job.salaryRange}</p>
-      <p><strong>Job Type:</strong> {job.jobType}</p>
-      <p><strong>Employment Level:</strong> {job.employmentLevel}</p>
-      <p><strong>Job Summary:</strong> {job.jobSummary}</p>
-      <p><strong>Job Description:</strong> {job.jobDescription}</p>
-      <p><strong>Responsibilities:</strong> {job.responsibilities.join(", ")}</p>
-      <p><strong>Requirements:</strong> {job.requirements.join(", ")}</p>
-      <p><strong>Preferred Qualifications:</strong> {job.preferredQualifications.join(", ")}</p>
-      <p><strong>Posted Date:</strong> {new Date(job.postedDate).toLocaleDateString()}</p>
-      <p><strong>Application Deadline:</strong> {new Date(job.applicationDeadline).toLocaleDateString()}</p>
-      <p><strong>Job Status:</strong> {job.jobStatus}</p>
-      
+      <p>
+        <strong>Company:</strong> {job.companyName}
+      </p>
+      <p>
+        <strong>Location:</strong> {job.location}
+      </p>
+      <p>
+        <strong>Salary Range:</strong> {job.salaryRange}
+      </p>
+      <p>
+        <strong>Job Type:</strong> {job.jobType}
+      </p>
+      <p>
+        <strong>Employment Level:</strong> {job.employmentLevel}
+      </p>
+      <p>
+        <strong>Job Summary:</strong> {job.jobSummary}
+      </p>
+      <p>
+        <strong>Job Description:</strong> {job.jobDescription}
+      </p>
+      <p>
+        <strong>Responsibilities:</strong> {job.responsibilities.join(", ")}
+      </p>
+      <p>
+        <strong>Requirements:</strong> {job.requirements.join(", ")}
+      </p>
+      <p>
+        <strong>Preferred Qualifications:</strong> {job.preferredQualifications.join(", ")}
+      </p>
+      <p>
+        <strong>Posted Date:</strong> {new Date(job.postedDate).toLocaleDateString()}
+      </p>
+      <p>
+        <strong>Application Deadline:</strong> {new Date(job.applicationDeadline).toLocaleDateString()}
+      </p>
+      <p>
+        <strong>Job Status:</strong> {job.jobStatus}
+      </p>
+
       {/* Apply button */}
       <button className="apply-button" onClick={handleApply}>
         Apply for this Job

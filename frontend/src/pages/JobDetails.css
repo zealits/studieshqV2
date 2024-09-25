@@ -2,10 +2,10 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #e0e0e0;
+    /* border: 1px solid #e0e0e0; */
     border-radius: 8px;
     background-color: #f9f9f9;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
   }
   
   .job-details-title {
@@ -51,16 +51,17 @@
     }
   }
   .apply-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #333; /* Dark grey for buttons */
+    color: #fff; /* White text */
     border: none;
-    padding: 10px 20px;
+    border-radius: 4px;
+    padding: 10px 15px;
     cursor: pointer;
-    margin-top: 20px;
+    
   }
   
   .apply-button:hover {
-    background-color: #0056b3;
+    background-color: #444;
   }
   
   .application-status {
