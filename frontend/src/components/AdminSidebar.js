@@ -4,16 +4,18 @@ import { useDispatch } from "react-redux";
 import { logout } from "../Services/Actions/userAction";
 
 import {
-  FaHome, // Dashboard
-  FaBook, // Manage Studies (Book for studies)
-  FaUsers, // Manage Users (Users icon for user management)
-  FaTasks, // Manage Payout (Tasks icon for payout management)
-  FaChartBar, // Analytics
-  FaPlusCircle, // Add Gig
-  FaHeadset, // Support
-  FaSignOutAlt, // Logout
+  FaHome, 
+  FaBook, 
+  FaUsers, 
+  FaTasks, 
+  FaChartBar, 
+  FaPlusCircle, 
+  FaHeadset, 
+  FaSignOutAlt, 
   FaAngleRight,
   FaAngleLeft,
+  FaFileInvoiceDollar,
+  FaBriefcase
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -80,6 +82,15 @@ const AdminSidebar = () => {
           <span className="tooltip">Manage Payout</span>
         </li>
         <li>
+  <Link to="/managejobs" className="linke">
+    <i>
+      <FaBriefcase className="icon" /> {/* Use FaBriefcase icon here */}
+    </i>
+    <span className="links_name">Manage Jobs</span>
+  </Link>
+  <span className="tooltip">Manage Jobs</span>
+</li>
+        <li>
           <Link to="/analytics" className="linke">
             <i>
               <FaChartBar className="icon" />
@@ -89,6 +100,16 @@ const AdminSidebar = () => {
           </Link>
           <span className="tooltip">Analytics</span>
         </li>
+        <li>
+  <Link to="/create-invoice" className="linke">
+    <i>
+      <FaFileInvoiceDollar className="icon" /> {/* Icon for invoice */}
+    </i>
+    <span className="links_name">Create Invoice</span>
+  </Link>
+  <span className="tooltip">Create Invoice</span>
+</li>
+
         <li>
           <Link to="/managePdf" className="linke">
             <i>

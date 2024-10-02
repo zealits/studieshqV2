@@ -1,0 +1,61 @@
+/* src/components/ManageJobs.css */
+.manage-jobs-container {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+  
+.manage-jobs-title {
+    color: #333333; /* Darker gray for headings */
+    text-align: center;
+}
+  
+.manage-fetch-jobs-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #666666; /* Medium gray button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.manage-fetch-jobs-button:hover {
+    background-color: #555555; /* Darker gray on hover */
+}
+  
+.manage-jobs-list {
+    list-style: none;
+    padding: 0;
+}
+  
+.manage-job-item {
+    background-color: #ffffff; /* White background for job items */
+    border: 1px solid #cccccc; /* Light gray border */
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+  
+.manage-job-title {
+    color: #444444; /* Gray color for job titles */
+}
+  
+.manage-job-summary {
+    color: #666666; /* Darker gray for descriptions */
+}
+
+.manage-loading {
+    text-align: center;
+    color: #666666; /* Adjust color as needed */
+}
+
+.manage-error {
+    color: red; /* Highlight error in red */
+    text-align: center;
+}
+
+.manage-no-jobs {
+    text-align: center;
+}

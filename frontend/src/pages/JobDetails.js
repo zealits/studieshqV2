@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./JobDetails.css";
 
-const JobDetails = () => {
+const JobDetails = ({ isAdmin }) => {  // Accept isAdmin as a prop
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -93,10 +93,13 @@ const JobDetails = () => {
         <strong>Job Status:</strong> {job.jobStatus}
       </p>
 
-      {/* Apply button */}
-      <button className="apply-button" onClick={handleApply}>
-        Apply for this Job
-      </button>
+      {/* Apply button visible only if the user is not an admin */}
+      {!isAdmin && (
+        <button className="apply-button" onClick={handleApply}>
+          Apply for this Job
+        </button>
+      )}
+      
       {/* Display the application status */}
       {applicationStatus && <p className="application-status">{applicationStatus}</p>}
     </div>

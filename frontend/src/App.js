@@ -26,7 +26,8 @@ import ManagePdf from "./Admin/ManagePdf.js";
 import SuperAdminDashboard from "./superAdmin/SuperAdminDashboard.js";
 import SuperAdminSidebar from "./superAdmin/SuperAdminSidebar.js";
 import Modal from "react-modal";
-
+import Invoice from "./Admin/Invoice.js";
+import ManageJobs from "./Admin/ManageJobs.js";
 import TotpPage from "./components/TotpPage.js";
 import TwoFactorAuthPage from "./components/TwoFactorAuthPage.js";
 import "./App.css"; // Import the CSS for layout
@@ -176,24 +177,25 @@ function App() {
   return (
     <div className="app">
       <Router>
-        {isAuthenticated && totpVerified && user.is2FAEnabled && (
-          <>
-            {user.role === "admin" && <AdminSidebar />}
-            {user.role === "user" && <Sidebar />}
-            {user.role === "superadmin" && <SuperAdminSidebar />}
-          </>
-        )}
+        {/* {isAuthenticated && totpVerified && user.is2FAEnabled && ( */}
+          {isAuthenticated && user.is2FAEnabled && (
+  <>
+    {user.role === "admin" && <AdminSidebar />}
+    {user.role === "user" && <Sidebar />}
+    {user.role === "superadmin" && <SuperAdminSidebar />}
+  </>
+)}
         <div className="content">
           <Routes>
             {!isAuthenticated && <Route path="/" element={<PandaLogin />} />}
 
-            {isAuthenticated && !user.is2FAEnabled && <Route path="/" element={<TwoFactorAuthPage />} />}
+            {/* {isAuthenticated && !user.is2FAEnabled && <Route path="/" element={<TwoFactorAuthPage />} />} */}
 
-            {isAuthenticated && !totpVerified && user.is2FAEnabled ? (
+            {isAuthenticated && totpVerified && user.is2FAEnabled ? (
               <Route path="/" element={<TotpPage />} />
             ) : (
               isAuthenticated &&
-              totpVerified && (
+              !totpVerified && (
                 <>
                   {user.role === "user" && (
                     <>
@@ -202,7 +204,7 @@ function App() {
                       <Route path="/available-gigs" element={<AvailableGigs />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/available-jobs" element={<AllJobs />} />
-                      <Route path="/jobs/:id" element={<JobDetails />} />
+                      <Route path="/jobs/:id" element={<JobDetails isAdmin={user.role === "admin"} />} />
                       <Route path="/earnings" element={<Earnings />} />
                       <Route path="/preferences" element={<Preferences />} />
                       <Route path="/message" element={<Message />} />
@@ -216,8 +218,11 @@ function App() {
                       <Route exact path="/" element={<AdminDashboard />} />
                       <Route exact path="/manageuser" element={<ManageUser />} />
                       <Route exact path="/managestudies" element={<ManageStudies />} />
+                      <Route exact path="/managejobs" element={<ManageJobs/>}/>
+                      <Route path="/jobs/:id" element={<JobDetails isAdmin={true} />} />
                       <Route exact path="/managepayout" element={<ManagePayout />} />
                       <Route exact path="/managePdf" element={<CreateContract />} />
+                      <Route exact path="/create-invoice" element={<Invoice/>}/>
                       <Route path="/addstudies" element={<AddGig />} />
                       {/* <Route path="/analytics" element={<UpdateContract />} /> */}
                       {/* <Route path="/analytics" element={<AllJobs />} /> */}
