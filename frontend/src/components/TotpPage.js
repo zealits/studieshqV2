@@ -62,28 +62,31 @@ const TotpPage = () => {
 
   return (
     <div className="totp-container">
-      <h1>Enter TOTP</h1>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="totp-form">
-        <label htmlFor="totp">Enter the 6-digit code:</label>
-        <div className="otp-inputs">
-          {otp.map((value, index) => (
-            <input
-              key={index}
-              type="text"
-              maxLength="1"
-              className="otp-box"
-              value={value}
-              onChange={(e) => handleChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              ref={(el) => (inputRefs.current[index] = el)}
-            />
-          ))}
-        </div>
-        <button className="totpbutton" type="submit">Submit</button>
-      </form>
+      <div className="totp-inner">
+        <h1>Enter TOTP</h1>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSubmit} className="totp-form">
+          <label htmlFor="totp">Enter the 6-digit code:</label>
+          <div className="otp-inputs">
+            {otp.map((value, index) => (
+              <input
+                key={index}
+                type="text"
+                maxLength="1"
+                className="otp-box"
+                value={value}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                ref={(el) => (inputRefs.current[index] = el)}
+              />
+            ))}
+          </div>
+          <button className="totpbutton" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
+  ;
 };
 
 export default TotpPage;

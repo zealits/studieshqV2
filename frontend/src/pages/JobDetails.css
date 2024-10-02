@@ -2,6 +2,78 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
+    /* border: 1px solid #e0e0e0; */
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .job-details-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .job-details p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .job-details strong {
+    color: #333;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+  
+  .error {
+    text-align: center;
+    font-size: 1.5rem;
+    color: red;
+  }
+  
+  @media (max-width: 600px) {
+    .job-details {
+      padding: 15px;
+    }
+  
+    .job-details-title {
+      font-size: 1.5rem;
+    }
+  
+    .job-details p {
+      font-size: 0.9rem;
+    }
+  }
+  .apply-button {
+    background-color: #333; /* Dark grey for buttons */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    
+  }
+  
+  .apply-button:hover {
+    background-color: #444;
+  }
+  
+  .application-status {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+  }
+  
+.job-details {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     background-color: #f9f9f9;

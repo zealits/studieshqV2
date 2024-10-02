@@ -23,7 +23,8 @@ const AllJobs = () => {
     fetchJobs();
   }, []);
 
-  const handleShare = async (job) => {
+  const handleShare = async (e, job) => {
+    e.stopPropagation(); // Prevent click from bubbling to card
     if (navigator.share) {
       try {
         await navigator.share({
@@ -53,28 +54,33 @@ const AllJobs = () => {
       <ul className="jobs-list">
         {jobs.map((job) => (
           <li key={job._id} className="job-item">
-            <Link to={`/jobs/${job._id}`}>
-              <h2 className="job-title">{job.jobTitle}</h2>
+            <Link to={`/jobs/${job._id}`} className="job-link">
+              <div className="job-content">
+                <h2 className="job-title">{job.jobTitle}</h2>
+                <p className="job-company">
+                  <strong>Company:</strong> {job.companyName}
+                </p>
+                <p className="job-location">
+                  <strong>Location:</strong> {job.location}
+                </p>
+                <p className="job-salary">
+                  <strong>Salary Range:</strong> {job.salaryRange}
+                </p>
+                <p className="job-summary">
+                  <strong>Job Summary:</strong> {job.jobSummary}
+                </p>
+                <p className="job-posted-date">
+                  <strong>Posted Date:</strong> {new Date(job.postedDate).toLocaleDateString()}
+                </p>
+              </div>
             </Link>
-            <p className="job-company">
-              <strong>Company:</strong> {job.companyName}
-            </p>
-            <p className="job-location">
-              <strong>Location:</strong> {job.location}
-            </p>
-            <p className="job-salary">
-              <strong>Salary Range:</strong> {job.salaryRange}
-            </p>
-            <p className="job-summary">
-              <strong>Job Summary:</strong> {job.jobSummary}
-            </p>
-            <p className="job-posted-date">
-              <strong>Posted Date:</strong> {new Date(job.postedDate).toLocaleDateString()}
-            </p>
-            <button className="share-button" onClick={() => handleShare(job)}>
+            <button
+              className="share-button"
+              onClick={(e) => handleShare(e, job)}
+            >
               Share Job
             </button>
-            <hr className="job-divider" />
+     
           </li>
         ))}
       </ul>
