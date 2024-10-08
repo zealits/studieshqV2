@@ -220,13 +220,14 @@ export const getUserDetails = (id) => async (dispatch) => {
 };
 
 // Update User
+
 export const updateUser = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(`/admin/user/${id}`, userData, config);
+    const { data } = await axios.put(`/aak/l1/admin/user/${id}`, userData, config);
 
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data.message });
   } catch (error) {
@@ -234,18 +235,54 @@ export const updateUser = (id, userData) => async (dispatch) => {
   }
 };
 
+
+// export const updateUser = (id, updatedUserData) => async (dispatch) => {
+//   try {
+//     dispatch({ type: "USER_UPDATE_REQUEST" });
+
+//     // Assuming you have a service to handle API requests
+//     await updateUserService(id, updatedUserData); 
+
+//     dispatch({ type: "USER_UPDATE_SUCCESS" });
+//     dispatch(loadAllUsers()); // Refresh the user list after updating
+//   } catch (error) {
+//     dispatch({
+//       type: "USER_UPDATE_FAIL",
+//       payload: error.response?.data?.message || error.message,
+//     });
+//   }
+// };
+
+
+// Delete User
 // Delete User
 export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
 
-    const { data } = await axios.delete(`/admin/user/${id}`);
+    const { data } = await axios.delete(`/aak/l1/admin/user/${id}`);
 
     dispatch({ type: DELETE_USER_SUCCESS, payload: { success: data.success, message: data.message } });
+
+    // Reload the user list after a successful delete
+    dispatch(loadAllUsers());
+
   } catch (error) {
     dispatch({ type: DELETE_USER_FAIL, payload: error.response.data.message });
   }
 };
+
+// export const deleteUser = (id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: DELETE_USER_REQUEST });
+
+//     const { data } = await axios.delete(`/admin/user/${id}`);
+
+//     dispatch({ type: DELETE_USER_SUCCESS, payload: { success: data.success, message: data.message } });
+//   } catch (error) {
+//     dispatch({ type: DELETE_USER_FAIL, payload: error.response.data.message });
+//   }
+// };
 
 // below not used anywhere
 export const updateUser2FAVerifiedStatus = (status) => async (dispatch, getState) => {

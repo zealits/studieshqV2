@@ -1,80 +1,231 @@
-/* AddGig.css */
+/* Gig Form Styles */
+.add-gig-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f9;
+  font-family: 'Arial', sans-serif;
+}
 
-.add-gig {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f9;
-    font-family: Arial, sans-serif;
-  }
-  
-  .add-gig form {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-   
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* max-width: 500px; */
-    width: 500px;
-  }
-  
-  .add-gig h1 {
-    margin-bottom: 20px;
-    color: #333333;
-    text-align: center;
-  }
-  
-  .add-gig div {
-    margin-bottom: 15px;
-  }
-  
-  .add-gig label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555555;
-  }
-  
-  .add-gig input,
-  .add-gig textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .add-gig input:focus,
-  .add-gig textarea:focus {
-    border-color: #666666;
-  }
-  
-  .add-gig textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .add-gig button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .add-gig button:hover {
-    background-color: #218838;
-  }
-  
-  .add-gig button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
+.add-gig-form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  transition: transform 0.3s;
+}
+
+.add-gig-form:hover {
+  transform: translateY(-5px);
+}
+
+.add-gig-heading {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  font-size: 24px;
+}
+
+.add-gig-field {
+  margin-bottom: 20px;
+}
+
+.add-gig-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.add-gig-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 16px;
+  color: #333;
+}
+
+.add-gig-input:focus {
+  border-color: #66b3ff;
+}
+
+.add-gig-dropdown-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #7e8081;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-gig-dropdown-button:hover {
+  background-color: #313232;
+}
+
+.add-gig-submit-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #717372;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-gig-submit-button:hover {
+  background-color: #212221;
+}
+
+.add-gig-submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.add-gig-error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Modal Styles */
+.add-gig-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.add-gig-modal-content {
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.add-gig-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-gig-modal-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.add-gig-modal-close-button {
+  background: #ff5c5c;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-gig-modal-close-button:hover {
+  background-color: #e94e4e;
+}
+
+.add-gig-modal-list {
+  margin: 20px 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.add-gig-modal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.add-gig-modal-item:hover {
+  background-color: #f1f1f1;
+}
+
+.add-gig-modal-title {
+  flex: 1;
+  color: #333;
+}
+
+.add-gig-modal-submit-button {
+  background-color: #8f928f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-gig-modal-submit-button:hover {
+  background-color: #444645;
+}
+
+/* Selected Jobs Styles */
+.add-gig-selected-jobs {
+  margin-top: 20px;
+}
+
+.add-gig-selected-jobs-list {
+  margin-top: 10px;
+}
+
+.add-gig-selected-jobs-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  /* border: 1px solid #ddd; */
+  /* border-radius: 6px; */
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.add-gig-selected-jobs-item:hover {
+  background-color: #f1f1f1;
+}
+
+.add-gig-selected-jobs-title {
+  flex: 1;
+  color: #333;
+}
+
+.add-gig-remove-button {
+  background: none;
+  border: none;
+  color: #ff5c5c;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.add-gig-remove-button:hover {
+  color: #e94e4e;
+  background-color: #f1f1f1;
+}

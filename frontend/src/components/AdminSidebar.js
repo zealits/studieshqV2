@@ -57,9 +57,9 @@ const AdminSidebar = () => {
               <FaBook className="icon" />
             </i>
 
-            <span className="links_name">Manage Studies</span>
+            <span className="links_name">Manage Projects</span>
           </Link>
-          <span className="tooltip">Manage Studies</span>
+          <span className="tooltip">Manage Projects</span>
         </li>
         <li>
           <Link to="/manageuser" className="linke">
@@ -127,7 +127,7 @@ const AdminSidebar = () => {
               <FaPlusCircle className="icon" />
             </i>
 
-            <span className="links_name">Add Study</span>
+            <span className="links_name">Add Project</span>
           </Link>
           <span className="tooltip">Add Study</span>
         </li>

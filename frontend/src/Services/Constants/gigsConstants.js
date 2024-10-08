@@ -15,3 +15,13 @@ export const ADD_GIG_FAIL = "ADD_GIG_FAIL";
 
 
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+
+
+
+//addjobs constants
+
+export const FETCH_JOBS_REQUEST = "FETCH_JOBS_REQUEST";
+export const FETCH_JOBS_SUCCESS = "FETCH_JOBS_SUCCESS";
+export const FETCH_JOBS_FAIL = "FETCH_JOBS_FAIL";
+

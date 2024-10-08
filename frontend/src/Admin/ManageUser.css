@@ -1,7 +1,8 @@
+/* General Styles */
 .manage-user {
   font-family: 'Arial', sans-serif;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #ffffff; /* White background */
 }
 
 h1 {
@@ -10,35 +11,84 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Delete Icon Styles in Header */
+.header {
+  position: relative;
+  text-align: center;
+}
+
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly */
+  align-items: center; /* Center align items vertically */
+  margin-top: 20px; /* Space above the buttons */
+}
+
+/* Styling for the delete icon and select all button */
+.delete-icon {
+  display: flex; /* Ensure flex display for proper alignment */
+  align-items: center; /* Center items vertically */
+  margin-left: 10px; /* Space between buttons */
+  gap: 10px; /* Space between delete icon and select all button */
+}
+
+.delete-icon-container {
+  display: flex; /* Flex display to align icon and count */
+  align-items: center; /* Center icon and count vertically */
+  cursor: pointer;
+  font-size: 24px;
+  color: #d9534f;
+}
+
+.delete-icon-container span {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.delete-icon:hover {
+  color: #c9302c;
+}
+
+/* Optional: Styling for the selection options */
+.selection-options {
+  display: flex; /* Align the buttons in a row */
+  gap: 10px; /* Space between buttons */
+}
+
+/* Table Styles */
 .user-table {
-  width: 100%;
+  width: 80vw; /* Full width */
+  /* max-width: 100%; Ensure no overflow */
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
 .user-table th,
 .user-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #b0b0b0; /* Gray border */
   padding: 12px;
   text-align: left;
 }
 
 .user-table th {
-  background-color: #007bff;
+  background-color: #75797b; /* Darker gray header */
   color: white;
   font-weight: bold;
 }
 
 .user-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #d0d0d0; /* Slightly darker gray for even rows */
 }
 
 .user-table tr:hover {
-  background-color: #ddd;
+  background-color: #b8b8b8; /* Darker gray on hover */
 }
 
+/* User Details Styles */
 .user-details {
-  background-color: #fff;
+  background-color: #ffffff; /* White background for user details */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -47,67 +97,137 @@ h1 {
 
 .user-details h2 {
   margin-top: 0;
-  color: #007bff;
+  color: #333;
 }
 
 .user-details p {
   margin: 10px 0;
+  color: #555;
 }
 
-.user-details .user-studies {
-  margin-top: 20px;
-}
-
-.user-details .study-details {
-  background-color: #f9f9f9;
+/* Input Fields */
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid #b0b0b0; /* Gray border for input */
   border-radius: 4px;
-  padding: 15px;
-  margin-bottom: 10px;
+  box-sizing: border-box;
+  background-color: #ffffff; /* White input background */
 }
 
-.user-details .study-details p {
-  margin: 5px 0;
+/* Search Bar */
+/* Search Bar Container */
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.btn {
-  display: inline-block;
-  padding: 10px 15px;
-  font-size: 14px;
-  border-radius: 4px;
-  text-align: center;
+.search-bar input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 10px;
+  flex-grow: 1;
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0; /* Initially hidden */
+  width: 0; /* Start with no width */
+}
+
+.search-bar.active input {
+  opacity: 1; /* Show input when active */
+  width: 200px; /* Adjust width as needed */
+}
+
+.search-bar svg {
+  font-size: 20px;
+  color: #3f4042; /* Optional: Adjust the color of the search icon */
   cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
 }
 
-.btn-info {
-  background-color: #17a2b8;
-  color: white;
+
+
+
+
+/* Sort Options */
+.sort-options {
+  position: relative; /* Make the container relative to position the dropdown menu correctly */
+  display: inline-block; /* Ensure the dropdown stays beside the icon */
+}
+
+/* Dropdown Menu for Sorting */
+.dropdown-menu {
+  position: absolute;
+  top: 200px; /* Place the menu just below the icon */
+  left: 370px; /* Align it with the left edge of the icon */
+  background-color: #f8f5f5;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it appears above other content */
+  
+  width: 100px;
+  /* display: none; Hide the dropdown initially */
+}
+
+/* Show the dropdown when the dropdown icon is clicked */
+.sort-options.open .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #989191; /* Highlight on hover */
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Make sure it appears on top */
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.modal-content button {
+  margin-right: 10px; /* Add margin for spacing between modal buttons */
+}
+
+.modal-content button:last-child {
+  margin-right: 0; /* Remove margin from the last button */
+}
+/* Button Styles */
+.btn {
+  padding: 10px 15px;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; /* Added margin to increase the gap */
 }
 
-.btn-info:hover {
-  background-color: #138496;
+.btn:last-child {
+  margin-right: 0; /* Remove margin from the last button */
 }
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-}
-
-.btn-danger:hover {
-  background-color: #c82333;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-

@@ -3,15 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGig, clearErrors } from "../Services/Actions/gigsActions.js";
 import axios from "axios";
 import "./AddGig.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const AddGig = () => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [selectedJobs, setSelectedJobs] = useState([]);
   const [deadline, setDeadline] = useState("");
   const [budget, setBudget] = useState("");
-  const [selectedPdf, setSelectedPdf] = useState(""); // State for selected PDF
-  const [pdfs, setPdfs] = useState([]); // State for list of PDFs
-  const [message, setMessage] = useState(""); // State for messages
+  const [selectedPdf, setSelectedPdf] = useState("");
+  const [pdfs, setPdfs] = useState([]);
+  const [location, setLocation] = useState("");
+  const [jobs, setJobs] = useState([]);
+  const [message, setMessage] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.gig);
@@ -23,22 +28,21 @@ const AddGig = () => {
     }
 
     if (success) {
-      alert("Study added successfully");
-      // Clear form fields
+      alert("Gig added successfully");
       setTitle("");
-      setDescription("");
+      setSelectedJobs([]);
       setDeadline("");
       setBudget("");
-      setSelectedPdf(""); // Clear selected PDF
+      setSelectedPdf("");
+      setLocation("");
+      setJobs([]);
     }
   }, [dispatch, error, success]);
 
   useEffect(() => {
     const fetchPdfs = async () => {
       try {
-        // const response = await axios.get("/aak/l1/getpdf");
         const response = await axios.get("/aak/l1/contracts");
-
         setPdfs(response.data);
       } catch (error) {
         console.error("Error fetching PDFs:", error);
@@ -49,45 +53,141 @@ const AddGig = () => {
     fetchPdfs();
   }, []);
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      if (location) {
+        try {
+          const response = await axios.get(`/aak/l1/jobs?location=${location}`);
+          const filteredJobs = response.data.jobs.filter(job => 
+            job.location.toLowerCase().includes(location.toLowerCase())
+          );
+          setJobs(filteredJobs);
+        } catch (error) {
+          console.error("Error fetching jobs:", error);
+          setMessage("Error fetching jobs");
+        }
+      } else {
+        setJobs([]);
+      }
+    };
+
+    fetchJobs();
+  }, [location]);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
     const gigData = {
       title,
-      description,
+      jobs: selectedJobs,
       deadline,
       budget,
-      pdf: selectedPdf, // Add selected PDF to gig data
+      pdf: selectedPdf,
     };
-
-    // console.log(selectedPdf);
 
     dispatch(addGig(gigData));
   };
 
+  const toggleJobModal = () => {
+    setModalOpen((prev) => !prev);
+  };
+
+  const handleJobSelect = (jobId) => {
+    setSelectedJobs((prevSelected) =>
+      prevSelected.includes(jobId)
+        ? prevSelected.filter((id) => id !== jobId)
+        : [...prevSelected, jobId]
+    );
+  };
+
   return (
-    <div className="add-gig">
-      <form onSubmit={submitHandler}>
-        <h1>Add Study</h1>
-        <div>
-          <label>Title</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+    <div className="add-gig-container">
+      <form onSubmit={submitHandler} className="add-gig-form">
+        <h1 className="add-gig-heading">Add Projects</h1>
+        <div className="add-gig-field">
+          <label className="add-gig-label">Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            className="add-gig-input"
+          />
         </div>
-        <div>
-          <label>Description</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+        <div className="add-gig-field">
+          <label className="add-gig-label">Location</label>
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value.toLowerCase())}
+            placeholder="Enter Location to filter jobs"
+            className="add-gig-input"
+          />
         </div>
-        <div>
-          <label>Deadline</label>
-          <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} required />
+        
+        <button type="button" onClick={toggleJobModal} className="add-gig-dropdown-button">
+          Select Jobs <FontAwesomeIcon icon={faChevronDown} />
+        </button>
+
+        <div className="add-gig-selected-jobs">
+          <h3>Selected Jobs:</h3>
+          {selectedJobs.length > 0 ? (
+            <div className="add-gig-selected-jobs-list">
+              {selectedJobs.map((jobId) => {
+                const job = jobs.find((job) => job._id === jobId);
+                return job ? (
+                  <div key={jobId} className="add-gig-selected-jobs-item">
+                    <span className="add-gig-selected-jobs-title">{job.jobTitle}</span>
+                    <button
+                      onClick={() => {
+                        setSelectedJobs((prevSelected) => prevSelected.filter((id) => id !== jobId));
+                      }}
+                      className="add-gig-remove-button"
+                      aria-label={`Remove ${job.jobTitle}`}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  </div>
+                ) : (
+                  <div key={jobId} className="add-gig-selected-jobs-item">
+                    Job not found
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p>No jobs selected</p>
+          )}
         </div>
-        <div>
-          <label>Budget</label>
-          <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)} required />
+
+        <div className="add-gig-field">
+          <label className="add-gig-label">Deadline</label>
+          <input
+            type="date"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+            required
+            className="add-gig-input"
+          />
         </div>
-        <div>
-          <label>Select PDF</label>
-          <select value={selectedPdf} onChange={(e) => setSelectedPdf(e.target.value)} required>
+        <div className="add-gig-field">
+          <label className="add-gig-label">Budget</label>
+          <input
+            type="number"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+            required
+            className="add-gig-input"
+          />
+        </div>
+        <div className="add-gig-field">
+          <label className="add-gig-label">Select PDF</label>
+          <select
+            value={selectedPdf}
+            onChange={(e) => setSelectedPdf(e.target.value)}
+            required
+            className="add-gig-input"
+          >
             <option value="">Select a PDF</option>
             {pdfs.map((pdf) => (
               <option key={pdf._id} value={pdf._id}>
@@ -96,11 +196,41 @@ const AddGig = () => {
             ))}
           </select>
         </div>
-        {message && <p className="error-message">{message}</p>}
-        <button type="submit" disabled={loading ? true : false}>
-          {loading ? "Loading..." : "Add Study"}
+        {message && <p className="add-gig-error-message">{message}</p>}
+        <button type="submit" disabled={loading} className="add-gig-submit-button">
+          {loading ? "Loading..." : "Add Project"}
         </button>
       </form>
+
+      {modalOpen && (
+        <div className="add-gig-modal-overlay">
+          <div className="add-gig-modal-content">
+            <div className="add-gig-modal-header">
+              <h2>Select Jobs</h2>
+              <button className="add-gig-modal-close-button" onClick={toggleJobModal}>
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+            <div className="add-gig-modal-list">
+              {jobs.length > 0 ? (
+                jobs.map((job) => (
+                  <div key={job._id} className="add-gig-modal-item">
+                    <span className="add-gig-modal-title">{job.jobTitle}</span>
+                    <input
+                      type="checkbox"
+                      checked={selectedJobs.includes(job._id)}
+                      onChange={() => handleJobSelect(job._id)}
+                    />
+                  </div>
+                ))
+              ) : (
+                <p>No jobs available for this location.</p>
+              )}
+            </div>
+            <button className="add-gig-modal-submit-button" onClick={toggleJobModal}>Done</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -5,35 +5,28 @@ const gigSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    // required: true, // Uncomment if description should be required
-  },
+  jobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Job", // Assuming you have a Job model
+    required: true,
+  }],
   deadline: {
-    type: String,
+    type: Date,
+    required: true,
   },
   budget: {
-    type: String,
+    type: Number,
+    required: true,
   },
-  status: {
-    type: String,
-    enum: ["available", "applied", "allocated", "completed"],
-    default: "available",
+  pdf: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Pdf", // Assuming you have a Pdf model for the PDFs
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-  applicants: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  pdf: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "PDF", // Reference to the PDF model
-  },
+  }
 });
 
 module.exports = mongoose.model("Gig", gigSchema);

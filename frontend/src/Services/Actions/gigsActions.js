@@ -9,6 +9,9 @@ import {
   ADD_GIG_SUCCESS,
   ADD_GIG_FAIL,
   CLEAR_ERRORS,
+  FETCH_JOBS_REQUEST,
+  FETCH_JOBS_SUCCESS,
+  FETCH_JOBS_FAIL,
 } from "../Constants/gigsConstants";
 import axios from "axios";
 
@@ -29,6 +32,7 @@ export const addGig = (gigData) => async (dispatch) => {
     });
   }
 };
+
 
 // Fetch Gigs
 export const fetchGigs = () => async (dispatch) => {
@@ -59,4 +63,18 @@ export const applyGig = (gigId) => async (dispatch) => {
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
+};
+
+
+// Fetch Jobs by Country
+export const fetchJobsByLocation = (location) => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_JOBS_REQUEST });
+
+    const { data } = await axios.get(`/aak/l1/jobs/filter?country=${location}`);
+
+    dispatch({ type: FETCH_JOBS_SUCCESS, payload: data.jobs });
+  } catch (error) {
+    dispatch({ type: FETCH_JOBS_FAIL, payload: error.response.data.message });
+  }
 };

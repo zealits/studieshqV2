@@ -1,4 +1,5 @@
 const Gig = require("../models/gigModel");
+const Job = require("../models/jobModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
@@ -72,3 +73,48 @@ exports.getSingleGig = catchAsyncErrors(async (req, res, next) => {
     gig,
   });
 });
+
+
+// Add Gig
+exports.addGig = async (req, res) => {
+  try {
+    const { title, jobs, deadline, budget, pdf } = req.body;
+
+    const gig = await Gig.create({
+      title,
+      jobs,
+      deadline,
+      budget,
+      pdf,
+    });
+
+    res.status(201).json({
+      success: true,
+      gig,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Filter Jobs by Country
+exports.getJobsByLocation = async (req, res) => {
+  const { country } = req.query;
+
+  try {
+    const jobs = await Job.find({ location }); // Assuming the Job model has a country field
+
+    res.status(200).json({
+      success: true,
+      jobs,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
