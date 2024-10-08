@@ -74,13 +74,9 @@ const AllJobs = () => {
                 </p>
               </div>
             </Link>
-            <button
-              className="share-button"
-              onClick={(e) => handleShare(e, job)}
-            >
+            <button className="sharej-button" onClick={(e) => handleShare(e, job)}>
               Share Job
             </button>
-     
           </li>
         ))}
       </ul>
