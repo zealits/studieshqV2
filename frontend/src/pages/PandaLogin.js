@@ -138,7 +138,7 @@ const Login = ({ loginName, loginPassword, setLoginName, setLoginPassword, handl
     <h1>Log In</h1>
     <hr />
     <form onSubmit={handleSubmit}>
-      <Input label="User Name" type="text" value={loginName} onChange={(e) => setLoginName(e.target.value)} />
+      <Input label="Email" type="text" value={loginName} onChange={(e) => setLoginName(e.target.value)} />
       <Input
         label="Password"
         type="password"
