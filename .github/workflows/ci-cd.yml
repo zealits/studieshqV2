@@ -28,15 +28,15 @@ jobs:
         run: npm install
         working-directory: .
 
-      # # Step 4: Install frontend dependencies
-      # - name: Install frontend dependencies
-      #   run: npm install
-      #   working-directory: ./frontend
+      # Step 4: Install frontend dependencies
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: ./frontend
 
-      # # Step 5: Build the frontend application
-      # - name: Build frontend application
-      #   run: npm run build
-      #   working-directory: ./frontend
+      # Step 5: Build the frontend application
+      - name: Build frontend application
+        run: npm run build
+        working-directory: ./frontend
 
       # # Step 6: Run tests (if any)
       # - name: Run tests
