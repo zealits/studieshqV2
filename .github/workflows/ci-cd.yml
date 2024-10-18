@@ -30,7 +30,7 @@ jobs:
 
       # Step 4: Install frontend dependencies
       - name: Install frontend dependencies
-        run: npm install
+        run: npm install --force
         working-directory: ./frontend
 
       # Step 5: Build the frontend application
