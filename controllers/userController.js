@@ -333,7 +333,7 @@ exports.completeGig = catchAsyncErrors(async (req, res, next) => {
 //Login User
 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
-  console.log(req)
+  // console.log(req)
   const { email, password } = req.body;
 
   // checking if user has given password and email both
@@ -576,7 +576,7 @@ exports.requestGiftCard = async (req, res, next) => {
     const { giftCardType } = req.body; // Get the gift card type from the request body
     const userId = req.user._id;
 
-    console.log(giftCardType);
+    // console.log(giftCardType);
     const user = await User.findById(userId);
 
     const gig = user.gigs.id(gigId);
@@ -610,9 +610,9 @@ exports.approveGiftCard = async (req, res, next) => {
     const { userId, gigId } = req.params;
 
     const { giftCardOption } = req.body; // Get giftCardOption from the request body
-    console.log(userId);
-    console.log(gigId);
-    console.log(giftCardOption);
+    // console.log(userId);
+    // console.log(gigId);
+    // console.log(giftCardOption);
     const user = await User.findById(userId);
 
     const gig = user.gigs.id(gigId);
@@ -762,7 +762,7 @@ exports.updateGigBudget = async (req, res, next) => {
 
 exports.sendTableDataEmail = catchAsyncErrors(async (req, res, next) => {
   // Log the request body for debugging
-  console.log("Request body:", req.body);
+  // console.log("Request body:", req.body);
 
   const { email, tableData } = req.body;
 
