@@ -43,16 +43,23 @@ jobs:
       #   run: npm test
       #   working-directory: .
 
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H dev.zealits.com >> ~/.ssh/known_hosts
+          
       # Step 7: Deploy to the server
       - name: Deploy to server
         if: github.ref == 'refs/heads/main'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh admin@dev.zealits.com << 'EOF'
             cd ~/studieshqV2
             git pull origin main
             npm install
-            # cd frontend
-            # npm run build
-            # cd ..
+            cd frontend
+            npm run build
+            cd ..
             pm2 restart studieshq
           EOF
