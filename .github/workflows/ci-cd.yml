@@ -51,8 +51,8 @@ jobs:
             cd ~/studieshqV2
             git pull origin main
             npm install
-            cd frontend
-            npm run build
-            cd ..
+            # cd frontend
+            # npm run build
+            # cd ..
             pm2 restart studieshq
           EOF
