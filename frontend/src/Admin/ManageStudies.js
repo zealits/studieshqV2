@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -5,6 +6,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import Modal from "react-modal";
 import "./ManageStudies.css";
 import Loading from "../components/Loading";
+import ShareButton from "./ShareButton";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -13,10 +15,11 @@ const ManageStudies = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedStudy, setSelectedStudy] = useState(null);
-  const [formData, setFormData] = useState({ title: "", description: "", budget: "", deadline: "" });
+  const [formData, setFormData] = useState({ title: "", description: "", budget: "", deadline: "", jobs: "" });
   const [loadingAction, setLoadingAction] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [studyToDelete, setStudyToDelete] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const token = useSelector((state) => state.user.token);
 
   useEffect(() => {
@@ -28,7 +31,6 @@ const ManageStudies = () => {
           },
         });
         setGigs(response.data.gigs || []);
-        // console.log(gigs);
         setLoading(false);
       } catch (error) {
         setError("Error fetching gigs");
@@ -37,8 +39,12 @@ const ManageStudies = () => {
     };
 
     fetchGigs();
-    console.log(gigs);
   }, [token]);
+
+  // Filtering logic moved here for clarity
+  const filteredGigs = gigs.filter((gig) =>
+    gig.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const generatePieData = (applicants) => {
     const statusCounts = {
@@ -61,6 +67,7 @@ const ManageStudies = () => {
         });
       }
     });
+    
 
     return Object.keys(statusCounts).map((status) => ({
       name: status.charAt(0).toUpperCase() + status.slice(1),
@@ -75,24 +82,25 @@ const ManageStudies = () => {
       description: study.description,
       budget: study.budget,
       deadline: study.deadline,
+      jobs: study.jobs,
     });
   };
 
-  const handleShare = (gig) => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: gig.title,
-          text: gig.description,
-          url: window.location.href, // You can replace this with a specific URL related to the gig
-        })
-        .then(() => console.log("Thanks for sharing!"))
-        .catch((error) => console.error("Error sharing:", error));
-    } else {
-      // Fallback code for non-supporting browsers
-      alert("Web Share API is not supported in your browser. Please share manually.");
-    }
-  };
+  // const handleShare = (gig) => {
+  //   if (navigator.share) {
+  //     navigator
+  //       .share({
+  //         title: gig.title,
+  //         text: gig.description,
+  //         url: window.location.href, // You can replace this with a specific URL related to the gig
+  //       })
+  //       .then(() => console.log("Thanks for sharing!"))
+  //       .catch((error) => console.error("Error sharing:", error));
+  //   } else {
+  //     // Fallback code for non-supporting browsers
+  //     alert("Web Share API is not supported in your browser. Please share manually.");
+  //   }
+  // };
 
   const openDeleteModal = (study) => {
     setStudyToDelete(study);
@@ -182,19 +190,21 @@ const ManageStudies = () => {
     }
   };
 
-  if (loading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+   if (loading) return <Loading />;
   if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="manage-studies">
-      <h1>Manage Studies</h1>
+      <h1>Manage Projects</h1>
+      <input
+        type="text"
+        placeholder="Search by title..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
       <Modal isOpen={!!selectedStudy} onRequestClose={closeModal} className="modal" overlayClassName="overlay">
-        <h2>Edit Study</h2>
+        <h2>Edit Project</h2>
         <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" />
         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
         <input type="text" name="budget" value={formData.budget} onChange={handleChange} placeholder="Gift Card" />
@@ -209,7 +219,7 @@ const ManageStudies = () => {
 
       <Modal isOpen={deleteModalIsOpen} onRequestClose={closeDeleteModal} className="modal" overlayClassName="overlay">
         <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete this study?</p>
+        <p>Are you sure you want to delete this Project?</p>
         <button className="btn btn-danger" onClick={handleDelete} disabled={loadingAction}>
           {loadingAction ? "Deleting..." : "Delete"}
         </button>
@@ -217,15 +227,17 @@ const ManageStudies = () => {
           Cancel
         </button>
       </Modal>
+      
       <div className="studies-list">
-        {gigs.length === 0 ? (
-          <p>No studies available</p>
+        {filteredGigs.length === 0 ? (
+          <p>No Projects available</p>
         ) : (
-          gigs.map((study) => (
+          filteredGigs.map((study) => (
             <div key={study._id} className="study-card">
               <h2>{study.title}</h2>
               <p>Description: {study.description}</p>
               <p>Gift Card: ${study.budget}</p>
+              <p>Jobs: ${study.jobs}</p>
               <p>Deadline: {study.deadline}</p>
               {study.pdfDetails && (
                 <p className="pdf-container">
@@ -262,9 +274,7 @@ const ManageStudies = () => {
                 <button className="btn btn-danger" onClick={() => openDeleteModal(study)} disabled={loadingAction}>
                   {loadingAction ? "Deleting..." : "Delete"}
                 </button>
-                <button className="btn " onClick={() => handleShare(study)}>
-                  share
-                </button>
+                <ShareButton project={gigs} /> 
               </div>
             </div>
           ))
@@ -275,3 +285,4 @@ const ManageStudies = () => {
 };
 
 export default ManageStudies;
+

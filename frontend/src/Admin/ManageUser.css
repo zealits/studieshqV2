@@ -20,7 +20,7 @@ h1 {
 /* Action Buttons Container */
 .action-buttons {
   display: flex;
-  justify-content: space-between; /* Distribute space evenly */
+  justify-content: flex-end; /* Align to the right */
   align-items: center; /* Center align items vertically */
   margin-top: 20px; /* Space above the buttons */
 }
@@ -60,9 +60,8 @@ h1 {
 /* Table Styles */
 .user-table {
   width: 80vw; /* Full width */
-  /* max-width: 100%; Ensure no overflow */
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Space below the table */
 }
 
 .user-table th,
@@ -84,6 +83,11 @@ h1 {
 
 .user-table tr:hover {
   background-color: #b8b8b8; /* Darker gray on hover */
+}
+
+/* Add gap below the table */
+.table-gap {
+  margin-bottom: 30px; /* Adjust the gap as needed */
 }
 
 /* User Details Styles */
@@ -123,6 +127,7 @@ input[type="email"] {
   display: flex;
   align-items: center;
   position: relative;
+  margin-left: 10px; /* Adjusted margin to move it closer to the More Options icon */
 }
 
 .search-bar input {
@@ -144,12 +149,7 @@ input[type="email"] {
 .search-bar svg {
   font-size: 20px;
   color: #3f4042; /* Optional: Adjust the color of the search icon */
-  cursor: pointer;
 }
-
-
-
-
 
 /* Sort Options */
 .sort-options {
@@ -170,7 +170,6 @@ input[type="email"] {
   z-index: 1000; /* Ensure it appears above other content */
   
   width: 100px;
-  /* display: none; Hide the dropdown initially */
 }
 
 /* Show the dropdown when the dropdown icon is clicked */
@@ -192,6 +191,8 @@ input[type="email"] {
 .dropdown-menu li:hover {
   background-color: #989191; /* Highlight on hover */
 }
+
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -212,6 +213,7 @@ input[type="email"] {
   width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .modal-content button {
   margin-right: 10px; /* Add margin for spacing between modal buttons */
 }
@@ -219,6 +221,7 @@ input[type="email"] {
 .modal-content button:last-child {
   margin-right: 0; /* Remove margin from the last button */
 }
+
 /* Button Styles */
 .btn {
   padding: 10px 15px;
@@ -230,4 +233,37 @@ input[type="email"] {
 
 .btn:last-child {
   margin-right: 0; /* Remove margin from the last button */
+}
+
+/* More Options Styles */
+.more-options-icon {
+  position: relative;
+  font-size: 30px; /* Increased size of the More Options icon */
+}
+
+.more-options-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0; /* Align to the right side */
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  width: 150px;
+}
+
+.more-options-dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.more-options-dropdown ul li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.more-options-dropdown ul li:hover {
+  background-color: #f0f0f0;
 }

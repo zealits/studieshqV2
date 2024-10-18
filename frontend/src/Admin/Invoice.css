@@ -15,10 +15,10 @@
     margin-bottom: 20px;
   }
   
-  form {
+  /* invoice-form {
     display: flex;
     flex-direction: column;
-  }
+  } */
   
   .form-group {
     margin-bottom: 20px;

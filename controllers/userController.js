@@ -162,61 +162,6 @@ exports.applyForGig = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// below is apply for gig on available studies for version 1 made of studyhq
-// exports.applyForGig = catchAsyncErrors(async (req, res, next) => {
-//   const userId = req.user.id;
-//   const gigId = req.body.gigId;
-
-//   const user = await User.findById(userId);
-//   const gig = await Gig.findById(gigId);
-
-//   console.log("gig :", gigId);
-//   // console.log("user :", user);
-//   if (!gig) {
-//     return next(new ErrorHander("Gig not found", 404));
-//   }
-
-//   if (!user) {
-//     return next(new ErrorHander("User not found", 404));
-//   }
-
-//   // Convert gigId to ObjectId if needed
-//   // const objectIdGigId = mongoose.Types.ObjectId(gigId);
-
-//   // Check if user has already applied for the gig
-//   // const hasApplied = user.gigs.some((gigDetail) => gigDetail.gigId.toString() === gigId.toString());
-
-//   // if (hasApplied) {
-//   //   return next(new ErrorHander("You have already applied for this gig", 400));
-//   // }
-
-//   const usergig = {
-//     gigId: gigId,
-//     title: gig.title,
-//     description: gig.description,
-//     deadline: gig.deadline,
-//     budget: gig.budget,
-//     status: "applied",
-//     appliedAt: Date.now(),
-//   };
-//   console.log("usergig :", usergig);
-
-//   user.gigs.push(usergig);
-//   await user.save();
-
-//   gig.applicants.push(userId);
-//   if (gig.status === "open") {
-//     gig.status = "applied";
-//   }
-
-//   await gig.save();
-
-//   res.status(200).json({
-//     success: true,
-//     message: "Applied for gig successfully",
-//   });
-// });
-
 // Get all gigs with applicants (Admin)
 exports.getAllGigsWithApplicants = catchAsyncErrors(async (req, res, next) => {
   // Aggregation pipeline to match gigs with applicants and PDFs
@@ -1014,3 +959,31 @@ exports.updateLanguages = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Admin Update User Details
+exports.adminUpdateUserDetails = async (req, res) => {
+  const { firstName, lastName, email } = req.body;
+  const userId = req.params.id; // Get user ID from route parameters
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Update user fields
+    user.firstName = firstName || user.firstName; // Only update if provided
+    user.lastName = lastName || user.lastName;
+    user.email = email || user.email;
+
+    // Save the updated user
+    await user.save();
+
+    return res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};

@@ -106,3 +106,31 @@
   color: #666;
   margin: 5px 0;
 }
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.registered-users {
+  display: flex;
+  flex-wrap: wrap; /* This ensures that if there are too many users, they wrap to the next line */
+  gap: 10px; /* Add some space between each user checkbox */
+  margin-top: 10px;
+}
+
+.user-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.user-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+}
+

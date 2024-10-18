@@ -221,19 +221,42 @@ export const getUserDetails = (id) => async (dispatch) => {
 
 // Update User
 
-export const updateUser = (id, userData) => async (dispatch) => {
+export const updateUserDetails = (id, userDetails) => async (dispatch) => {
   try {
-    dispatch({ type: UPDATE_USER_REQUEST });
+      dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+      // Make an API request to update user details
+      const { data } = await axios.put(`/aak/l1/admin/user/${id}`, userDetails);
 
-    const { data } = await axios.put(`/aak/l1/admin/user/${id}`, userData, config);
-
-    dispatch({ type: UPDATE_USER_SUCCESS, payload: data.message });
+      dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: data, // Assuming your backend returns the updated user data
+      });
   } catch (error) {
-    dispatch({ type: UPDATE_USER_FAIL, payload: error.response.data.message });
+      dispatch({
+          type: UPDATE_USER_FAIL,
+          payload: error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+      });
   }
 };
+
+
+
+// export const updateUser = (id, userData) => async (dispatch) => {
+//   try {
+//     dispatch({ type: UPDATE_USER_REQUEST });
+
+//     const config = { headers: { "Content-Type": "application/json" } };
+
+//     const { data } = await axios.put(`/aak/l1/admin/user/${id}`, userData, config);
+
+//     dispatch({ type: UPDATE_USER_SUCCESS, payload: data.message });
+//   } catch (error) {
+//     dispatch({ type: UPDATE_USER_FAIL, payload: error.response.data.message });
+//   }
+// };
 
 
 // export const updateUser = (id, updatedUserData) => async (dispatch) => {

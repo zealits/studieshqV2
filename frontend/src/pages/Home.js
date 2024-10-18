@@ -16,12 +16,12 @@ import calendar from "../Assets/photos/calendar.png";
 import share from "../Assets/photos/share3.png";
 import { useNavigate } from "react-router-dom";
 
-
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [expandedGigId, setExpandedGigId] = useState(null);
+
   useEffect(() => {
     dispatch(fetchGigs());
   }, [dispatch]);
@@ -65,17 +65,14 @@ const Home = () => {
         .then(() => console.log("Thanks for sharing!"))
         .catch((error) => console.error("Error sharing:", error));
     } else {
-      // Fallback code for non-supporting browsers
       alert("Web Share API is not supported in your browser. Please share manually.");
     }
   };
-  
 
   return (
     <div className="home">
       <section className="hero">
         <video autoPlay loop muted className="background-video">
-          {/* <source src="https://cdn.pixabay.com/video/2016/05/12/3179-166339018_tiny.mp4" type="video/mp4" /> */}
           <source src={v1} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -87,49 +84,48 @@ const Home = () => {
       </section>
 
       <section className="popular-gigs">
-  <div className="available-studies">
-    <h2>Popular Studies</h2>
-    <div className="study-list">
-      {gigs && gigs.length > 0 ? (
-        gigs.map((gig) => (
-          <div key={gig._id} className="homestudy-card" >
-            <h3 className="study-title">{gig.title}</h3>
-            <div className={`study-description ${expandedGigId === gig._id ? "expanded" : ""}`}>
-              {expandedGigId === gig._id ? gig.description : `${gig.description.substring(0, 100)}.`}
-            </div>
-            {gig.description.length > 100 && (
-              <button className="read-more-button" onClick={() => toggleDescription(gig._id)}>
-                {expandedGigId === gig._id ? "Read Less" : "Read More"}
-              </button>
+        <div className="available-studies">
+          <h2>Popular Studies</h2>
+          <div className="study-list">
+            {gigs && gigs.length > 0 ? (
+              gigs.map((gig) => (
+                <div key={gig._id} className="homestudy-card">
+                  <h3 className="study-title">{gig.title}</h3>
+                  <div className={`study-description ${expandedGigId === gig._id ? "expanded" : ""}`}>
+                    {expandedGigId === gig._id 
+                      ? gig.description 
+                      : gig.description 
+                        ? `${gig.description.substring(0, 100)}.` 
+                        : "No description available."
+                    }
+                  </div>
+                  {gig.description && gig.description.length > 100 && (
+                    <button className="read-more-button" onClick={() => toggleDescription(gig._id)}>
+                      {expandedGigId === gig._id ? "Read Less" : "Read More"}
+                    </button>
+                  )}
+                  <div className="home-study-details">
+                    <span className="study-location">
+                      GiftCard <div></div>${gig.budget}
+                    </span>
+                    <span className="study-date">
+                      <img src={calendar} alt="Calendar" className="calendar-icon" /> Last Date
+                      <div></div> {formatDate(gig.deadline)}
+                    </span>
+                    <div className="share-buttons">
+                      <button className="share-button" onClick={() => handleShare(gig)}>
+                        <img src={share} alt="Share" className="share-icon" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>No gigs available</div>
             )}
-            <div className="home-study-details">
-              <span className="study-location">
-                GiftCard <div></div>${gig.budget}
-              </span>
-              <span className="study-date">
-                <img src={calendar} alt="Calendar" className="calendar-icon" /> Last Date<div></div>{" "}
-                {formatDate(gig.deadline)}
-              </span>
-              <div className="share-buttons">
-              <button
-                className="share-button"
-                onClick={() => handleShare(gig)}
-              >
-              <img src={share} alt="Share" className="share-icon" />
-              </button>
-            </div>
-            </div>
-            {/* Share Button Section */}
-          
           </div>
-        ))
-      ) : (
-        <div>No gigs available</div>
-      )}
-    </div>
-  </div>
-</section>
-
+        </div>
+      </section>
 
       <section className="how-it-works">
         <h2>How It Works</h2>
@@ -162,15 +158,13 @@ const Home = () => {
         <div className="testimonial-list">
           <div className="testimonial-card">
             <p className="testimonial-text">
-              "StudiesHQ has completely transformed the way I participate in studies. The process is seamless, and I
-              love earning gift cards!"
+              "StudiesHQ has completely transformed the way I participate in studies. The process is seamless, and I love earning gift cards!"
             </p>
             <p className="testimonial-author">- John Doe</p>
           </div>
           <div className="testimonial-card">
             <p className="testimonial-text">
-              "The variety of studies available is fantastic. I appreciate the ease of use and the rewards for my
-              efforts."
+              "The variety of studies available is fantastic. I appreciate the ease of use and the rewards for my efforts."
             </p>
             <p className="testimonial-author">- Jane Smith</p>
           </div>

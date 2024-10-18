@@ -1,0 +1,113 @@
+.share-modal {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff; /* White background for modal */
+    border-radius: 8px; /* Rounded corners for the modal */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for modal */
+}
+
+.registered-users-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px; /* Space below the user list */
+    border: none; /* Removed border for user list */
+    border-radius: 5px; /* Rounded corners for user list */
+    padding: 10px; /* Padding inside the user list */
+}
+
+.user-checkbox {
+    display: flex;
+    align-items: center;
+    margin: 10px 0; /* Space between checkboxes */
+    font-size: 16px; /* Font size for user names */
+}
+
+.user-checkbox input {
+    margin-right: 10px; /* Space between checkbox and user name */
+}
+
+.share-button {
+    background-color: #3c3b3b; /* Button primary color */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Padding for main share button */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer;
+    font-size: 16px; /* Font size for button text */
+    transition: background-color 0.3s;
+}
+
+.share-button:hover {
+    background-color: #49494a; /* Darker shade for hover effect */
+}
+
+.social-share-title {
+    margin-top: 20px; /* Space above social share title */
+}
+
+.social-share-icons {
+    display: flex; /* Align icons in a row */
+    gap: 20px; /* Increased space between icons */
+    margin: 10px 0; /* Space above and below the icons */
+    justify-content: center; /* Center the icons */
+}
+
+.social-icon {
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 40px; /* Increased size of icons */
+    transition: transform 0.3s; /* Transition effect for hover */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+.facebook {
+    color: #3b5998; /* Facebook color */
+}
+
+.twitter {
+    color: #1DA1F2; /* Twitter color */
+}
+
+.linkedin {
+    color: #0077b5; /* LinkedIn color */
+}
+
+.share-selected-button {
+    background-color: #28a745; /* Success button color */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Padding for buttons */
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Space above this button */
+}
+
+.share-selected-button:hover {
+    background-color: #218838; /* Darker shade for hover effect */
+}
+
+.view-more-button,
+.view-less-button,
+.cancel-button {
+    background: none; /* No background for link button */
+    color: #007bff; /* Bootstrap primary color */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    text-decoration: underline; /* Underline for link */
+    font-size: 14px; /* Font size for link */
+    margin-top: 10px; /* Space above the link */
+}
+
+/* Remove hover effects completely */
+.view-more-button:hover,
+.view-less-button:hover,
+.cancel-button:hover {
+    background: none; /* No background on hover */
+    color: #007bff; /* Keep the same color on hover */
+    text-decoration: underline; /* Keep underline on hover */
+    cursor: default; /* Default cursor */
+}

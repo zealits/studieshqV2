@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./ManageUser.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAllUsers, deleteUser, updateUser } from "../Services/Actions/userAction";
+import { loadAllUsers, deleteUser, updateUserDetails } from "../Services/Actions/userAction";
 import Loader from "../components/Loading";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faSearch, faSort, faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-// Modal Component for displaying user details
+// Modal Component for updating user details
 const Modal = ({ selectedUser, onClose, onUpdate }) => {
   const [updatedFirstName, setUpdatedFirstName] = useState(selectedUser.firstName);
   const [updatedLastName, setUpdatedLastName] = useState(selectedUser.lastName);
   const [updatedEmail, setUpdatedEmail] = useState(selectedUser.email);
+
   const handleUpdate = () => {
     const updatedUser = {
       firstName: updatedFirstName,
@@ -59,78 +60,117 @@ const Modal = ({ selectedUser, onClose, onUpdate }) => {
 const ManageUser = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.admin);
-
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [editMode, setEditMode] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isSelecting, setIsSelecting] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
   const [sortType, setSortType] = useState("none");
   const [sortOrder, setSortOrder] = useState("asc");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
+  const dropdownRef = useRef(null);
+
+  // Load all users on component mount
   useEffect(() => {
     dispatch(loadAllUsers());
   }, [dispatch]);
 
+  // Delete a single user
   const handleDeleteUser = (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       dispatch(deleteUser(id));
     }
   };
 
+  // Delete selected users
   const handleDeleteSelectedUsers = () => {
     if (selectedUsers.length === 0) {
       alert("No users selected.");
       return;
     }
-
     if (window.confirm("Are you sure you want to delete selected users?")) {
       selectedUsers.forEach((id) => {
         dispatch(deleteUser(id));
       });
       setSelectedUsers([]);
+      setIsSelecting(false);
     }
   };
 
+  // Handle individual user selection
   const handleSelectUser = (id) => {
     setSelectedUsers((prevSelected) => {
       if (prevSelected.includes(id)) {
-        return prevSelected.filter((userId) => userId !== id);
+        const newSelected = prevSelected.filter((userId) => userId !== id);
+        if (newSelected.length === 0) {
+          setIsSelecting(false);
+        }
+        return newSelected;
       } else {
         return [...prevSelected, id];
       }
     });
   };
 
+  // Handle selecting all users
   const handleSelectAllUsers = () => {
     if (selectedUsers.length === users.length) {
       setSelectedUsers([]);
+      setIsSelecting(false);
     } else {
       setSelectedUsers(users.map((user) => user._id));
+      setIsSelecting(true);
     }
   };
 
+  // Cancel selection
+  const handleCancelSelection = () => {
+    setSelectedUsers([]);
+    setIsSelecting(false);
+  };
+
+  // Share selected users (stub for functionality)
+  const handleShareSelectedUsers = () => {
+    if (selectedUsers.length === 0) {
+      alert("No users selected to share.");
+      return;
+    }
+    alert(`Sharing ${selectedUsers.length} selected users.`);
+  };
+
+  // Edit user
   const handleEditUser = (user) => {
     setSelectedUser(user);
-    setIsModalOpen(true); // Open modal when editing
+    setIsModalOpen(true);
   };
 
+  // Update user information
   const handleUpdateUser = (id, updatedUser) => {
-    dispatch(updateUser(id, updatedUser));
-    setIsModalOpen(false);
-    setSelectedUser(null);
+    dispatch(updateUserDetails(id, updatedUser)); // Ensure correct action is dispatched
   };
 
-  // Filtered users based on the search query
+  // Close dropdown when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  // Filter users based on search query
   const filteredUsers = users.filter((user) =>
     (user.firstName && user.firstName.toLowerCase().includes(searchQuery.toLowerCase())) ||
     (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  // Sort users based on selected sort type and order
+  // Sort users based on selected criteria
   const sortedUsers = [...filteredUsers].sort((a, b) => {
     if (sortType === "name") {
       return sortOrder === "asc" ? a.firstName.localeCompare(b.firstName) : b.firstName.localeCompare(a.firstName);
@@ -142,7 +182,7 @@ const ManageUser = () => {
     return 0;
   });
 
-  // Toggle the dropdown when the sort button is clicked
+  // Toggle dropdown menu
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -157,61 +197,48 @@ const ManageUser = () => {
 
       {/* Search Bar */}
       <div className={`search-bar ${isSearchBarVisible ? 'active' : ''}`}>
-  <FontAwesomeIcon
-    icon={faSearch}
-    onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}
-    style={{ cursor: "pointer" }}
-  />
-  {isSearchBarVisible && (
-    <input
-      type="text"
-      placeholder="Search by name or email"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-    />
-  )}
-</div>
+          <FontAwesomeIcon
+            icon={faSearch}
+            onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}
+            style={{ cursor: "pointer" }}
+          />
+          {isSearchBarVisible && (
+            <input
+              type="text"
+              placeholder="Search by name or email"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          )}
+        </div>
 
+      {/* Action Buttons */}
       <div className="action-buttons">
-        <button className="btn btn-primary" onClick={() => setIsSelecting(!isSelecting)}>
-          {isSelecting ? "Cancel" : "Select Users"}
-        </button>
-
-        {isSelecting && (
-          <div className="delete-icon">
-            <button className="btn btn-secondary" onClick={handleSelectAllUsers}>
-              {selectedUsers.length === users.length ? "Deselect All" : "Select All"}
-            </button>
-
-            <span className="delete-icon-container">
-              <FontAwesomeIcon icon={faTrashAlt} onClick={handleDeleteSelectedUsers} />
-              <span>({selectedUsers.length})</span>
-            </span>
+      <div className="more-options-icon">
+          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} style={{ cursor: "pointer" }} />
+        </div>
+        {isDropdownOpen && (
+          <div className="more-options-dropdown" ref={dropdownRef}>
+            <ul>
+              <li onClick={handleSelectAllUsers}>
+                {selectedUsers.length === users.length ? "Deselect All" : "Select All"}
+              </li>
+              <li onClick={handleShareSelectedUsers}>Share</li>
+              <li onClick={handleDeleteSelectedUsers}>Delete </li>
+              <li onClick={handleCancelSelection}>Cancel</li>
+            </ul>
           </div>
         )}
       </div>
 
+      {/* User Table */}
       {sortedUsers && sortedUsers.length > 0 ? (
+        <div class="table-gap">
         <table className="user-table">
           <thead>
             <tr>
               {isSelecting && <th>Select</th>}
-              <th>
-                Name
-                <FontAwesomeIcon
-                  icon={faSort}
-                  onClick={toggleDropdown}
-                  style={{ cursor: "pointer", marginLeft: "8px" }}
-                />
-                {isDropdownOpen && (
-                  <div className="dropdown-menu">
-                    <ul>
-                      <li onClick={() => { setSortType("name"); setSortOrder("asc"); setIsDropdownOpen(false); }}>A - Z</li>
-                      <li onClick={() => { setSortType("name"); setSortOrder("desc"); setIsDropdownOpen(false); }}>Z - A</li>
-                    </ul>
-                  </div>
-                )}
-              </th>
+              <th>Name</th>
               <th>Last Name</th>
               <th>Email</th>
               <th>Actions</th>
@@ -233,26 +260,26 @@ const ManageUser = () => {
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
                 <td>
-                  <button className="btn" onClick={() => { setSelectedUser(user); setIsModalOpen(true); }}>
+                  <button className="btn" onClick={() => handleEditUser(user)}>
                     <FontAwesomeIcon icon={faEye} style={{ marginRight: '5px' }} />
                     View
                   </button>
-                  <button className="btn" onClick={() => handleDeleteUser(user._id)}>
+                  <button className="btn delete" onClick={() => handleDeleteUser(user._id)}>
                     <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '5px' }} />
                     Delete
                   </button>
-                  
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       ) : (
         <p>No users found.</p>
       )}
 
-      {/* Modal for User Details */}
-      {isModalOpen && selectedUser && (
+      {/* Modal for Editing User */}
+      {isModalOpen && (
         <Modal
           selectedUser={selectedUser}
           onClose={() => setIsModalOpen(false)}
