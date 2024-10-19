@@ -51,20 +51,34 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           ssh admin@dev.zealits.com << 'EOF'
+            # Backup the config.env file if it exists
+            if [ -f ~/studieshqV2/config/config.env ]; then
+              cp ~/studieshqV2/config/config.env ~/config.env.bak
+            fi
+
             # Remove the ~/studieshqV2 folder if it exists
             rm -rf ~/studieshqV2 || true
 
             # Clone the repository
             git clone https://github.com/aniket-017/studieshqV2.git
 
+            # Restore the config.env file
+            if [ -f ~/config.env.bak ]; then
+              mv ~/config.env.bak ~/studieshqV2/config/config.env
+            fi
+
             # Navigate to the directory
             cd ~/studieshqV2
 
             # Install backend dependencies
             npm install
+
+            # Install frontend dependencies and build
             cd frontend
             npm install --force
             npm run build
             cd ..
+
+            # Restart the application using PM2
             pm2 restart studieshq || pm2 start npm --name "studieshq" -- start
           EOF
