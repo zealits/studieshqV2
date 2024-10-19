@@ -127,8 +127,8 @@ const AvailableGigs = () => {
             <div key={gig._id} className="homestudy-card signed-contract-card">
               <h3 className="study-title">{gig.title}</h3>
               <div className={`study-description ${expandedGigId === gig._id ? "expanded" : ""}`}>
-                {expandedGigId === gig._id ? gig.description : `${gig.description.substring(0, 100)}.`}
-              </div>
+  {expandedGigId === gig._id ? gig.description : gig.description ? `${gig.description.substring(0, 100)}.` : "No description available."}
+</div>
               {gig.description.length > 100 && (
                 <button className="read-more-button" onClick={() => toggleDescription(gig._id)}>
                   {expandedGigId === gig._id ? "Read Less" : "Read More"}
