@@ -52,8 +52,8 @@ jobs:
         run: |
           ssh admin@dev.zealits.com << 'EOF'
             # Backup the config.env file if it exists
-            if [ -f ~/studieshqV2/config.env ]; then
-              cp ~/studieshqV2/config.env ~/config.env.bak
+            if [ -f ~/studieshqV2/config/config.env ]; then
+              cp ~/studieshqV2/config/config.env ~/config.env.bak
             fi
 
             # Remove the ~/studieshqV2 folder if it exists
@@ -64,7 +64,7 @@ jobs:
 
             # Restore the config.env file
             if [ -f ~/config.env.bak ]; then
-              mv ~/config.env.bak ~/studieshqV2/config.env
+              mv ~/config.env.bak ~/studieshqV2/config/config.env
             fi
 
             # Navigate to the directory
