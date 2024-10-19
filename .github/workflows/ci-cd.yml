@@ -28,15 +28,15 @@ jobs:
         run: npm install
         working-directory: .
 
-      # Step 4: Install frontend dependencies
-      - name: Install frontend dependencies
-        run: npm install --force
-        working-directory: ./frontend
+      # # Step 4: Install frontend dependencies
+      # - name: Install frontend dependencies
+      #   run: npm install --force
+      #   working-directory: ./frontend
 
-      # Step 5: Build the frontend application
-      - name: Build frontend application
-        run: npm run build
-        working-directory: ./frontend
+      # # Step 5: Build the frontend application
+      # - name: Build frontend application
+      #   run: npm run build
+      #   working-directory: ./frontend
 
       # Step 6: Setup SSH for Deployment
       - name: Setup SSH
@@ -62,5 +62,9 @@ jobs:
 
             # Install backend dependencies
             npm install
+            cd frontend
+            npm install --force
+            npm run build
+            cd ..
             pm2 restart studieshq || pm2 start npm --name "studieshq" -- start
           EOF
