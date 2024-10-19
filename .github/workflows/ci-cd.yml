@@ -38,28 +38,34 @@ jobs:
         run: npm run build
         working-directory: ./frontend
 
-      # # Step 6: Run tests (if any)
-      # - name: Run tests
-      #   run: npm test
-      #   working-directory: .
-
+      # Step 6: Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H dev.zealits.com >> ~/.ssh/known_hosts
-          
+
       # Step 7: Deploy to the server
       - name: Deploy to server
         if: github.ref == 'refs/heads/main'
         run: |
           ssh admin@dev.zealits.com << 'EOF'
+            # Remove the ~/studieshqV2 folder
+            rm -rf ~/studieshqV2
+
+            # Clone the repository into the new folder
+            git clone git@github.com:your-repo/studieshqV2.git ~/studieshqV2
+
+            # Navigate to the directory and install dependencies
             cd ~/studieshqV2
-            git pull origin main
             npm install
+
+            # Navigate to frontend and build the application
             cd frontend
             npm run build
+
+            # Restart the application using pm2
             cd ..
             pm2 restart studieshq
           EOF
