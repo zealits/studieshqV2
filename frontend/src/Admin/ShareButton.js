@@ -70,7 +70,7 @@ const ShareButton = ({ project }) => {
 
     const shareOnSocialMedia = (platform) => {
         const url = window.location.href;
-        const message = `Check out this project: ${project.title}`;
+        const message = `Check out this project:`;
         let shareUrl = "";
 
         switch (platform) {

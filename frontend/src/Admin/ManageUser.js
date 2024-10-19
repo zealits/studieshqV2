@@ -170,10 +170,14 @@ const ManageUser = () => {
     (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  // Sort users based on selected criteria
+  // Sort users based on selected sort type and order
   const sortedUsers = [...filteredUsers].sort((a, b) => {
     if (sortType === "name") {
-      return sortOrder === "asc" ? a.firstName.localeCompare(b.firstName) : b.firstName.localeCompare(a.firstName);
+      if (sortOrder === "asc") {
+        return a.firstName.localeCompare(b.firstName);
+      } else {
+        return b.firstName.localeCompare(a.firstName);
+      }
     } else if (sortType === "date") {
       const dateA = new Date(a.createdAt);
       const dateB = new Date(b.createdAt);

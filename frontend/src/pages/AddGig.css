@@ -201,8 +201,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  /* border: 1px solid #ddd; */
-  /* border-radius: 6px; */
   margin-bottom: 10px;
   transition: background-color 0.3s;
 }
@@ -228,4 +226,67 @@
 .add-gig-remove-button:hover {
   color: #e94e4e;
   background-color: #f1f1f1;
+}
+
+.add-gig-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white; /* or any other background color */
+  border: 1px solid #ccc; /* optional border */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* make sure it's above other content */
+  text-align: center; /* center the text */
+}
+
+.add-gig-alert button {
+  margin-top: 10px; /* spacing for share button */
+}
+
+.share-modal-overlay {
+  position: fixed; /* Use fixed or absolute to overlay */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.share-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.share-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.share-modal-body {
+  margin-top: 10px;
+}
+
+/* Share Button Styles */
+.share-button {
+  background: none; /* Keep the background transparent */
+  border: none;
+  cursor: pointer;
+  margin: 0 5px; /* Add margin between buttons */
+  color: inherit; /* Inherit the color for brand icons */
+  transition: transform 0.3s;
+}
+
+.share-button:hover {
+  transform: scale(1.1); /* Slightly scale up on hover */
 }
