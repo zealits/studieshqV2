@@ -63,14 +63,8 @@ jobs:
             # Install backend dependencies
             npm install
 
-            # Navigate to frontend and install dependencies
-            cd frontend
-            npm install
+         
 
-            # Build the frontend application
-            npm run build
-
-            # Restart the application using pm2
-            cd ..
+  
             pm2 restart studieshq || pm2 start npm --name "studieshq" -- start
           EOF
