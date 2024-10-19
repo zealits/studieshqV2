@@ -38,7 +38,7 @@ jobs:
         run: npm run build
         working-directory: ./frontend
 
-      # Step 6: Setup SSH
+      # Step 6: Setup SSH for Deployment
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -51,21 +51,26 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           ssh admin@dev.zealits.com << 'EOF'
-            # Remove the ~/studieshqV2 folder
-            rm -rf ~/studieshqV2
+            # Remove the ~/studieshqV2 folder if it exists
+            rm -rf ~/studieshqV2 || true
 
-            # Clone the repository into the new folder
+            # Clone the repository
             git clone git@github.com:your-repo/studieshqV2.git ~/studieshqV2
 
-            # Navigate to the directory and install dependencies
+            # Navigate to the directory
             cd ~/studieshqV2
+
+            # Install backend dependencies
             npm install
 
-            # Navigate to frontend and build the application
+            # Navigate to frontend and install dependencies
             cd frontend
+            npm install
+
+            # Build the frontend application
             npm run build
 
             # Restart the application using pm2
             cd ..
-            pm2 restart studieshq
+            pm2 restart studieshq || pm2 start npm --name "studieshq" -- start
           EOF
