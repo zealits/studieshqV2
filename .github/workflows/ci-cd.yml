@@ -55,16 +55,12 @@ jobs:
             rm -rf ~/studieshqV2 || true
 
             # Clone the repository
-            git clone git@github.com:your-repo/studieshqV2.git ~/studieshqV2
+            git clone https://github.com/aniket-017/studieshqV2.git
 
             # Navigate to the directory
             cd ~/studieshqV2
 
             # Install backend dependencies
             npm install
-
-         
-
-  
             pm2 restart studieshq || pm2 start npm --name "studieshq" -- start
           EOF
