@@ -181,7 +181,7 @@ const AddGig = () => {
           />
         </div>
         <div className="add-gig-field">
-          <label className="add-gig-label">Select PDF</label>
+          <label className="add-gig-label">Attach Contract</label>
           <select
             value={selectedPdf}
             onChange={(e) => setSelectedPdf(e.target.value)}

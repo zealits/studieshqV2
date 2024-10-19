@@ -27,8 +27,8 @@ const Home = () => {
   }, [dispatch]);
 
   const { gigs, successMessage } = useSelector((state) => ({
-    gigs: state.gig.gigs, // Adjust state path as necessary
-    successMessage: state.gig.successMessage, // Assuming this is where the success message is stored
+    gigs: state.gig.gigs,
+    successMessage: state.gig.successMessage,
   }));
 
   const handleApply = (gigId) => {
@@ -42,7 +42,8 @@ const Home = () => {
   };
 
   const formatDate = (dateString) => {
-    const [year, day, month] = dateString.split("-");
+    if (!dateString) return "N/A";
+    const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
   };
 
@@ -60,7 +61,7 @@ const Home = () => {
         .share({
           title: gig.title,
           text: gig.description,
-          url: window.location.href, // You can replace this with a specific URL related to the gig
+          url: window.location.href,
         })
         .then(() => console.log("Thanks for sharing!"))
         .catch((error) => console.error("Error sharing:", error));
@@ -71,6 +72,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      {/* Hero Section */}
       <section className="hero">
         <video autoPlay loop muted className="background-video">
           <source src={v1} type="video/mp4" />
@@ -83,6 +85,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Popular Gigs Section */}
       <section className="popular-gigs">
         <div className="available-studies">
           <h2>Popular Studies</h2>
@@ -92,13 +95,12 @@ const Home = () => {
                 <div key={gig._id} className="homestudy-card">
                   <h3 className="study-title">{gig.title}</h3>
                   <div className={`study-description ${expandedGigId === gig._id ? "expanded" : ""}`}>
-  {gig.description 
-    ? (expandedGigId === gig._id 
-      ? gig.description 
-      : `${gig.description.substring(0, 100)}.`)
-    : "No description available."
-  }
-</div>
+                    {gig.description 
+                      ? (expandedGigId === gig._id 
+                        ? gig.description 
+                        : `${gig.description.substring(0, 100)}.`)
+                      : "No description available."}
+                  </div>
                   {gig.description && gig.description.length > 100 && (
                     <button className="read-more-button" onClick={() => toggleDescription(gig._id)}>
                       {expandedGigId === gig._id ? "Read Less" : "Read More"}
@@ -127,6 +129,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
       <section className="how-it-works">
         <h2>How It Works</h2>
         <div className="steps">
@@ -153,6 +156,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
       <section className="testimonials">
         <h2>Testimonials</h2>
         <div className="testimonial-list">
@@ -177,6 +181,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Benefits Section */}
       <section className="benefits">
         <h2>Benefits</h2>
         <ul>
@@ -199,6 +204,7 @@ const Home = () => {
         </ul>
       </section>
 
+      {/* Recent Studies Section */}
       <section className="recent-gigs">
         <h2>Recent Studies</h2>
         {/* Add cards for recent gigs here */}
