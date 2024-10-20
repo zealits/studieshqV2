@@ -60,7 +60,7 @@ jobs:
             rm -rf ~/studieshqV2 || true
 
             # Clone the repository
-            git clone https://github.com/aniket-017/studieshqV2.git
+            git clone https://github.com/zealits/studieshqV2.git
 
             # Restore the config.env file
             if [ -f ~/config.env.bak ]; then
