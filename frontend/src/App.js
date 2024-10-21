@@ -178,7 +178,7 @@ function App() {
     <div className="app">
       <Router>
         {/* {isAuthenticated && totpVerified && user.is2FAEnabled && ( */}
-          {isAuthenticated && user.is2FAEnabled && (
+          {isAuthenticated && (
   <>
     {user.role === "admin" && <AdminSidebar />}
     {user.role === "user" && <Sidebar />}
