@@ -3,8 +3,9 @@ import "./ManageUser.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAllUsers, deleteUser, updateUserDetails } from "../Services/Actions/userAction";
 import Loader from "../components/Loading";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 // Modal Component for updating user details
 const Modal = ({ selectedUser, onClose, onUpdate }) => {
@@ -12,13 +13,30 @@ const Modal = ({ selectedUser, onClose, onUpdate }) => {
   const [updatedLastName, setUpdatedLastName] = useState(selectedUser.lastName);
   const [updatedEmail, setUpdatedEmail] = useState(selectedUser.email);
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     const updatedUser = {
       firstName: updatedFirstName,
       lastName: updatedLastName,
       email: updatedEmail,
     };
-    onUpdate(selectedUser._id, updatedUser);
+    try {
+      // Make API call to update the user details
+      const response = await axios.put(`/aak/l1/admin/user/${selectedUser._id}/update`, updatedUser, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Handle success
+      console.log("User updated:", response.data);
+      alert("User details updated successfully!");
+    } catch (error) {
+      // Handle error
+      console.error("Failed to update user:", error.response?.data?.message || error.message);
+      alert("Error updating user.");
+    }
+
+    // onUpdate(selectedUser._id, updatedUser);
     onClose();
   };
 
@@ -28,27 +46,15 @@ const Modal = ({ selectedUser, onClose, onUpdate }) => {
         <h2>User Details</h2>
         <div>
           <label>First Name:</label>
-          <input
-            type="text"
-            value={updatedFirstName}
-            onChange={(e) => setUpdatedFirstName(e.target.value)}
-          />
+          <input type="text" value={updatedFirstName} onChange={(e) => setUpdatedFirstName(e.target.value)} />
         </div>
         <div>
           <label>Last Name:</label>
-          <input
-            type="text"
-            value={updatedLastName}
-            onChange={(e) => setUpdatedLastName(e.target.value)}
-          />
+          <input type="text" value={updatedLastName} onChange={(e) => setUpdatedLastName(e.target.value)} />
         </div>
         <div>
           <label>Email:</label>
-          <input
-            type="text"
-            value={updatedEmail}
-            onChange={(e) => setUpdatedEmail(e.target.value)}
-          />
+          <input type="text" value={updatedEmail} onChange={(e) => setUpdatedEmail(e.target.value)} />
         </div>
         <button onClick={handleUpdate}>Update</button>
         <button onClick={onClose}>Close</button>
@@ -165,9 +171,10 @@ const ManageUser = () => {
   }, [dropdownRef]);
 
   // Filter users based on search query
-  const filteredUsers = users.filter((user) =>
-    (user.firstName && user.firstName.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredUsers = users.filter(
+    (user) =>
+      (user.firstName && user.firstName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   // Sort users based on selected sort type and order
@@ -200,25 +207,25 @@ const ManageUser = () => {
       </div>
 
       {/* Search Bar */}
-      <div className={`search-bar ${isSearchBarVisible ? 'active' : ''}`}>
-          <FontAwesomeIcon
-            icon={faSearch}
-            onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}
-            style={{ cursor: "pointer" }}
+      <div className={`search-bar ${isSearchBarVisible ? "active" : ""}`}>
+        <FontAwesomeIcon
+          icon={faSearch}
+          onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}
+          style={{ cursor: "pointer" }}
+        />
+        {isSearchBarVisible && (
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          {isSearchBarVisible && (
-            <input
-              type="text"
-              placeholder="Search by name or email"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          )}
-        </div>
+        )}
+      </div>
 
       {/* Action Buttons */}
       <div className="action-buttons">
-      <div className="more-options-icon">
+        <div className="more-options-icon">
           <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} style={{ cursor: "pointer" }} />
         </div>
         {isDropdownOpen && (
@@ -238,45 +245,45 @@ const ManageUser = () => {
       {/* User Table */}
       {sortedUsers && sortedUsers.length > 0 ? (
         <div class="table-gap">
-        <table className="user-table">
-          <thead>
-            <tr>
-              {isSelecting && <th>Select</th>}
-              <th>Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedUsers.map((user) => (
-              <tr key={user._id}>
-                {isSelecting && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedUsers.includes(user._id)}
-                      onChange={() => handleSelectUser(user._id)}
-                    />
-                  </td>
-                )}
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button className="btn" onClick={() => handleEditUser(user)}>
-                    <FontAwesomeIcon icon={faEye} style={{ marginRight: '5px' }} />
-                    View
-                  </button>
-                  <button className="btn delete" onClick={() => handleDeleteUser(user._id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '5px' }} />
-                    Delete
-                  </button>
-                </td>
+          <table className="user-table">
+            <thead>
+              <tr>
+                {isSelecting && <th>Select</th>}
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedUsers.map((user) => (
+                <tr key={user._id}>
+                  {isSelecting && (
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.includes(user._id)}
+                        onChange={() => handleSelectUser(user._id)}
+                      />
+                    </td>
+                  )}
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button className="btn" onClick={() => handleEditUser(user)}>
+                      <FontAwesomeIcon icon={faEye} style={{ marginRight: "5px" }} />
+                      View
+                    </button>
+                    <button className="btn delete" onClick={() => handleDeleteUser(user._id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: "5px" }} />
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <p>No users found.</p>
@@ -284,11 +291,7 @@ const ManageUser = () => {
 
       {/* Modal for Editing User */}
       {isModalOpen && (
-        <Modal
-          selectedUser={selectedUser}
-          onClose={() => setIsModalOpen(false)}
-          onUpdate={handleUpdateUser}
-        />
+        <Modal selectedUser={selectedUser} onClose={() => setIsModalOpen(false)} onUpdate={handleUpdateUser} />
       )}
     </div>
   );
