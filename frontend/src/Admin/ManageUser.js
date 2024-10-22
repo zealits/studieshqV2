@@ -7,36 +7,48 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+// Feedback Modal Component
+const FeedbackModal = ({ message, onClose }) => (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h2>{message}</h2>
+      <button onClick={onClose}>Close</button>
+    </div>
+  </div>
+);
+// for delete conifrma
+const ConfirmModal = ({ message, onConfirm, onCancel }) => {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Confirmation</h2>
+        <p>{message}</p>
+        <div className="modal-actions">
+          <button className="btn" onClick={onConfirm}>
+            Confirm
+          </button>
+          <button className="btn" onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Modal Component for updating user details
 const Modal = ({ selectedUser, onClose, onUpdate }) => {
   const [updatedFirstName, setUpdatedFirstName] = useState(selectedUser.firstName);
   const [updatedLastName, setUpdatedLastName] = useState(selectedUser.lastName);
   const [updatedEmail, setUpdatedEmail] = useState(selectedUser.email);
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     const updatedUser = {
       firstName: updatedFirstName,
       lastName: updatedLastName,
       email: updatedEmail,
     };
-    try {
-      // Make API call to update the user details
-      const response = await axios.put(`/aak/l1/admin/user/${selectedUser._id}/update`, updatedUser, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      // Handle success
-      console.log("User updated:", response.data);
-      alert("User details updated successfully!");
-    } catch (error) {
-      // Handle error
-      console.error("Failed to update user:", error.response?.data?.message || error.message);
-      alert("Error updating user.");
-    }
-
-    // onUpdate(selectedUser._id, updatedUser);
+    onUpdate(selectedUser._id, updatedUser);
     onClose();
   };
 
@@ -70,11 +82,16 @@ const ManageUser = () => {
   const [isSelecting, setIsSelecting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState(""); // For confirmation modal
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Confirmation modal state
+  const [deleteUserId, setDeleteUserId] = useState(null); // To track which user to delete
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
   const [sortType, setSortType] = useState("none");
   const [sortOrder, setSortOrder] = useState("asc");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false); // For feedback modal
+  const [feedbackMessage, setFeedbackMessage] = useState(""); // Feedback message
 
   const dropdownRef = useRef(null);
 
@@ -83,28 +100,48 @@ const ManageUser = () => {
     dispatch(loadAllUsers());
   }, [dispatch]);
 
-  // Delete a single user
-  const handleDeleteUser = (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      dispatch(deleteUser(id));
-    }
+  // Function to show feedback
+  const onShowFeedback = (message) => {
+    setFeedbackMessage(message);
+    setIsFeedbackModalOpen(true);
   };
 
-  // Delete selected users
+  // Delete a single user - Show confirmation modal
+  const handleDeleteUser = (id) => {
+    setDeleteUserId(id);
+    setConfirmMessage("Are you sure you want to delete this user?");
+    setIsConfirmModalOpen(true);
+  };
+
+  const confirmDeleteUser = () => {
+    dispatch(deleteUser(deleteUserId));
+    setIsConfirmModalOpen(false);
+    setDeleteUserId(null);
+  };
+
+  // Delete selected users - Show confirmation modal
   const handleDeleteSelectedUsers = () => {
     if (selectedUsers.length === 0) {
       alert("No users selected.");
       return;
     }
-    if (window.confirm("Are you sure you want to delete selected users?")) {
-      selectedUsers.forEach((id) => {
-        dispatch(deleteUser(id));
-      });
-      setSelectedUsers([]);
-      setIsSelecting(false);
-    }
+    setConfirmMessage("Are you sure you want to delete selected users?");
+    setIsConfirmModalOpen(true);
   };
 
+  const confirmDeleteSelectedUsers = () => {
+    selectedUsers.forEach((id) => {
+      dispatch(deleteUser(id));
+    });
+    setSelectedUsers([]);
+    setIsSelecting(false);
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleCancelConfirmation = () => {
+    setIsConfirmModalOpen(false);
+    setDeleteUserId(null);
+  };
   // Handle individual user selection
   const handleSelectUser = (id) => {
     setSelectedUsers((prevSelected) => {
@@ -153,8 +190,16 @@ const ManageUser = () => {
   };
 
   // Update user information
-  const handleUpdateUser = (id, updatedUser) => {
-    dispatch(updateUserDetails(id, updatedUser)); // Ensure correct action is dispatched
+  const handleUpdateUser = async (id, updatedUser) => {
+    try {
+      const response = await axios.put(`/aak/l1/admin/user/${id}/update`, updatedUser, {
+        headers: { "Content-Type": "application/json" },
+      });
+      onShowFeedback("User updated successfully!");
+      dispatch(loadAllUsers());
+    } catch (error) {
+      onShowFeedback("Error updating user.");
+    }
   };
 
   // Close dropdown when clicking outside of it
@@ -293,6 +338,18 @@ const ManageUser = () => {
       {isModalOpen && (
         <Modal selectedUser={selectedUser} onClose={() => setIsModalOpen(false)} onUpdate={handleUpdateUser} />
       )}
+
+      {/* Confirmation Modal */}
+      {isConfirmModalOpen && (
+        <ConfirmModal
+          message={confirmMessage}
+          onConfirm={deleteUserId ? confirmDeleteUser : confirmDeleteSelectedUsers}
+          onCancel={handleCancelConfirmation}
+        />
+      )}
+
+      {/* Feedback Modal */}
+      {isFeedbackModalOpen && <FeedbackModal message={feedbackMessage} onClose={() => setIsFeedbackModalOpen(false)} />}
     </div>
   );
 };
