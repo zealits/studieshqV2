@@ -5,62 +5,54 @@ import "./PandaLogin.css";
 import Modal from "react-modal";
 
 const PandaLogin = () => {
-  // const [signUp, setSignUp] = useState(false);
+  const [signUp, setSignUp] = useState(false);
   const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [rePassword, setRePassword] = useState(/"");
   const [loginName, setLoginName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [show2FAModal, setShow2FAModal] = useState(false);
 
-  const [signUp, setSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false); // To track if OTP is sent
-  const [emailVerified, setEmailVerified] = useState(false); // To track if email is verified
+  const [otpSent, setOtpSent] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const [popupMessage, setPopupMessage] = useState(""); // Modal state
+
   const sendOtpToEmail = () => {
-    // Call the backend API to send OTP
     fetch("/aak/l1/send-otp", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           setOtpSent(true);
-          alert("OTP has been sent to your email.");
+          setPopupMessage("OTP has been sent to your email.");
         } else {
-          alert(data.message || "Failed to send OTP.");
+          setPopupMessage(data.message || "Failed to send OTP.");
         }
       })
       .catch((error) => console.error("Error:", error));
   };
 
   const verifyOtp = () => {
-    // Call the backend API to verify OTP
     fetch("/aak/l1/verify-email", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           setEmailVerified(true);
-          alert("Email verified successfully.");
+          setPopupMessage("Email verified successfully.");
         } else {
-          alert(data.message || "Invalid OTP.");
+          setPopupMessage(data.message || "Invalid OTP.");
         }
       })
       .catch((error) => console.error("Error:", error));
@@ -74,24 +66,23 @@ const PandaLogin = () => {
   };
 
   const animateFields = (form) => {
-    // Animation logic here
+    // Animation logic
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (signUp) {
       if (password !== rePassword) {
-        alert("Passwords do not match");
+        setPopupMessage("Passwords do not match");
         return;
       }
       const userData = { firstName, lastName, email, password };
-      // console.log(userData);
       dispatch(register(userData)).then(() => {
-        // alert("Registration successful!");
+        setPopupMessage("Registration successful!");
       });
     } else {
       dispatch(login(loginName, loginPassword)).then(() => {
-        // alert("Login successful!");
+        setPopupMessage("Login successful!");
       });
     }
   };
@@ -129,9 +120,30 @@ const PandaLogin = () => {
           handleSubmit={handleSubmit}
         />
       )}
+      
+      {/* Modal to display notifications */}
+      <Modal
+        isOpen={!!popupMessage}
+        onRequestClose={() => setPopupMessage("")}
+       className="popup"
+        overlayClassName="overlay"
+      >
+        <div >
+          <h2>Notification</h2>
+          <p>{popupMessage}</p>
+          <button className="btn btn-info" onClick={() => setPopupMessage("")}>
+            Close
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
+
+
+
+
+// ... Rest of your components remain unchanged
 
 const Login = ({ loginName, loginPassword, setLoginName, setLoginPassword, handleToggle, handleSubmit }) => (
   <div className="login">
