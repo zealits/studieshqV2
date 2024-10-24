@@ -80,7 +80,7 @@ const ManageProject = () => {
                 <ul>
                   {project.selectedJobs.map((job) => (
                     <li key={job._id} className="job-item">
-                      {job}
+                      {job.jobTitle}
                     </li>
                   ))}
                 </ul>

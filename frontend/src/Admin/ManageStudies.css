@@ -1,77 +1,104 @@
+
+
 .manage-projects {
-  width: 90%; /* Adjust this value as needed */
-  margin: 0 auto; /* This will center the component */
-  padding: 20px; /* Optional padding for better layout */
-  background-color: #f9f9f9; /* Optional background color */
+  width: 1200px; /* Set a max width for larger screens */
+  margin: 20px auto; /* Center container */
+  padding: 20px;
+ 
+ 
 }
 
 
-h1 {
-  font-size: 24px;
-  color: #333;
-  text-align: left;
+.error-message {
+  color: #ff4d4d; /* Red for error messages */
+  font-weight: bold;
+  text-align: center;
   margin-bottom: 20px;
-  border-bottom: 2px solid #1ca1c1;
 }
 
 .project-card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid #1ca1c1;
+  background-color: #f9f9f9; /* Light grey background for cards */
+  border: 1px solid #e0e0e0; /* Border for cards */
+  border-radius: 8px; /* Rounded corners for cards */
+  padding: 20px; /* Padding for card content */
+  margin-bottom: 20px; /* Space between cards */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  display: flex; /* Flexbox for layout */
+  flex-direction: column; /* Column direction */
+  justify-content: space-between; /* Space items */
+}
+
+.project-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
 }
 
 .project-title {
-  font-size: 22px;
-  color: #1ca1c1;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  color: #000000; /* Blue for titles */
+  margin: 0 0 10px; /* Margin below title */
+  text-align: center; /* Center title */
 }
 
-.project-description {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 15px;
+.project-description,
+.project-deadline,
+.project-budget {
+  font-size: 1rem; /* Standard font size for other texts */
+  color: #555; /* Dark grey for description and details */
+  margin: 5px 0; /* Margin around text */
 }
 
-h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+.project-jobs {
+  margin-top: 15px; /* Space above selected jobs section */
 }
 
-.jobs-list {
-  margin-top: 10px;
+.project-jobs h3 {
+  font-size: 1.2rem; /* Slightly larger font for section headings */
+  color: #333; /* Dark color for section headings */
+  margin-bottom: 10px; /* Space below heading */
+  text-align: left; /* Align left */
 }
 
-.job-card {
-  background-color: #f0f4f8;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+.job-item {
+  list-style-type: none; /* Remove default list style */
+  width: 500px;
+  margin-left: 20px; /* Indent job items */
+  color: #555; /* Grey for job items */
+  font-size: 0.9rem; /* Smaller font for job items */
+  line-height: 1.5; /* Increased line height for readability */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+  padding: 10px; /* Add padding for better spacing */
+  border-radius: 5px; /* Rounded corners for job items */
 }
 
-.job-card h4 {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 5px;
+.job-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
 }
 
-.job-card p {
-  font-size: 14px;
-  color: #555;
-  margin: 0;
-}
-.delete-button {
-  background-color: red; /* Change to your desired color */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
+
+.job-item:before {
+  content: "•"; /* Custom bullet */
+  color: #007bff; /* Color for bullet */
+  font-weight: bold; /* Bold bullet */
+  margin-right: 5px; /* Space between bullet and text */
 }
 
-.delete-button:hover {
-  background-color: darkred; /* Darker shade on hover */
+/* Responsive styles */
+@media (max-width: 768px) {
+  .manage-projects {
+    padding: 15px; /* Reduced padding for smaller screens */
+  }
+
+  .project-card {
+    padding: 15px; /* Less padding for cards on smaller screens */
+  }
+
+  .manage-projects h1 {
+    font-size: 2rem; /* Smaller heading on smaller screens */
+  }
+
+  .project-title {
+    font-size: 1.6rem; /* Smaller title font size */
+  }
 }

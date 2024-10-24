@@ -2,6 +2,7 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const Gig = require("../models/gigModel.js");
+const Job = require("../models/jobModel.js");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
@@ -166,28 +167,15 @@ exports.getAllProjects = catchAsyncErrors(async (req, res, next) => {
   try {
     console.log("Triggered");
 
-    // Use aggregation with $lookup to join the selectedJobs collection
-    const gigs = await Gig.aggregate([
-      {
-        $lookup: {
-          from: "Job", // The name of the jobs collection
-          localField: "selectedJobs", // Field from the Gig collection
-          foreignField: "_id", // Field from the Job collection to match
-          as: "selectedJobsDetails", // Output array field for matched documents
-        },
-      },
-    ]);
+    const gigs = await Gig.find().populate("selectedJobs");
 
-    // Log the full gigs with populated data
     console.log(gigs);
 
-    // Send response with all gigs and their populated job details
     res.status(200).json({
       success: true,
       gigs,
     });
   } catch (error) {
-    // Handle any error that occurs
     res.status(500).json({
       success: false,
       message: "Could not fetch gigs",
