@@ -14,7 +14,7 @@ const ManageProject = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/aak/l1/admin/gigs", {
+      const response = await axios.get("/aak/l1/admin/projects", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -43,7 +43,7 @@ const ManageProject = () => {
   //       setError("Error deleting study");
   //     } finally {
   //       setLoadingAction(false);
-        
+
   //     }
   //   }
   // };
@@ -72,24 +72,22 @@ const ManageProject = () => {
           <div key={project._id} className="project-card">
             <h2 className="project-title">{project.title}</h2>
             {project.description && <p className="project-description">Description: {project.description}</p>}
-            <p className="project-deadline">
-              Deadline: {new Date(project.deadline).toLocaleDateString()}
-            </p>
+            <p className="project-deadline">Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
             <p className="project-budget">Budget: ${project.budget}</p>
             <div className="project-jobs">
               <h3>Selected Jobs:</h3>
-              {project.jobs && project.jobs.length > 0 ? (
+              {project.selectedJobs && project.selectedJobs.length > 0 ? (
                 <ul>
-                  {project.jobs.map((job) => (
-                    <li key={job._id} className="job-item">{job.title}</li>
+                  {project.selectedJobs.map((job) => (
+                    <li key={job._id} className="job-item">
+                      {job}
+                    </li>
                   ))}
                 </ul>
               ) : (
                 <p>No jobs selected for this project.</p>
               )}
             </div>
-           
-            
           </div>
         ))
       )}

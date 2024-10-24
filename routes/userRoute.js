@@ -29,7 +29,8 @@ const {
   updateGigBudget,
   verifyEmail,
   sendOtp,
-  adminUpdateUserDetails
+  adminUpdateUserDetails,
+  getAllProjects,
 } = require("../controllers/userController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -58,14 +59,17 @@ router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin", "s
 router.route("/admin/user/:id").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getSingleUser);
 router.route("/admin/user/:id").put(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), updateUserRole);
 router.route("/admin/user/:id").delete(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), deleteUser);
-router.route("/admin/user/:id/update").put(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), adminUpdateUserDetails);
+router
+  .route("/admin/user/:id/update")
+  .put(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), adminUpdateUserDetails);
 // Gig Routes
 router.route("/gig/apply").post(isAuthenticatedUser, applyForGig);
 router
   .route("/admin/gig/approve/:userId/:gigId")
   .put(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), approveGig);
 router.route("/gig/complete/:gigId").put(isAuthenticatedUser, completeGig);
-router.route("/admin/gigs").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getAllGigsWithApplicants);
+// router.route("/admin/gigs").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getAllGigsWithApplicants);
+router.route("/admin/projects").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getAllProjects);
 
 // Gift Card Routes
 router.route("/gig/:gigId/request-gift-card").post(isAuthenticatedUser, requestGiftCard);

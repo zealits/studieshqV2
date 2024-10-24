@@ -178,13 +178,13 @@ function App() {
     <div className="app">
       <Router>
         {/* {isAuthenticated && totpVerified && user.is2FAEnabled && ( */}
-          {isAuthenticated && (
-  <>
-    {user.role === "admin" && <AdminSidebar />}
-    {user.role === "user" && <Sidebar />}
-    {user.role === "superadmin" && <SuperAdminSidebar />}
-  </>
-)}
+        {isAuthenticated && (
+          <>
+            {user.role === "admin" && <AdminSidebar />}
+            {user.role === "user" && <Sidebar />}
+            {user.role === "superadmin" && <SuperAdminSidebar />}
+          </>
+        )}
         <div className="content">
           <Routes>
             {!isAuthenticated && <Route path="/" element={<PandaLogin />} />}
@@ -218,11 +218,11 @@ function App() {
                       <Route exact path="/" element={<AdminDashboard />} />
                       <Route exact path="/manageuser" element={<ManageUser />} />
                       <Route exact path="/managestudies" element={<ManageStudies />} />
-                      <Route exact path="/managejobs" element={<ManageJobs/>}/>
+                      <Route exact path="/managejobs" element={<ManageJobs />} />
                       <Route path="/jobs/:id" element={<JobDetails isAdmin={true} />} />
                       <Route exact path="/managepayout" element={<ManagePayout />} />
                       <Route exact path="/managePdf" element={<CreateContract />} />
-                      <Route exact path="/create-invoice" element={<Invoice/>}/>
+                      <Route exact path="/create-invoice" element={<Invoice />} />
                       <Route path="/addstudies" element={<AddGig />} />
                       {/* <Route path="/analytics" element={<UpdateContract />} /> */}
                       {/* <Route path="/analytics" element={<AllJobs />} /> */}

@@ -36,16 +36,8 @@ const Sidebar = () => {
       <div className="logo-details">
         <i className="bx bxl-codepen"></i>
         <div className="logo_name">StudiesHQ</div>
-        <i
-          className={`bx bx-menu ${isOpen ? "rotate" : ""}`}
-          id="btn"
-          onClick={toggleSidebar}
-        >
-          {isOpen ? (
-            <FaAngleLeft id="btn" className="icon" />
-          ) : (
-            <FaAngleRight id="btn" className="icon" />
-          )}
+        <i className={`bx bx-menu ${isOpen ? "rotate" : ""}`} id="btn" onClick={toggleSidebar}>
+          {isOpen ? <FaAngleLeft id="btn" className="icon" /> : <FaAngleRight id="btn" className="icon" />}
         </i>
       </div>
       <ul className="nav-list">
@@ -77,14 +69,14 @@ const Sidebar = () => {
           <span className="tooltip">Available studies</span>
         </li>
         <li>
-  <Link to="/available-jobs" className="linke">
-    <i className="bx bx-chat">
-      <FaBriefcase className="icon" />
-    </i>
-    <span className="links_name">Available Jobs</span>
-  </Link>
-  <span className="tooltip">Available Jobs</span>
-</li>
+          <Link to="/available-jobs" className="linke">
+            <i className="bx bx-chat">
+              <FaBriefcase className="icon" />
+            </i>
+            <span className="links_name">Available Jobs</span>
+          </Link>
+          <span className="tooltip">Available Jobs</span>
+        </li>
 
         <li>
           <Link to="/profile" className="linke">

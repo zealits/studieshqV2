@@ -162,6 +162,40 @@ exports.applyForGig = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+exports.getAllProjects = catchAsyncErrors(async (req, res, next) => {
+  try {
+    console.log("Triggered");
+
+    // Use aggregation with $lookup to join the selectedJobs collection
+    const gigs = await Gig.aggregate([
+      {
+        $lookup: {
+          from: "Job", // The name of the jobs collection
+          localField: "selectedJobs", // Field from the Gig collection
+          foreignField: "_id", // Field from the Job collection to match
+          as: "selectedJobsDetails", // Output array field for matched documents
+        },
+      },
+    ]);
+
+    // Log the full gigs with populated data
+    console.log(gigs);
+
+    // Send response with all gigs and their populated job details
+    res.status(200).json({
+      success: true,
+      gigs,
+    });
+  } catch (error) {
+    // Handle any error that occurs
+    res.status(500).json({
+      success: false,
+      message: "Could not fetch gigs",
+      error: error.message,
+    });
+  }
+});
+
 // Get all gigs with applicants (Admin)
 exports.getAllGigsWithApplicants = catchAsyncErrors(async (req, res, next) => {
   // Aggregation pipeline to match gigs with applicants and PDFs
