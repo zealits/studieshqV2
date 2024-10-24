@@ -49,16 +49,27 @@ exports.deleteGig = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get all gigs
-exports.getAllGigs = catchAsyncErrors(async (req, res, next) => {
-  const gigs = await Gig.find();
 
-  console.log("sdfds");
-  res.status(200).json({
-    success: true,
-    gigs,
-  });
-});
+// Function to get all gigs
+exports.getAllGigs = async (req, res) => {
+  try {
+      // Populate the selectedJobs field
+      const getGigs = async (req, res) => {
+        try {
+            const gigs = await Gig.find().populate('selectedJobs'); // Populate selectedJobs
+            console.log("Fetched gigs:", gigs);
+            res.status(200).json(gigs);
+        } catch (error) {
+            console.error("Error fetching gigs:", error);
+            res.status(500).json({ message: "Error fetching gigs" });
+        }
+    };
+  } catch (error) {
+      console.error("Error fetching gigs:", error);
+      return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 // Get single gig
 exports.getSingleGig = catchAsyncErrors(async (req, res, next) => {
@@ -82,6 +93,7 @@ exports.addGig = async (req, res) => {
 
     const gig = await Gig.create({
       title,
+      description,
       jobs,
       deadline,
       budget,

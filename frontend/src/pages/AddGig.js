@@ -21,6 +21,8 @@ const AddGig = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [alert, setAlert] = useState({ visible: false, content: "" });
     const [shareModalOpen, setShareModalOpen] = useState(false);
+const [description, setDescription] = useState("");  // Add this state
+
 
     const dispatch = useDispatch();
     const { loading, error, success } = useSelector((state) => state.gig);
@@ -30,19 +32,26 @@ const AddGig = () => {
             alert(error);
             dispatch(clearErrors());
         }
-
+    
         if (success) {
+            // Show alert message on success
             setAlert({ visible: true, content: `Successfully created project: ${title}` });
+    
+            // Clear form fields
             setTitle("");
+            setDescription("");
             setSelectedJobs([]);
             setDeadline("");
             setBudget("");
             setSelectedPdf("");
             setLocation("");
             setJobs([]);
+    
+            // Close share modal to avoid unintended modal behavior
+            setShareModalOpen(false);  // Ensure share modal is closed after successful submission
         }
     }, [dispatch, error, success, title]);
-
+    
     useEffect(() => {
         const fetchPdfs = async () => {
             try {
@@ -80,17 +89,24 @@ const AddGig = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
+    
         const gigData = {
             title,
-            jobs: selectedJobs,
+            selectedJobs: selectedJobs,
             deadline,
             budget,
             pdf: selectedPdf,
+            description,
         };
-
-        dispatch(addGig(gigData));
+    
+        dispatch(addGig(gigData)).then(() => {
+            // Trigger a refetch of projects in ManageProject after a successful project addition
+            if (typeof window.refreshProjects === 'function') {
+                window.refreshProjects(); // Call this function after adding a project
+            }
+        });
     };
+    
 
     const toggleJobModal = () => {
         setModalOpen((prev) => !prev);
@@ -145,6 +161,7 @@ const AddGig = () => {
 
     return (
         <div className="add-gig-container">
+            
             {alert.visible && (
                 <div className="add-gig-alert">
                     <p>{alert.content}</p>
@@ -167,6 +184,16 @@ const AddGig = () => {
                         className="add-gig-input"
                     />
                 </div>
+                <div className="add-gig-field">
+        <label className="add-gig-label">Description</label>
+        <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter a detailed description of the project"
+            required
+            className="add-gig-textarea"  
+        />
+    </div>
                 <div className="add-gig-field">
                     <label className="add-gig-label">Location</label>
                     <input
@@ -214,15 +241,16 @@ const AddGig = () => {
                 </div>
 
                 <div className="add-gig-field">
-                    <label className="add-gig-label">Deadline</label>
-                    <input
-                        type="date"
-                        value={deadline}
-                        onChange={(e) => setDeadline(e.target.value)}
-                        required
-                        className="add-gig-input"
-                    />
-                </div>
+    <label className="add-gig-label">Deadline</label>
+    <input
+        type="date"
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
+        required
+        className="add-gig-input"
+        min={new Date().toISOString().split("T")[0]} // Sets the minimum date to today
+    />
+</div>
                 <div className="add-gig-field">
                     <label className="add-gig-label">Budget</label>
                     <input
@@ -280,6 +308,7 @@ const AddGig = () => {
                                 <p>No jobs available for this location.</p>
                             )}
                         </div>
+                        
                         <button className="add-gig-modal-submit-button" onClick={toggleJobModal}>Done</button>
                     </div>
                 </div>
@@ -313,6 +342,7 @@ const AddGig = () => {
                     <FontAwesomeIcon icon={faEnvelope} />
                 </button> */}
                 {/* <button onClick={closeShareModal}>Close</button> */}
+                
             </div>
         </div>
     </div>

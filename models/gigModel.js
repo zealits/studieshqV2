@@ -5,7 +5,13 @@ const gigSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  jobs: [{
+
+  description:{
+    type: String,
+    required: true,
+
+  },
+  selectedJobs: [{ // Change here
     type: mongoose.Schema.Types.ObjectId,
     ref: "Job", // Assuming you have a Job model
     required: true,

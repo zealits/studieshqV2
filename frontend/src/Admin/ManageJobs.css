@@ -59,3 +59,26 @@
 .manage-no-jobs {
     text-align: center;
 }
+.manage-jobs-actions {
+    margin-bottom: 20px; /* Adjust spacing below the buttons */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-start; /* Align buttons to the start */
+    gap: 20px; /* Increase the gap between buttons */
+  }
+  
+  .manage-create-job-button,
+  .manage-sync-workday-button {
+    padding: 10px 15px; /* Adjust padding */
+    background-color: #808080; /* Gray background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+  }
+  
+  .manage-create-job-button:hover,
+  .manage-sync-workday-button:hover {
+    background-color: #696969; /* Darker gray on hover */
+  }
+  

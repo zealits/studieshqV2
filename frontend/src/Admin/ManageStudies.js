@@ -1,288 +1,100 @@
-
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import Modal from "react-modal";
-import "./ManageStudies.css";
-import Loading from "../components/Loading";
-import ShareButton from "./ShareButton";
+import "./ManageStudies.css"; // Ensure this CSS file exists for custom styles
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-const ManageStudies = () => {
-  const [gigs, setGigs] = useState([]);
+const ManageProject = () => {
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedStudy, setSelectedStudy] = useState(null);
-  const [formData, setFormData] = useState({ title: "", description: "", budget: "", deadline: "", jobs: "" });
-  const [loadingAction, setLoadingAction] = useState(false);
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [studyToDelete, setStudyToDelete] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(""); // State for the search term
+  const [loadingAction, setLoadingAction] = useState(false);
   const token = useSelector((state) => state.user.token);
 
-  useEffect(() => {
-    const fetchGigs = async () => {
-      try {
-        const response = await axios.get("/aak/l1/admin/gigs", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setGigs(response.data.gigs || []);
-        setLoading(false);
-      } catch (error) {
-        setError("Error fetching gigs");
-        setLoading(false);
-      }
-    };
-
-    fetchGigs();
-  }, [token]);
-
-  // Filtering logic moved here for clarity
-  const filteredGigs = gigs.filter((gig) =>
-    gig.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const generatePieData = (applicants) => {
-    const statusCounts = {
-      applied: 0,
-      allocated: 0,
-      completed: 0,
-    };
-
-    if (!applicants) {
-      return [];
-    }
-
-    applicants.forEach((applicant) => {
-      if (applicant.gigs) {
-        applicant.gigs.forEach((gigDetail) => {
-          const status = gigDetail.status ? gigDetail.status.toLowerCase() : null;
-          if (status && statusCounts[status] !== undefined) {
-            statusCounts[status]++;
-          }
-        });
-      }
-    });
-    
-
-    return Object.keys(statusCounts).map((status) => ({
-      name: status.charAt(0).toUpperCase() + status.slice(1),
-      value: statusCounts[status],
-    }));
-  };
-
-  const handleEdit = (study) => {
-    setSelectedStudy(study);
-    setFormData({
-      title: study.title,
-      description: study.description,
-      budget: study.budget,
-      deadline: study.deadline,
-      jobs: study.jobs,
-    });
-  };
-
-  // const handleShare = (gig) => {
-  //   if (navigator.share) {
-  //     navigator
-  //       .share({
-  //         title: gig.title,
-  //         text: gig.description,
-  //         url: window.location.href, // You can replace this with a specific URL related to the gig
-  //       })
-  //       .then(() => console.log("Thanks for sharing!"))
-  //       .catch((error) => console.error("Error sharing:", error));
-  //   } else {
-  //     // Fallback code for non-supporting browsers
-  //     alert("Web Share API is not supported in your browser. Please share manually.");
-  //   }
-  // };
-
-  const openDeleteModal = (study) => {
-    setStudyToDelete(study);
-    setDeleteModalIsOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setDeleteModalIsOpen(false);
-    setStudyToDelete(null);
-  };
-
-  const handleDelete = async () => {
-    if (studyToDelete) {
-      setLoadingAction(true);
-      try {
-        await axios.delete(`/aak/l1/admin/gig/${studyToDelete._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setGigs(gigs.filter((gig) => gig._id !== studyToDelete._id));
-      } catch (error) {
-        setError("Error deleting study");
-      } finally {
-        setLoadingAction(false);
-        closeDeleteModal();
-      }
-    }
-  };
-
-  const handleUpdate = async () => {
-    setLoadingAction(true);
+  const fetchProjects = async () => {
+    setLoading(true);
     try {
-      const response = await axios.put(`/aak/l1/admin/gig/${selectedStudy._id}`, formData, {
+      const response = await axios.get("/aak/l1/admin/gigs", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setGigs(gigs.map((gig) => (gig._id === selectedStudy._id ? response.data.gig : gig)));
-      setSelectedStudy(null);
+      console.log(response.data); // Check if the data is structured correctly
+      setProjects(response.data.gigs || []); // Make sure to access gigs
+      setLoading(false);
     } catch (error) {
-      setError("Error updating study");
-    } finally {
-      setLoadingAction(false);
+      console.error("Error fetching projects:", error);
+      setError("Error fetching projects");
+      setLoading(false);
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  //   const handleDelete = async () => {
+  //   if (studyToDelete) {
+  //     setLoadingAction(true);
+  //     try {
+  //       await axios.delete(`/aak/l1/admin/gig/${studyToDelete._id}`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       // setGigs(gigs.filter((gig) => gig._id !== studyToDelete._id));
+  //     } catch (error) {
+  //       setError("Error deleting study");
+  //     } finally {
+  //       setLoadingAction(false);
+        
+  //     }
+  //   }
+  // };
 
-  const closeModal = () => {
-    setSelectedStudy(null);
-  };
+  // Expose the fetch function to be called from AddGig component
+  useEffect(() => {
+    window.refreshProjects = fetchProjects;
+    fetchProjects(); // Fetch projects on component mount
 
-  const downloadPdf = async (pdfUrl) => {
-    let id = pdfUrl._id;
-    console.log(id);
-    try {
-      const response = await axios.get(`/aak/l1/pdf/${id}`, {
-        responseType: "blob", // Important for handling file downloads
-      });
+    // Clean up to avoid memory leaks
+    return () => {
+      window.refreshProjects = null;
+    };
+  }, [token]);
 
-     
-
-      // Extract the filename from the Content-Disposition header
-      const contentDisposition = response.headers["content-disposition"];
-      let filename = "downloaded_file"; // Default filename
-      if (contentDisposition && contentDisposition.includes("filename=")) {
-        filename = contentDisposition.split("filename=")[1].replace(/['"]/g, ""); // Remove any quotes around the filename
-      }
-
-      // Create a URL for the blob and trigger the download
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", filename); // Use the extracted filename
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      // Optional: Clean up the URL object
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Download error:", error);
-      // setMessage('Error downloading file');
-    }
-  };
-
-   if (loading) return <Loading />;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div className="error-message">{error}</div>;
 
   return (
-    <div className="manage-studies">
-      <h1>Manage Projects</h1>
-      <input
-        type="text"
-        placeholder="Search by title..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
-      <Modal isOpen={!!selectedStudy} onRequestClose={closeModal} className="modal" overlayClassName="overlay">
-        <h2>Edit Project</h2>
-        <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" />
-        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
-        <input type="text" name="budget" value={formData.budget} onChange={handleChange} placeholder="Gift Card" />
-        <input type="date" name="deadline" value={formData.deadline} onChange={handleChange} placeholder="Deadline" />
-        <button className="btn btn-info" onClick={handleUpdate} disabled={loadingAction}>
-          {loadingAction ? "Saving..." : "Save"}
-        </button>
-        <button className="btn btn-info" onClick={closeModal}>
-          Cancel
-        </button>
-      </Modal>
-
-      <Modal isOpen={deleteModalIsOpen} onRequestClose={closeDeleteModal} className="modal" overlayClassName="overlay">
-        <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete this Project?</p>
-        <button className="btn btn-danger" onClick={handleDelete} disabled={loadingAction}>
-          {loadingAction ? "Deleting..." : "Delete"}
-        </button>
-        <button className="btn btn-secondary" onClick={closeDeleteModal}>
-          Cancel
-        </button>
-      </Modal>
-      
-      <div className="studies-list">
-        {filteredGigs.length === 0 ? (
-          <p>No Projects available</p>
-        ) : (
-          filteredGigs.map((study) => (
-            <div key={study._id} className="study-card">
-              <h2>{study.title}</h2>
-              <p>Description: {study.description}</p>
-              <p>Gift Card: ${study.budget}</p>
-              <p>Jobs: ${study.jobs}</p>
-              <p>Deadline: {study.deadline}</p>
-              {study.pdfDetails && (
-                <p className="pdf-container">
-                  <span>PDF:</span>
-                  <span className="btn btn-link" onClick={() => downloadPdf(study.pdfDetails)}>
-                    Download PDF
-                  </span>
-                </p>
+    <div className="manage-projects">
+      <h1>Existing Projects</h1>
+      {projects.length === 0 ? (
+        <p>No projects available</p>
+      ) : (
+        projects.map((project) => (
+          <div key={project._id} className="project-card">
+            <h2 className="project-title">{project.title}</h2>
+            {project.description && <p className="project-description">Description: {project.description}</p>}
+            <p className="project-deadline">
+              Deadline: {new Date(project.deadline).toLocaleDateString()}
+            </p>
+            <p className="project-budget">Budget: ${project.budget}</p>
+            <div className="project-jobs">
+              <h3>Selected Jobs:</h3>
+              {project.jobs && project.jobs.length > 0 ? (
+                <ul>
+                  {project.jobs.map((job) => (
+                    <li key={job._id} className="job-item">{job.title}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No jobs selected for this project.</p>
               )}
-              <div className="pie-chart-container">
-                <PieChart width={400} height={400}>
-                  <Pie
-                    data={generatePieData(study.applicantsDetails)}
-                    cx={200}
-                    cy={200}
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {generatePieData(study.applicantsDetails).map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </div>
-              <div className="study-actions">
-                <button className="btn btn-info" onClick={() => handleEdit(study)}>
-                  Edit
-                </button>
-                <button className="btn btn-danger" onClick={() => openDeleteModal(study)} disabled={loadingAction}>
-                  {loadingAction ? "Deleting..." : "Delete"}
-                </button>
-                <ShareButton project={gigs} /> 
-              </div>
             </div>
-          ))
-        )}
-      </div>
+           
+            
+          </div>
+        ))
+      )}
     </div>
   );
 };
 
-export default ManageStudies;
-
+export default ManageProject;

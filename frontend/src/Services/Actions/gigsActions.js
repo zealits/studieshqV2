@@ -22,28 +22,28 @@ export const addGig = (gigData) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
+    // Ensure selectedJobs is included in the gigData
     const { data } = await axios.post("/aak/l1/admin/gig", gigData, config);
 
     dispatch({ type: ADD_GIG_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: ADD_GIG_FAIL,
-      payload: error.response.data.message,
+      payload: error.response ? error.response.data.message : error.message,
     });
   }
 };
-
 
 // Fetch Gigs
 export const fetchGigs = () => async (dispatch) => {
   try {
     dispatch({ type: FETCH_GIGS_REQUEST });
 
-    const { data } = await axios.get(`/aak/l1/gigs`);
+    const { data } = await axios.get("/aak/l1/gigs");
 
     dispatch({ type: FETCH_GIGS_SUCCESS, payload: data.gigs });
   } catch (error) {
-    dispatch({ type: FETCH_GIGS_FAIL, payload: error.response.data.message });
+    dispatch({ type: FETCH_GIGS_FAIL, payload: error.response ? error.response.data.message : error.message });
   }
 };
 
@@ -52,11 +52,11 @@ export const applyGig = (gigId) => async (dispatch) => {
   try {
     dispatch({ type: APPLY_GIG_REQUEST });
 
-    const { data } = await axios.post(`/aak/l1/gig/apply`, { gigId });
+    const { data } = await axios.post("/aak/l1/gig/apply", { gigId });
 
     dispatch({ type: APPLY_GIG_SUCCESS, payload: data.success });
   } catch (error) {
-    dispatch({ type: APPLY_GIG_FAIL, payload: error.response.data.message });
+    dispatch({ type: APPLY_GIG_FAIL, payload: error.response ? error.response.data.message : error.message });
   }
 };
 
@@ -65,8 +65,7 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
 
-
-// Fetch Jobs by Country
+// Fetch Jobs by Location
 export const fetchJobsByLocation = (location) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_JOBS_REQUEST });
@@ -75,6 +74,6 @@ export const fetchJobsByLocation = (location) => async (dispatch) => {
 
     dispatch({ type: FETCH_JOBS_SUCCESS, payload: data.jobs });
   } catch (error) {
-    dispatch({ type: FETCH_JOBS_FAIL, payload: error.response.data.message });
+    dispatch({ type: FETCH_JOBS_FAIL, payload: error.response ? error.response.data.message : error.message });
   }
 };

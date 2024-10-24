@@ -16,11 +16,13 @@ router.route("/gigs").get(getAllGigs);
 router.route("/gig/:id").get(getSingleGig);
 
 
+
 // // Route to add a new gig
 router.post("/admin/gig", addGig);
 
 // Route to filter jobs by country
 router.get("/jobs/filter", getJobsByLocation);
+
 
 
 
