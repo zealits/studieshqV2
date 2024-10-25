@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadAllUsers, deleteUser, updateUserDetails } from "../Services/Actions/userAction";
 import Loader from "../components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faSearch, faEllipsisV, faEye, faEdit, faShareAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 // Feedback Modal Component
@@ -246,83 +246,76 @@ const ManageUser = () => {
   return (
     <div className="manage-user">
       {loading && <Loader />}
-
       <div className="header">
         <h1>Manage Users</h1>
       </div>
+      <div className={`action-bar`}>
 
-      {/* Search Bar */}
-      <div className={`search-bar ${isSearchBarVisible ? "active" : ""}`}>
-        <FontAwesomeIcon
-          icon={faSearch}
-          onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}
-          style={{ cursor: "pointer" }}
-        />
-        {isSearchBarVisible && (
+        <span className="selected-count">{selectedUsers.length} Selected</span>
+        
+        <div className="search-box-wrapper">
           <input
             type="text"
-            placeholder="Search by name or email"
+            placeholder="Search user..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
           />
-        )}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="action-buttons">
-        <div className="more-options-icon">
-          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} style={{ cursor: "pointer" }} />
+          <button className="search-btn">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
         </div>
-        {isDropdownOpen && (
-          <div className="more-options-dropdown" ref={dropdownRef}>
-            <ul>
-              <li onClick={handleSelectAllUsers}>
-                {selectedUsers.length === users.length ? "Deselect All" : "Select All"}
-              </li>
-              <li onClick={handleShareSelectedUsers}>Share</li>
-              <li onClick={handleDeleteSelectedUsers}>Delete </li>
-              <li onClick={handleCancelSelection}>Cancel</li>
-            </ul>
-          </div>
-        )}
+
+        <div className="action-icons">
+          <button className="action-icon" title="Share">
+            <FontAwesomeIcon icon={faShareAlt} />
+          </button>
+          <button className="action-icon delete-selected" title="Delete Selected" onClick={handleDeleteSelectedUsers}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
+        </div>
+
       </div>
 
-      {/* User Table */}
-      {sortedUsers && sortedUsers.length > 0 ? (
-        <div class="table-gap">
+      {filteredUsers.length > 0 ? (
+        <div className="table-gap">
           <table className="user-table">
             <thead>
               <tr>
-                {isSelecting && <th>Select</th>}
-                <th>Name</th>
+                <th>
+                  <input
+                    type="checkbox"
+                    className="select-all-users"
+                    onChange={handleSelectAllUsers}
+                    checked={selectedUsers.length === users.length}
+                  />
+                </th>
+                <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {sortedUsers.map((user) => (
+              {filteredUsers.map((user) => (
                 <tr key={user._id}>
-                  {isSelecting && (
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedUsers.includes(user._id)}
-                        onChange={() => handleSelectUser(user._id)}
-                      />
-                    </td>
-                  )}
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="select-user"
+                      checked={selectedUsers.includes(user._id)}
+                      onChange={() => handleSelectUser(user._id)}
+                    />
+                  </td>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
                   <td>
-                    <button className="btn" onClick={() => handleEditUser(user)}>
-                      <FontAwesomeIcon icon={faEye} style={{ marginRight: "5px" }} />
-                      View
+                    <button className="btn btn-update" onClick={() => handleEditUser(user)}>
+                      <FontAwesomeIcon icon={faEdit} /> Update
                     </button>
-                    <button className="btn delete" onClick={() => handleDeleteUser(user._id)}>
-                      <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: "5px" }} />
-                      Delete
+                    <button className="btn btn-delete" onClick={() => handleDeleteUser(user._id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} /> Delete
                     </button>
                   </td>
                 </tr>

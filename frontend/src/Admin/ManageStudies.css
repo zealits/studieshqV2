@@ -59,30 +59,33 @@
   text-align: left; /* Align left */
 }
 
-.job-item {
+.project-job-item {
   list-style-type: none; /* Remove default list style */
-  width: 500px;
+  display: inline-block;
   margin-left: 20px; /* Indent job items */
   color: #555; /* Grey for job items */
+  background-color: white;
   font-size: 0.9rem; /* Smaller font for job items */
   line-height: 1.5; /* Increased line height for readability */
   transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
   padding: 10px; /* Add padding for better spacing */
-  border-radius: 5px; /* Rounded corners for job items */
+  border-radius: 35px; /* Rounded corners for job items */
 }
 
-.job-item:hover {
+.project-job-item:hover {
   transform: translateY(-5px); /* Lift effect on hover */
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
 }
 
 
-.job-item:before {
-  content: "•"; /* Custom bullet */
-  color: #007bff; /* Color for bullet */
-  font-weight: bold; /* Bold bullet */
-  margin-right: 5px; /* Space between bullet and text */
-}
+/* project-job-item :before {
+  content: "•"; 
+ 
+  color: #007bff; 
+  font-size: 20px;
+  font-weight: bold; 
+  margin-right: 5px; 
+} */
 
 /* Responsive styles */
 @media (max-width: 768px) {

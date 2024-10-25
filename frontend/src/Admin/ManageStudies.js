@@ -79,7 +79,7 @@ const ManageProject = () => {
               {project.selectedJobs && project.selectedJobs.length > 0 ? (
                 <ul>
                   {project.selectedJobs.map((job) => (
-                    <li key={job._id} className="job-item">
+                    <li key={job._id} className="project-job-item ">
                       {job.jobTitle}
                     </li>
                   ))}

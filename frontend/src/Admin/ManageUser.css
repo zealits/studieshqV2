@@ -1,8 +1,6 @@
-/* General Styles */
+/* Manage User Styles */
 .manage-user {
-  font-family: 'Arial', sans-serif;
-  padding: 20px;
-  background-color: #ffffff; /* White background */
+  width: 80vw;
 }
 
 h1 {
@@ -17,178 +15,12 @@ h1 {
   text-align: center;
 }
 
-/* Action Buttons Container */
-.action-buttons {
-  display: flex;
-  justify-content: flex-end; /* Align to the right */
-  align-items: center; /* Center align items vertically */
-  margin-top: 20px; /* Space above the buttons */
-}
-
-/* Styling for the delete icon and select all button */
-.delete-icon {
-  display: flex; /* Ensure flex display for proper alignment */
-  align-items: center; /* Center items vertically */
-  margin-left: 10px; /* Space between buttons */
-  gap: 10px; /* Space between delete icon and select all button */
-}
-
-.delete-icon-container {
-  display: flex; /* Flex display to align icon and count */
-  align-items: center; /* Center icon and count vertically */
-  cursor: pointer;
-  font-size: 24px;
-  color: #d9534f;
-}
-
-.delete-icon-container span {
-  margin-left: 8px;
-  font-size: 16px;
-  color: #333;
-}
-
-.delete-icon:hover {
-  color: #c9302c;
-}
-
-/* Optional: Styling for the selection options */
-.selection-options {
-  display: flex; /* Align the buttons in a row */
-  gap: 10px; /* Space between buttons */
-}
-
-/* Table Styles */
-.user-table {
-  width: 80vw; /* Full width */
-  border-collapse: collapse;
-  margin-bottom: 20px; /* Space below the table */
-}
-
-.user-table th,
-.user-table td {
-  border: 1px solid #b0b0b0; /* Gray border */
-  padding: 12px;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #75797b; /* Darker gray header */
-  color: white;
-  font-weight: bold;
-}
-
-.user-table tr:nth-child(even) {
-  background-color: #d0d0d0; /* Slightly darker gray for even rows */
-}
-
-.user-table tr:hover {
-  background-color: #b8b8b8; /* Darker gray on hover */
-}
-
-/* Add gap below the table */
 .table-gap {
-  margin-bottom: 30px; /* Adjust the gap as needed */
-}
-
-/* User Details Styles */
-.user-details {
-  background-color: #ffffff; /* White background for user details */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
   padding: 20px;
-  margin-top: 20px;
-}
-
-.user-details h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.user-details p {
-  margin: 10px 0;
-  color: #555;
-}
-
-/* Input Fields */
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0 20px;
-  border: 1px solid #b0b0b0; 
-  border-radius: 4px;
-  box-sizing: border-box;
-  background-color: #ffffff; 
-}
-
-/* Search Bar */
-/* Search Bar Container */
-.search-bar {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-left: 10px; /* Adjusted margin to move it closer to the More Options icon */
-}
-
-.search-bar input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-left: 10px;
-  flex-grow: 1;
-  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  opacity: 0; /* Initially hidden */
-  width: 0; /* Start with no width */
-}
-
-.search-bar.active input {
-  opacity: 1; /* Show input when active */
-  width: 200px; /* Adjust width as needed */
-}
-
-.search-bar svg {
-  font-size: 20px;
-  color: #3f4042; /* Optional: Adjust the color of the search icon */
-}
-
-/* Sort Options */
-.sort-options {
-  position: relative; /* Make the container relative to position the dropdown menu correctly */
-  display: inline-block; /* Ensure the dropdown stays beside the icon */
-}
-
-/* Dropdown Menu for Sorting */
-.dropdown-menu {
-  position: absolute;
-  top: 200px; /* Place the menu just below the icon */
-  left: 370px; /* Align it with the left edge of the icon */
-  background-color: #f8f5f5;
-  color: black;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Ensure it appears above other content */
-  
-  width: 100px;
-}
-
-/* Show the dropdown when the dropdown icon is clicked */
-.sort-options.open .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.dropdown-menu li {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.dropdown-menu li:hover {
-  background-color: #989191; /* Highlight on hover */
+  background-color: #2c2c2c;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Modal Styles */
@@ -202,11 +34,11 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Make sure it appears on top */
+  z-index: 1000; /* Ensure it appears on top */
 }
 
 .modal-content {
-  background: white;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
@@ -214,7 +46,7 @@ input[type="text"] {
 }
 
 .modal-content button {
-  margin-right: 10px; /* Add margin for spacing between modal buttons */
+  margin-right: 10px; /* Margin for spacing between modal buttons */
 }
 
 .modal-content button:last-child {
@@ -227,42 +59,195 @@ input[type="text"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px; /* Added margin to increase the gap */
+  margin-right: 10px; /* Margin to increase the gap */
 }
 
 .btn:last-child {
   margin-right: 0; /* Remove margin from the last button */
 }
 
-/* More Options Styles */
-.more-options-icon {
-  position: relative;
-  font-size: 30px; /* Increased size of the More Options icon */
+/* Action Bar Container */
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #2c2c2c;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: auto;
 }
 
-.more-options-dropdown {
-  position: absolute;
-  top: 30px;
-  right: 0; /* Align to the right side */
-  background: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  width: 150px;
+/* Selected Count */
+.selected-count {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
 }
 
-.more-options-dropdown ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+/* Search Box Wrapper */
+.search-box-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #404040;
+  border-radius: 20px;
+  padding: 5px 10px;
+  max-width: 300px;
+  flex: 1;
+  margin: 0 15px;
 }
 
-.more-options-dropdown ul li {
-  padding: 10px;
+/* Search Input */
+.search-input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* Search Button */
+.search-btn {
+  background-color: #606060;
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 50%;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
 }
 
-.more-options-dropdown ul li:hover {
-  background-color: #f0f0f0;
+.search-btn:hover {
+  background-color: #777;
+}
+
+/* Action Icons Container */
+.action-icons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Action Icons */
+.action-icon {
+  background-color: #505050;
+  border: none;
+  color: #fff;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-icon:hover {
+  background-color: #707070;
+  transform: scale(1.1);
+}
+
+/* Delete Selected Icon */
+.delete-selected {
+  background-color: #ff4d4d;
+}
+
+.delete-selected:hover {
+  background-color: #ff3333;
+}
+
+/* User Table Styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #ddd;
+  font-size: 16px;
+}
+
+/* Header Styling */
+.user-table thead th {
+  background-color: #333;
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.user-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.user-table thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Row Styling */
+.user-table tbody tr {
+  background-color: #404040;
+  transition: background-color 0.3s;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background-color: #484848;
+}
+
+.user-table tbody tr:hover {
+  background-color: #555;
+}
+
+/* Cell Styling */
+.user-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+
+/* Checkbox Styling */
+.select-all-users,
+.select-user {
+  accent-color: #ff5722; /* Change checkbox color */
+  width: 18px;
+  height: 18px;
+}
+
+/* Button Styling */
+.btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  margin: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-update {
+  background-color: #4caf50; /* Green update button */
+}
+
+.btn-update:hover {
+  background-color: #43a047;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: #f44336; /* Red delete button */
+}
+
+.btn-delete:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
 }
