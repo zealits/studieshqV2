@@ -60,13 +60,13 @@ const Sidebar = () => {
           <span className="tooltip">My studies</span>
         </li>
         <li>
-          <Link to="/available-gigs" className="linke">
+          <Link to="/available-projects" className="linke">
             <i className="bx bx-chat">
               <FaTasks className="icon " />
             </i>
-            <span className="links_name">Available studies</span>
+            <span className="links_name">Projects</span>
           </Link>
-          <span className="tooltip">Available studies</span>
+          <span className="tooltip">Projects</span>
         </li>
         <li>
           <Link to="/available-jobs" className="linke">

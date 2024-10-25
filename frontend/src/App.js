@@ -5,6 +5,7 @@ import { loadUser } from "./Services/Actions/userAction.js";
 import Home from "./pages/Home";
 import MyGigs from "./pages/MyGigs";
 import AvailableGigs from "./pages/AvailableGigs";
+import AvailableProjects from "./pages/AvailableProjects.js";
 import Earnings from "./pages/Earnings";
 import Profile from "./pages/Profile";
 import Preferences from "./pages/Preferences";
@@ -34,6 +35,7 @@ import "./App.css"; // Import the CSS for layout
 import axios from "axios";
 import CreateContract from "./Admin/CreateContract.js";
 import UpdateContract from "./Admin/updateContract.js";
+import CreateProject from "./Admin/CreateProject.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -201,7 +203,8 @@ function App() {
                     <>
                       <Route exact path="/" element={<Home />} />
                       <Route path="/my-gigs" element={<MyGigs />} />
-                      <Route path="/available-gigs" element={<AvailableGigs />} />
+                      {/* <Route path="/available-jobs" element={<AvailableGigs />} /> */}
+                      <Route path="/available-projects" element={<AvailableProjects />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/available-jobs" element={<AllJobs />} />
                       <Route path="/jobs/:id" element={<JobDetails isAdmin={user.role === "admin"} />} />
@@ -222,8 +225,8 @@ function App() {
                       <Route path="/jobs/:id" element={<JobDetails isAdmin={true} />} />
                       <Route exact path="/managepayout" element={<ManagePayout />} />
                       <Route exact path="/managePdf" element={<CreateContract />} />
-                      <Route exact path="/create-invoice" element={<Invoice />} />
-                      <Route path="/addstudies" element={<AddGig />} />
+                      <Route exact path="/create-invoice" element={<AddGig />} />
+                      <Route path="/addstudies" element={<CreateProject />} />
                       {/* <Route path="/analytics" element={<UpdateContract />} /> */}
                       {/* <Route path="/analytics" element={<AllJobs />} /> */}
                     </>

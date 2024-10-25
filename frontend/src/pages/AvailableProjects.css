@@ -1,0 +1,178 @@
+/* Container styling */
+.available-projects {
+   width: 80vw;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Title styling */
+  .available-projects__title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Loading and error message styling */
+  .available-projects__loading,
+  .available-projects__error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e74c3c; /* Error color */
+  }
+  
+  /* No projects message styling */
+  .available-projects__no-projects {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #b0b0b0;
+  }
+  
+  /* Projects list styling */
+  .available-projects__projects-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Project item styling */
+  .available-projects__project-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #333333;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Project item hover effect */
+  .available-projects__project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Project title styling */
+  .available-projects__project-title {
+    font-size: 1.5rem;
+    color: #f39c12; /* Orange color */
+    margin-bottom: 5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Project description styling */
+  .available-projects__project-description {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  /* Project budget styling */
+  .available-projects__project-budget {
+    font-size: 1.1rem;
+    color: #e67e22; /* Bright orange color */
+    margin: 5px 0;
+  }
+  
+  /* Project deadline styling */
+  .available-projects__project-deadline {
+    font-size: 1rem;
+    color: #cccccc; /* Light gray color */
+    margin: 5px 0;
+  }
+  
+  /* Jobs title styling */
+  .available-projects__jobs-title {
+    font-size: 1.2rem;
+    color: #e67e22; /* Bright orange color */
+    margin-top: 15px;
+  }
+  
+  /* No jobs message styling */
+  .available-projects__no-jobs {
+    font-size: 1rem;
+    color: #b0b0b0;
+  }
+  
+  /* Jobs list styling */
+  .available-projects__jobs-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Job item styling */
+  .available-projects__job-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: #444444;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  /* Job item hover effect */
+  .available-projects__job-item:hover {
+    background: #555555;
+    transform: scale(1.02);
+  }
+  
+  /* Job title styling */
+  .available-projects__job-title {
+    font-size: 1.2rem;
+    color: #f39c12; /* Orange color */
+  }
+  
+  /* Job location styling */
+  .available-projects__job-location {
+    font-size: 0.9rem;
+    color: #cccccc; /* Light gray color */
+  }
+  
+  /* Job description styling */
+  .available-projects__job-description {
+    font-size: 0.9rem;
+    color: #ffffff; /* White for better visibility */
+  }
+  
+  /* Button styling */
+  .available-projects__apply-button,
+  .available-projects__refer-button,
+  .available-projects__resume-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e67e22; /* Bright orange color */
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 10px; /* Space between buttons */
+  }
+  
+  /* Button hover effect */
+  .available-projects__apply-button:hover,
+  .available-projects__refer-button:hover,
+  .available-projects__resume-button:hover {
+    background-color: #d35400; /* Darker orange on hover */
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .available-projects {
+      padding: 15px;
+    }
+  
+    .available-projects__title {
+      font-size: 1.8rem;
+    }
+  
+    .available-projects__project-title {
+      font-size: 1.3rem;
+    }
+  }
+  

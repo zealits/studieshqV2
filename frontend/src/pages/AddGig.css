@@ -288,7 +288,7 @@
 }
 
 .share-button:hover {
-  transform: scale(1.1); /* Slightly scale up on hover */
+  transform: scalezz(1.1); /* Slightly scale up on hover */
 }
 .add-gig-textarea {
   width: 100%;

@@ -70,6 +70,7 @@ router
 router.route("/gig/complete/:gigId").put(isAuthenticatedUser, completeGig);
 // router.route("/admin/gigs").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getAllGigsWithApplicants);
 router.route("/admin/projects").get(isAuthenticatedUser, authorizeRoles("admin", "superadmin"), getAllProjects);
+router.route("/projects").get(isAuthenticatedUser, getAllProjects);
 
 // Gift Card Routes
 router.route("/gig/:gigId/request-gift-card").post(isAuthenticatedUser, requestGiftCard);
