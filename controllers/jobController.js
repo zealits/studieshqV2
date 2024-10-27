@@ -1,4 +1,5 @@
 const Job = require("../models/jobModel"); // Adjust the path as necessary
+const ApiFeatures = require("../utils/apifeatures");
 
 // Create a new job
 exports.createJob = async (req, res) => {
@@ -41,7 +42,11 @@ exports.deleteJob = async (req, res) => {
 // Get all jobs
 exports.getAllJobs = async (req, res) => {
   try {
-    const jobs = await Job.find();
+    const resultPerPage = 10;
+    const apiFeature = new ApiFeatures(Job.find(), req.query).search().filter().pagination(resultPerPage);
+
+    const jobs = await apiFeature.query;
+
     res.status(200).json({ success: true, jobs });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

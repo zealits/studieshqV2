@@ -69,6 +69,7 @@ const AddGig = () => {
       if (location) {
         try {
           const response = await axios.get(`/aak/l1/jobs?location=${location}`);
+          console.log(response);
           const filteredJobs = response.data.jobs.filter((job) =>
             job.location.toLowerCase().includes(location.toLowerCase())
           );

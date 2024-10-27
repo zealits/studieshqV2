@@ -1,138 +1,185 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./CreateProject.css";
 
 const CreateProject = () => {
-  const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [selectedPdf, setSelectedPdf] = useState("");
+  const [pdfs, setPdfs] = useState([]);
   const [jobs, setJobs] = useState([]);
-  const [selectedJob, setSelectedJob] = useState('');
-  const [referralAmount, setReferralAmount] = useState('');
-  const [contractPdf, setContractPdf] = useState('');
-  const [location, setLocation] = useState('');
-  const [message, setMessage] = useState('');
+  const [selectedJobs, setSelectedJobs] = useState([]);
+  const [totalReferralBudget, setTotalReferralBudget] = useState(0);
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
 
+  // Fetch jobs
   useEffect(() => {
     const fetchJobs = async () => {
-      if (location) {
-        try {
-          const response = await axios.get(`/aak/l1/jobs?location=${location}`);
-          const filteredJobs = response.data.jobs.filter((job) =>
-            job.location.toLowerCase().includes(location.toLowerCase())
-          );
-          setJobs(filteredJobs);
-        } catch (error) {
-          console.error("Error fetching jobs:", error);
-          setMessage("Error fetching jobs");
-        }
-      } else {
-        setJobs([]);
+      try {
+        const response = await axios.get(`/aak/l1/jobs`);
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
       }
     };
-
     fetchJobs();
-  }, [location]);
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log({
-      projectName,
-      projectDescription,
-      selectedJob,
-      referralAmount,
-      contractPdf,
+  // Fetch contracts for the PDF dropdown
+  useEffect(() => {
+    const fetchContracts = async () => {
+      try {
+        const response = await axios.get("/aak/l1/contracts");
+        setPdfs(response.data);
+      } catch (error) {
+        console.error("Error fetching contracts:", error);
+      }
+    };
+    fetchContracts();
+  }, []);
+
+  const handleJobSelection = (jobId) => {
+    setSelectedJobs((prevSelected) => {
+      const jobExists = prevSelected.find((job) => job.id === jobId);
+      let updatedSelection;
+
+      if (jobExists) {
+        // Remove the job if it already exists in the selected list
+        updatedSelection = prevSelected.filter((job) => job.id !== jobId);
+      } else {
+        // Add the job if it is not in the selected list
+        const selectedJob = jobs.find((job) => job._id === jobId);
+        updatedSelection = [...prevSelected, { id: jobId, jobTitle: selectedJob.jobTitle, referralAmount: 0 }];
+      }
+
+      // Recalculate the total referral budget
+      const total = updatedSelection.reduce((sum, job) => sum + job.referralAmount, 0);
+      setTotalReferralBudget(total);
+
+      return updatedSelection;
     });
   };
 
+  const updateReferralAmount = (jobId, newAmount) => {
+    setSelectedJobs((prevSelected) => {
+      const updatedSelection = prevSelected.map((job) =>
+        job.id === jobId ? { ...job, referralAmount: newAmount } : job
+      );
+
+      // Calculate total referral budget after each update
+      const total = updatedSelection.reduce((sum, job) => sum + job.referralAmount, 0);
+      setTotalReferralBudget(total);
+
+      return updatedSelection;
+    });
+  };
+
+  const filteredJobs = jobs.filter(
+    (job) =>
+      job.jobTitle.toLowerCase().includes(searchTitle.toLowerCase()) &&
+      job.location.toLowerCase().includes(searchLocation.toLowerCase())
+  );
+
   return (
-    <div className="create-project">
-      <h2>Create Project</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="projectName">Project Name:</label>
-          <input
-            type="text"
-            id="projectName"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="projectDescription">Project Description:</label>
-          <textarea
-            id="projectDescription"
-            value={projectDescription}
-            onChange={(e) => setProjectDescription(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="location">Location:</label>
-          <input
-            type="text"
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter location to filter jobs"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="jobSelection">Select Job:</label>
-          <select
-            id="jobSelection"
-            value={selectedJob}
-            onChange={(e) => setSelectedJob(e.target.value)}
-            required
-          >
-            <option value="" disabled>Select a job</option>
-            {jobs.length > 0 ? (
-              jobs.map((job) => (
-                <option key={job.id} value={job.id}>
-                  {job.title} - {job.location}
+    <div className="create-project-container">
+      <div className="project-details">
+        <h2 className="create-project-heading">Create Project</h2>
+        <form className="project-form">
+          <label>
+            Title:
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+          </label>
+          <label>
+            Description:
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+          </label>
+          <label>
+            Deadline:
+            <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} required />
+          </label>
+          <div className="add-contract-field">
+            <label className="add-contract-label">Attach Contract</label>
+            <select
+              value={selectedPdf}
+              onChange={(e) => setSelectedPdf(e.target.value)}
+              required
+              className="add-contract-input"
+            >
+              <option value="">Select Contract</option>
+              {pdfs.map((pdf) => (
+                <option key={pdf._id} value={pdf._id}>
+                  {pdf.filename}
                 </option>
-              ))
-            ) : (
-              <option value="" disabled>No jobs available</option>
-            )}
-          </select>
+              ))}
+            </select>
+          </div>
+
+          <h3>Selected Jobs</h3>
+          <div className="selected-jobs">
+            {selectedJobs.map((job) => (
+              <div key={job.id} className="selected-job-item">
+                <label>{job.jobTitle}</label>
+                <input
+                  type="number"
+                  value={job.referralAmount}
+                  onChange={(e) => updateReferralAmount(job.id, parseFloat(e.target.value) || 0)}
+                  placeholder="Enter referral amount"
+                />
+                <button type="button" className="remove-job-button" onClick={() => handleJobSelection(job.id)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <p className="total-referral-budget">Total Referral Budget: {totalReferralBudget}</p>
+          <button type="submit" className="create-project-button">
+            Create Project
+          </button>
+        </form>
+      </div>
+
+      <div className="job-search">
+        <h3>Search and Filter Jobs</h3>
+        <div className="search-filters">
+          <label>
+            Job Title:
+            <input
+              type="text"
+              value={searchTitle}
+              onChange={(e) => setSearchTitle(e.target.value)}
+              placeholder="Search by title"
+            />
+          </label>
+          <label>
+            Location:
+            <input
+              type="text"
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
+              placeholder="Search by location"
+            />
+          </label>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="referralAmount">Referral Amount:</label>
-          <input
-            type="number"
-            id="referralAmount"
-            value={referralAmount}
-            onChange={(e) => setReferralAmount(e.target.value)}
-            required
-            min="0"
-          />
+        <h4 className="heading-available-jobs">Available Jobs</h4>
+        <div className="available-jobs">
+          {filteredJobs.map((job) => (
+            <div key={job._id} className="job-item-project">
+              <input
+                type="checkbox"
+                checked={selectedJobs.some((selected) => selected.id === job._id)}
+                onChange={() => handleJobSelection(job._id)}
+              />
+              <label>
+                {job.jobTitle} - {job.location}
+              </label>
+            </div>
+          ))}
         </div>
-
-        <div className="form-group">
-          <label htmlFor="contractPdf">Select Contract PDF:</label>
-          <select
-            id="contractPdf"
-            value={contractPdf}
-            onChange={(e) => setContractPdf(e.target.value)}
-            required
-          >
-            <option value="" disabled>Select a contract PDF</option>
-            {/* Replace the following options with actual PDFs from your API */}
-            <option value="contract1.pdf">Contract 1</option>
-            <option value="contract2.pdf">Contract 2</option>
-          </select>
-        </div>
-
-        {message && <p className="error-message">{message}</p>}
-
-        <button type="submit">Create Project</button>
-      </form>
+      </div>
     </div>
   );
 };

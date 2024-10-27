@@ -1,0 +1,377 @@
+.create-project-container {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    width: 80vw;
+    background: linear-gradient(135deg, #1c1c1e, #2c2c2e);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+}
+
+.project-details,
+.job-search {
+    flex: 1;
+    padding: 24px;
+    background-color: #232323;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.project-form label,
+.search-filters label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #bcbcbc;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.project-form input,
+.project-form textarea,
+.search-filters input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #3a3a3a;
+    color: #f0f0f0;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.project-form input:focus,
+.project-form textarea:focus,
+.search-filters input:focus {
+    border-color: #bb86fc;
+    box-shadow: 0 0 10px rgba(187, 134, 252, 0.4);
+}
+
+
+
+.total-referral-budget {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #bb86fc;
+}
+
+.create-project-button {
+    margin-top: 20px;
+    padding: 14px 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #bb86fc, #9b6cff);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.create-project-button:hover {
+    background: linear-gradient(135deg, #9b6cff, #bb86fc);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(187, 134, 252, 0.5);
+}
+
+.search-filters input,
+.project-form input[type="number"] {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+
+/* Heading for Available Jobs */
+.heading-available-jobs {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #BB86FC; /* Purple accent color */
+    margin-bottom: 16px;
+    text-align: left;
+    border-bottom: 2px solid #BB86FC;
+    padding-bottom: 4px;
+}
+
+/* Available Jobs Container */
+.available-jobs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #1E1E1E; /* Dark background for job container */
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    scrollbar-width: thin;
+    scrollbar-color: #BB86FC #1E1E1E;
+}
+
+/* Job Item */
+.job-item-project {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #2C2C2C;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.job-item-project:hover {
+    background-color: #3A3A3A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
+}
+
+/* Checkbox Style */
+.job-item-project input[type="checkbox"] {
+    accent-color: #BB86FC;
+    transform: scale(1.4);
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Label for Job Item */
+.job-item-project label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #E0E0E0; /* Light gray text for contrast */
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Scrollbar customization */
+.available-jobs::-webkit-scrollbar {
+    width: 8px;
+}
+
+.available-jobs::-webkit-scrollbar-track {
+    background: #1E1E1E;
+    border-radius: 8px;
+}
+
+.available-jobs::-webkit-scrollbar-thumb {
+    background-color: #BB86FC;
+    border-radius: 8px;
+}
+
+
+
+.remove-job-button {
+    margin-left: auto;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.remove-job-button:hover {
+    background-color: #e63946;
+    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
+}
+
+
+/* Container for Selected Jobs */
+.selected-jobs {
+    margin-top: 20px;
+    padding: 14px;
+    background-color: #2E2E2E;
+    border-radius: 10px;
+    border: 1px solid #555;
+    color: #E0E0E0;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Individual Selected Job Item */
+.selected-job-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #3A3A3A;
+    border: 1px solid #444;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.selected-job-item:hover {
+    background-color: #474747;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
+}
+
+/* Label for Job Title */
+.selected-job-item label {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #E0E0E0;
+    font-weight: 600;
+}
+
+/* Input Field for Referral Amount */
+.selected-job-item input[type="number"] {
+    width: 80px; /* Adjusted width to keep it compact */
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background-color: #2C2C2C;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    text-align: right;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Chrome, Safari, Edge, and Opera */
+.selected-job-item input[type="number"]::-webkit-outer-spin-button,
+.selected-job-item input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.selected-job-item input[type="number"]:focus {
+    border-color: #BB86FC;
+    box-shadow: 0 0 6px rgba(187, 134, 252, 0.3);
+}
+
+/* Remove Job Button */
+.remove-job-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #FF5252; /* Red for remove button */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.remove-job-button:hover {
+    background-color: #FF3B3B;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255, 82, 82, 0.3);
+}
+
+/* Scrollbar Styling for Selected Jobs */
+.selected-jobs::-webkit-scrollbar {
+    width: 8px;
+}
+
+.selected-jobs::-webkit-scrollbar-track {
+    background: #2E2E2E;
+}
+
+.selected-jobs::-webkit-scrollbar-thumb {
+    background-color: #BB86FC;
+    border-radius: 8px;
+}
+
+
+/* Container for new fields */
+.project-form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  
+  .project-form input[type="text"],
+  .project-form textarea,
+  .project-form input[type="date"],
+  .project-form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+    border-radius: 8px;
+    background-color: #2C2C2C;
+    color: #fff;
+    border: 1px solid #555;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Advanced style for date input */
+  .project-form input[type="date"] {
+    appearance: none; /* Hide default date picker style */
+    padding: 12px;
+  }
+  
+  .project-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Invert icon color for dark background */
+    cursor: pointer;
+  }
+  
+  /* Advanced styling for the dropdown */
+  .add-contract-field select {
+    appearance: none; /* Hide default dropdown arrow */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+  
+  /* Focus effects */
+  .project-form input[type="date"]:focus,
+  .project-form select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    outline: none;
+  }
+  
+  .add-contract-label {
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .project-form input[type="text"],
+    .project-form textarea,
+    .project-form input[type="date"],
+    .project-form select {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+  }
+  
+
+  /* Style for the Create Project heading */
+.create-project-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    position: relative;
+    background: linear-gradient(90deg, #4CAF50, #1A73E8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+    cursor: default;
+  }
+  
+  
+  
+  
