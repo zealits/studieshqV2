@@ -365,9 +365,9 @@
     margin-bottom: 20px;
     padding-bottom: 8px;
     position: relative;
-    background: linear-gradient(90deg, #4CAF50, #1A73E8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    /* background: linear-gradient(90deg, #4CAF50, #1A73E8); */
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */
     transition: transform 0.3s ease;
     cursor: default;
   }

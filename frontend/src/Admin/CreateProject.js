@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./CreateProject.css";
+import Modal from "../components/Modal";
 
 const CreateProject = () => {
   const [title, setTitle] = useState("");
@@ -13,6 +14,8 @@ const CreateProject = () => {
   const [totalReferralBudget, setTotalReferralBudget] = useState(0);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [modalMessage, setModalMessage] = useState(""); // State for modal message
 
   // Fetch jobs
   useEffect(() => {
@@ -82,11 +85,46 @@ const CreateProject = () => {
       job.location.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    // Prepare the data to send to the API
+    const projectData = {
+      title,
+      description,
+      selectedJobs: selectedJobs.map((job) => ({
+        job: job.id,
+        referralAmount: job.referralAmount,
+      })),
+      deadline,
+      budget: totalReferralBudget,
+      pdf: selectedPdf,
+    };
+
+    try {
+      const response = await axios.post("/aak/l1/admin/project", projectData);
+
+      setModalMessage("Project created successfully!"); // Set success message
+      setShowModal(true); // Show modal
+      // Optionally, reset the form or redirect to another page
+    } catch (error) {
+      setModalMessage("Error creating project. Please try again."); // Set error message
+      setShowModal(true); // Show modal
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Close modal
+  };
+
   return (
     <div className="create-project-container">
+      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+
       <div className="project-details">
         <h2 className="create-project-heading">Create Project</h2>
-        <form className="project-form">
+        <form className="project-form" onSubmit={handleSubmit}>
           <label>
             Title:
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
