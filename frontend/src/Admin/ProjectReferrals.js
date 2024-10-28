@@ -85,7 +85,7 @@ const ProjectReferrals = () => {
       {projects.map((project) => (
         <div key={project._id} className="project-referrals__project">
           <h3 className="project-referrals__project-title">{project.title}</h3>
-          <p className="project-referrals__project-description">{project.description}</p>
+          <p className="project-referrals__project-description">Referral Budget: <strong>${project.budget}</strong></p>
 
           <h4 className="project-referrals__section-title">Project-Level Referrals</h4>
           <ul className="project-referrals__list">
@@ -102,7 +102,7 @@ const ProjectReferrals = () => {
           <h4 className="project-referrals__section-title">Job-Level Referrals</h4>
           {project.selectedJobs.map((jobItem, jobIdx) => (
             <div key={jobIdx} className="project-referrals__job">
-              <strong>Job:</strong> {jobItem.job.title} <br />
+              <strong>Job:</strong> {jobItem.job.jobTitle} <br />
               <strong>Referral Amount:</strong> ${jobItem.referralAmount}
               <ul className="project-referrals__list">
                 {jobItem.jobReferrals.map((jobReferral, refIdx) => (
