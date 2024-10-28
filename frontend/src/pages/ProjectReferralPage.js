@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import { FacebookShareButton, WhatsappShareButton, LinkedinShareButton, TwitterShareButton } from "react-share";
 import "./ProjectReferralPage.css"; // Add any specific styling for this page
@@ -8,6 +8,7 @@ const ProjectReferralPage = () => {
   const { projectId } = useParams(); // Get the project ID from URL parameters
   const query = new URLSearchParams(useLocation().search);
   const referringUserId = query.get("referral"); // Get the referring user ID from query parameters
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [projectDetails, setProjectDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,9 @@ const ProjectReferralPage = () => {
         const response = await axios.get(`/aak/l1/user/project/${projectId}`);
         setProjectDetails(response.data.project);
         console.log(response.data.project); // Set project details in state
+       
         localStorage.setItem("referringUserId", referringUserId); // Store referral ID in local storage for tracking
+        localStorage.setItem("referredProjectId", projectId); // Store referral ID in local storage for tracking
       } catch (error) {
         console.error("Error fetching project details:", error);
         setError("Failed to load project details.");
@@ -33,12 +36,15 @@ const ProjectReferralPage = () => {
     fetchProjectDetails();
   }, [projectId, referringUserId]);
 
-  // Generate referral link for the entire project
+  // Generate referral link for the entire project and redirect to registration page
   const referProject = async () => {
     try {
       const response = await axios.post("/aak/l1/generate-link", { projectId, referringUserId });
       setReferralLink(response.data.referralLink); // Set referral link in state
       setShowModal(true); // Open modal for social media sharing
+
+      // Redirect to the registration page with referral information
+      navigate(`/register?redirect=/apply/project/${projectId}&referral=${referringUserId}`);
     } catch (error) {
       console.error("Error generating referral link:", error);
       alert("Failed to generate referral link.");
@@ -51,6 +57,9 @@ const ProjectReferralPage = () => {
       const response = await axios.post("/aak/l1/generate-link", { projectId, jobId, referringUserId });
       setReferralLink(response.data.referralLink); // Set referral link in state
       setShowModal(true); // Open modal for social media sharing
+
+      // Redirect to the registration page with referral information
+      navigate(`/register?redirect=/apply/job/${jobId}&referral=${referringUserId}`);
     } catch (error) {
       console.error("Error generating job referral link:", error);
       alert("Failed to generate job referral link.");
@@ -84,12 +93,9 @@ const ProjectReferralPage = () => {
               <p>Location: {job.job.location}</p>
               <p>Description: {job.job.jobDescription}</p>
               <p>Referral Gift: ${job.referralAmount}</p>
-              <button className="project-referral__refer-job-button">
-                Apply
-              </button>
-              {/* <button onClick={() => referJob(job._id)} className="project-referral__refer-job-button">
+              <button onClick={() => referJob(job.job._id)} className="project-referral__refer-job-button">
                 Refer This Job
-              </button> */}
+              </button>
             </li>
           ))}
         </ul>

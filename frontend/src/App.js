@@ -25,6 +25,7 @@ import AdminSidebar from "./components/AdminSidebar.js";
 import ManageUser from "./Admin/ManageUser.js";
 import ManageStudies from "./Admin/ManageStudies.js";
 import ManagePayout from "./Admin/ManagePayout.js";
+import ProjectReferrals from "./Admin/ProjectReferrals.js";
 import ManagePdf from "./Admin/ManagePdf.js";
 import SuperAdminDashboard from "./superAdmin/SuperAdminDashboard.js";
 import SuperAdminSidebar from "./superAdmin/SuperAdminSidebar.js";
@@ -170,7 +171,7 @@ function App() {
 
                   {user.role === "admin" && (
                     <>
-                      <Route exact path="/" element={<AdminDashboard />} />
+                      <Route exact path="/" element={<ProjectReferrals />} />
                       <Route exact path="/manageuser" element={<ManageUser />} />
                       <Route exact path="/managestudies" element={<ManageStudies />} />
                       <Route exact path="/managejobs" element={<ManageJobs />} />

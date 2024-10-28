@@ -1,0 +1,162 @@
+:root {
+    --bg-color: #202020;
+    --secondary-bg: #2f2f2f;
+    --highlight-color: #BB86FC;
+    --secondary-highlight: #8E24AA;
+    --text-color: #E0E0E0;
+    --dark-color: #333;
+    --darker-color: #2c2c2c;
+    --hover-color: #555;
+    --border-color: #444;
+    --status-color: #FF8C00;
+    --referred-by-color: #4A90E2;
+}
+
+.project-referrals {
+    padding: 24px;
+    width: 80vw;
+    margin: auto;
+    background: linear-gradient(135deg, var(--bg-color), var(--secondary-bg));
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.project-referrals__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    text-align: center;
+    background: linear-gradient(90deg, var(--highlight-color), var(--secondary-highlight));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.project-referrals__project {
+    padding: 16px;
+    margin: 16px 0;
+    background: var(--dark-color);
+    border-radius: 10px;
+    border-left: 4px solid var(--highlight-color);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.project-referrals__project:hover {
+    background: #3c3c3c;
+    box-shadow: 0 6px 18px rgba(187, 134, 252, 0.2);
+}
+
+.project-referrals__project-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--highlight-color);
+    margin-bottom: 8px;
+}
+
+.project-referrals__project-description {
+    font-size: 1rem;
+    color: #D0D0D0;
+    line-height: 1.5;
+}
+
+.project-referrals__section-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #9C27B0;
+    margin: 20px 0 12px;
+}
+
+.project-referrals__list {
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-referrals__list-item {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #444;
+    color: var(--text-color);
+    font-size: 1rem;
+    display: flex;
+    gap: 10px;
+    transition: background-color 0.3s;
+}
+
+.project-referrals__list-item:hover {
+    background-color: var(--hover-color);
+    box-shadow: 0 4px 10px rgba(187, 134, 252, 0.3);
+}
+
+.referral__referred-by {
+    font-weight: bold;
+    color: var(--referred-by-color);
+}
+
+.referral__referred-user {
+    color: #333;
+}
+
+.referral__status {
+    font-style: italic;
+    color: var(--status-color);
+}
+
+.referral__date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.project-referrals__job {
+    padding: 16px;
+    background: var(--darker-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-top: 12px;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.project-referrals__job:hover {
+    border-color: var(--highlight-color);
+    background-color: #333;
+    transform: scale(1.02);
+}
+
+.project-referrals__chart {
+    padding: 20px;
+    margin: 24px 0;
+    background-color: #292929;
+    border-radius: 12px;
+    border: 1px solid #555;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    .project-referrals {
+        padding: 16px;
+    }
+
+    .project-referrals__title {
+        font-size: 1.5rem;
+    }
+
+    .project-referrals__project {
+        padding: 12px;
+    }
+
+    .project-referrals__project-title {
+        font-size: 1.125rem;
+    }
+
+    .project-referrals__section-title {
+        font-size: 1rem;
+    }
+
+    .project-referrals__list-item {
+        font-size: 0.9rem;
+        padding: 8px; /* More comfortable padding */
+    }
+}

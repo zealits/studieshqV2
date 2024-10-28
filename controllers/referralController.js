@@ -7,9 +7,12 @@ exports.generateReferralLink = async (req, res) => {
 
   try {
     let referralLink = "";
-    if (jobId) {
-      // Generate link for a specific job
-      referralLink = `${req.protocol}://${req.get("host")}/share/job/${jobId}?referral=${referringUserId}`;
+    // Ensure that projectId is always included if jobId is provided
+    if (jobId && projectId) {
+      // Generate link for a specific job with the associated project ID
+      referralLink = `${req.protocol}://${req.get(
+        "host"
+      )}/share/job/${jobId}?referral=${referringUserId}&project=${projectId}`;
     } else if (projectId) {
       // Generate link for the entire project
       referralLink = `${req.protocol}://${req.get("host")}/share/project/${projectId}?referral=${referringUserId}`;
@@ -56,5 +59,18 @@ exports.trackReferral = async (req, res) => {
     res.status(200).json({ message: "Referral tracked successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error tracking referral" });
+  }
+};
+
+
+exports.getProjectsWithReferrals = async (req, res) => {
+  try {
+    const projects = await Project.find()
+      .populate("projectReferrals.referredBy projectReferrals.referredUser")
+      .populate("selectedJobs.job")
+      .populate("selectedJobs.jobReferrals.referredBy selectedJobs.jobReferrals.referredUser");
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving projects", error });
   }
 };

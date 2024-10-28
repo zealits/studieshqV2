@@ -8,6 +8,7 @@ const JobReferralPage = () => {
   const { jobId } = useParams();
   const query = new URLSearchParams(useLocation().search);
   const referringUserId = query.get("referral"); // Get referral ID from query parameters
+  const referredProjectId = query.get("project"); // Get referral ID from query parameters
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.user); // Check if user is authenticated
@@ -20,6 +21,8 @@ const JobReferralPage = () => {
         const response = await axios.get(`/aak/l1/job/${jobId}`);
         setJobDetails(response.data.job);
         localStorage.setItem("referringUserId", referringUserId); // Store referral ID locally
+        localStorage.setItem("referredJobId", jobId); // Store referral ID locally
+        localStorage.setItem("referredProjectId", referredProjectId); // Store referral ID locally
       } catch (error) {
         console.error("Error fetching job details:", error);
       } finally {

@@ -2,6 +2,7 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const Gig = require("../models/gigModel.js");
+const Project = require("../models/projectModel.js");
 const Job = require("../models/jobModel.js");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
@@ -13,42 +14,109 @@ const ApiFeatures = require("../utils/apifeatures");
 
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  // console.log(req);
-  console.log("regisring the user");
-  const { name, email, otp, password, firstName, lastName } = req.body;
-  // console.log(req.body);
-  // console.log(firstName);
+  const { email, password, firstName, lastName, referralId, projectId, jobId } = req.body;
+  console.log(req.body);
+  
+  // Check if projectId is provided when jobId is also present
+  if (jobId && !projectId) {
+    return next(new ErrorHander("Project ID must be provided when Job ID is specified.", 400));
+  }
 
+  // Find the user by email
   const user = await User.findOne({ email });
-
+  
   if (!user) {
     return next(new ErrorHander("User not found. Please request an OTP first.", 404));
   }
 
-  // const isOtpValid = await user.verifyOTP(otp);
-
-  // console.log(isOtpValid);
-
-  // if (!isOtpValid) {
-  //   return next(new ErrorHander("Invalid or expired OTP", 400));
-  // }
-
+  // Update user details
   user.password = password;
   user.firstName = firstName;
   user.lastName = lastName;
-  // user.gender = gender;
-  // user.dateOfBirth = dateOfBirth;
-  // user.country = country;
-  // user.state = state;
-  // user.city = city;
-  user.name = firstName;
-  // user.contactNumber = contactNumber;
 
+  // Save the user details
   await user.save();
-  // console.log(user);
 
+  if (referralId) {
+    console.log(`Referral ID: ${referralId}`);
+
+    // Find the project using projectId
+    const project = await Project.findById(projectId);
+    
+    if (!project) {
+      return next(new ErrorHander("Project not found.", 404));
+    }
+
+    if (jobId) {
+      // If jobId is provided, find the specific job within the project
+      const selectedJob = project.selectedJobs.find(job => job.job.toString() === jobId);
+      if (selectedJob) {
+        // Add referral to the job's `jobReferrals` array
+        selectedJob.jobReferrals.push({
+          referredBy: referralId,
+          referredUser: user._id,
+          status: "pending",
+          referralDate: new Date(),
+        });
+      } else {
+        return next(new ErrorHander("Job not found in the selected project.", 404));
+      }
+    } else {
+      // If no jobId is provided, add referral to the project's `projectReferrals` array
+      project.projectReferrals.push({
+        referredBy: referralId,
+        referredUser: user._id,
+        status: "pending",
+        referralDate: new Date(),
+      });
+    }
+
+    // Save the project with the updated referrals
+    await project.save();
+  }
+
+  // Send back a token or response
   sendToken(user, 200, res);
 });
+
+
+// exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+//   // console.log(req);
+//   console.log("regisring the user");
+//   const { name, email, otp, password, firstName, lastName } = req.body;
+//   // console.log(req.body);
+//   // console.log(firstName);
+
+//   const user = await User.findOne({ email });
+
+//   if (!user) {
+//     return next(new ErrorHander("User not found. Please request an OTP first.", 404));
+//   }
+
+//   // const isOtpValid = await user.verifyOTP(otp);
+
+//   // console.log(isOtpValid);
+
+//   // if (!isOtpValid) {
+//   //   return next(new ErrorHander("Invalid or expired OTP", 400));
+//   // }
+
+//   user.password = password;
+//   user.firstName = firstName;
+//   user.lastName = lastName;
+//   // user.gender = gender;
+//   // user.dateOfBirth = dateOfBirth;
+//   // user.country = country;
+//   // user.state = state;
+//   // user.city = city;
+//   user.name = firstName;
+//   // user.contactNumber = contactNumber;
+
+//   await user.save();
+//   // console.log(user);
+
+//   sendToken(user, 200, res);
+// });
 
 exports.sendOtp = catchAsyncErrors(async (req, res, next) => {
   // console.log(req)

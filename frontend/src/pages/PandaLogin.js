@@ -68,17 +68,37 @@ const PandaLogin = () => {
   const animateFields = (form) => {
     // Animation logic
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (signUp) {
       if (password !== rePassword) {
         setPopupMessage("Passwords do not match");
         return;
       }
-      const userData = { firstName, lastName, email, password };
+
+      // Retrieve referral ID from localStorage
+      const referringUserId = localStorage.getItem("referringUserId");
+      const referredProjectId = localStorage.getItem("referredProjectId");
+      const referredJobId = localStorage.getItem("referredJobId");
+      // Add the referral ID to the registration data if it exists
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        password,
+        referralId: referringUserId || null, // Include referral ID if available
+        projectId: referredProjectId || null,
+        jobId: referredJobId || null, // Specific job in the project (if applicable)
+      };
+
       dispatch(register(userData)).then(() => {
         setPopupMessage("Registration successful!");
+
+        // Clear referral ID if needed
+        localStorage.removeItem("referringUserId");
+        localStorage.removeItem("projectId");
+        localStorage.removeItem("jobId");
       });
     } else {
       dispatch(login(loginName, loginPassword)).then(() => {
@@ -120,15 +140,15 @@ const PandaLogin = () => {
           handleSubmit={handleSubmit}
         />
       )}
-      
+
       {/* Modal to display notifications */}
       <Modal
         isOpen={!!popupMessage}
         onRequestClose={() => setPopupMessage("")}
-       className="popup"
+        className="popup"
         overlayClassName="overlay"
       >
-        <div >
+        <div>
           <h2>Notification</h2>
           <p>{popupMessage}</p>
           <button className="btn btn-info" onClick={() => setPopupMessage("")}>
@@ -139,9 +159,6 @@ const PandaLogin = () => {
     </div>
   );
 };
-
-
-
 
 // ... Rest of your components remain unchanged
 
