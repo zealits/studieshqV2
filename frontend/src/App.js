@@ -127,57 +127,6 @@ function App() {
     return <Loading />; // Show loading screen while fetching user data
   }
 
-  // if (isAuthenticated && !loading) {
-  //   if (user && user.is2FAEnabled && user.is2FAVerified) {
-  //     return (
-  //       <Modal
-  //         isOpen={showTOTPForm}
-  //         onRequestClose={() => setShowTOTPForm(false)}
-  //         contentLabel="Enter TOTP"
-  //         className="modal"
-  //         overlayClassName="overlay"
-  //       >
-  //         <h2>Enter your TOTP</h2>
-  //         <div>
-  //           <label htmlFor="totp">Enter the 6-digit TOTP code:</label>
-  //           <div className="code-inputs">
-  //             {Array.from({ length: 6 }).map((_, index) => (
-  //               <input
-  //                 key={index}
-  //                 id={`totp-${index}`}
-  //                 type="text"
-  //                 maxLength="1"
-  //                 className="code-box"
-  //                 onChange={(e) => handleTOTPChange(e, index)}
-  //               />
-  //             ))}
-  //           </div>
-  //           {verificationError && <p style={{ color: "red" }}>{verificationError}</p>}
-  //           <button onClick={handleVerification}>Submit</button>
-  //         </div>
-  //         <button onClick={() => setShowTOTPForm(false)}>Close</button>
-  //       </Modal>
-  //     );
-  //   }
-
-  //   if (!user.is2FAEnabled) {
-  //     return (
-  //       <Modal
-  //         isOpen={show2FAModal}
-  //         onRequestClose={() => setShow2FAModal(false)}
-  //         contentLabel="Activate 2FA"
-  //         className="modal"
-  //         overlayClassName="overlay"
-  //       >
-  //         <h2>Activate 2-Factor Authentication</h2>
-  //         <p>Would you like to activate 2-Factor Authentication now?</p>
-  //         <button onClick={() => handle2FA(true)}>Activate</button>
-  //         <button onClick={() => handle2FA(false)}>Maybe Later</button>
-  //       </Modal>
-  //     );
-  //   }
-  // }
-
   return (
     <div className="app">
       <Router>
@@ -216,7 +165,6 @@ function App() {
                       <Route path="/knowledge-bank" element={<KnowledgeBank />} />
                       <Route path="/support" element={<Support />} />
                       {/* Add the referral landing page route */}
-                
                     </>
                   )}
 
@@ -248,94 +196,15 @@ function App() {
             {/* Redirect to the home page if no matching route */}
             <Route path="/share/job/:jobId" element={<JobReferralPage />} />
             <Route path="/share/project/:projectId" element={<ProjectReferralPage />} />
+
+            {/* Register and Apply routes for referral flow */}
+            <Route path="/register" element={<PandaLogin />} />
+            {/* <Route path="/apply/job/:jobId" element={<ApplyJob />} /> */}
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
       </Router>
-
-      {/* <Router>
-        {isAuthenticated && totpVerified && (
-          <>
-            {user.role === "admin" && <AdminSidebar />}
-            {user.role === "user" && <Sidebar />}
-            {user.role === "superadmin" && <SuperAdminSidebar />}
-          </>
-        )}
-        <div className="content">
-          <Routes>
-            {!isAuthenticated && <Route path="/" element={<PandaLogin />} />}
-            {isAuthenticated && !totpVerified ? <Route path="/" element={<TotpPage />} /> : null}
-
-            {isAuthenticated && totpVerified ? (
-              <>
-                {user.role === "user" && (
-                  <>
-                    <Route exact path="/" element={<Home />} />
-                    <Route path="/my-gigs" element={<MyGigs />} />
-                    <Route path="/available-gigs" element={<AvailableGigs />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/earnings" element={<Earnings />} />
-                    <Route path="/preferences" element={<Preferences />} />
-                    <Route path="/message" element={<Message />} />
-                    <Route path="/knowledge-bank" element={<KnowledgeBank />} />
-                    <Route path="/support" element={<Support />} />
-                  </>
-                )}
-
-                {user.role === "admin" && (
-                  <>
-                    <Route exact path="/" element={<AdminDashboard />} />
-                    <Route exact path="/manageuser" element={<ManageUser />} />
-                    <Route exact path="/managestudies" element={<ManageStudies />} />
-                    <Route exact path="/managepayout" element={<ManagePayout />} />
-                    <Route path="/addstudies" element={<AddGig />} />
-                  </>
-                )}
-
-                {user.role === "superadmin" && (
-                  <>
-                    <Route exact path="/" element={<SuperAdminDashboard />} />
-                  </>
-                )}
-
-                <Route path="*" element={<Navigate to="/" />} />
-              </>
-            ) : (
-              <Route path="*" element={<Navigate to="/" />} />
-            )}
-          </Routes>
-
-          {qrCodeUrl && (
-            <Modal
-              isOpen={!!qrCodeUrl}
-              onRequestClose={() => setQrCodeUrl("")}
-              contentLabel="Scan QR Code"
-              className="modal"
-              overlayClassName="overlay"
-            >
-              <h2>Scan this QR Code with your authenticator app</h2>
-              <img src={qrCodeUrl} alt="QR Code for 2FA" />
-              <div>
-                <label htmlFor="code">Enter the 6-digit code:</label>
-                <div className="code-inputs">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <input
-                      key={index}
-                      id={`code-${index}`}
-                      type="text"
-                      maxLength="1"
-                      className="code-box"
-                      onChange={(e) => handleChange(e, index)}
-                    />
-                  ))}
-                </div>
-                {verificationError && <p style={{ color: "red" }}>{verificationError}</p>}
-                <button onClick={handleVerification}>Verify</button>
-              </div>
-            </Modal>
-          )}
-        </div>
-      </Router> */}
     </div>
   );
 }

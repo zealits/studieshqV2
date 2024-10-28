@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./JobReferralPage.css"; // Include this line to add CSS
+import { useSelector } from "react-redux"; // For accessing authentication status from Redux
+import "./JobReferralPage.css";
 
 const JobReferralPage = () => {
-  const { jobId } = useParams(); 
+  const { jobId } = useParams();
   const query = new URLSearchParams(useLocation().search);
-  const referringUserId = query.get("referral");
+  const referringUserId = query.get("referral"); // Get referral ID from query parameters
+  const navigate = useNavigate();
 
+  const { user } = useSelector((state) => state.user); // Check if user is authenticated
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +19,7 @@ const JobReferralPage = () => {
       try {
         const response = await axios.get(`/aak/l1/job/${jobId}`);
         setJobDetails(response.data.job);
-        localStorage.setItem("referringUserId", referringUserId);
+        localStorage.setItem("referringUserId", referringUserId); // Store referral ID locally
       } catch (error) {
         console.error("Error fetching job details:", error);
       } finally {
@@ -26,6 +29,16 @@ const JobReferralPage = () => {
     fetchJobDetails();
   }, [jobId, referringUserId]);
 
+  const handleApplyClick = () => {
+    if (!user) {
+      // Redirect to registration page if not logged in, preserving referral information
+      navigate(`/register?redirect=/apply/job/${jobId}&referral=${referringUserId}`);
+    } else {
+      // If logged in, proceed to application
+      navigate(`/apply/job/${jobId}`);
+    }
+  };
+
   if (loading) return <div className="job-referral__loading">Loading...</div>;
   if (!jobDetails) return <div className="job-referral__not-found">Job not found</div>;
 
@@ -34,7 +47,9 @@ const JobReferralPage = () => {
       <h2 className="job-referral__title">{jobDetails.jobTitle}</h2>
       <p className="job-referral__description">{jobDetails.jobDescription}</p>
       <p className="job-referral__location">Location: {jobDetails.location}</p>
-      <button className="job-referral__apply-button">Apply for Job</button>
+      <button onClick={handleApplyClick} className="job-referral__apply-button">
+        Apply for Job
+      </button>
     </div>
   );
 };
