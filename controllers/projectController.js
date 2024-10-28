@@ -32,4 +32,51 @@ const createProject = async (req, res) => {
   }
 };
 
-module.exports = { createProject };
+const getAllProjects = async (req, res) => {
+  try {
+    // Fetch all projects from the database and populate selectedJobs.job
+    const projects = await Project.find().populate({
+      path: "selectedJobs.job", // Path to the job reference
+      model: "Job", // The model to populate
+    });
+
+    // console.log(projects);
+    res.status(200).json({
+      success: true,
+      projects,
+    });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+// Controller for getting a single project by ID
+const getSingleProject = async (req, res) => {
+  console.log(req.params);
+  const projectId = req.params.id; // Get the project ID from the URL parameters
+  console.log(projectId);
+  try {
+    // Find the project by ID
+    const project = await Project.findById(projectId).populate({
+      path: "selectedJobs.job", // Path to the job reference
+      model: "Job", // The model to populate
+    });
+    console.log(project);
+    // Check if the project exists
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    // Return the project details
+    res.status(200).json({ project });
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createProject, getAllProjects, getSingleProject };

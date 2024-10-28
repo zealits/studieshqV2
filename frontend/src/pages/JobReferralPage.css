@@ -1,0 +1,56 @@
+/* JobReferralPage.css */
+
+/* Main container */
+.job-referral {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Job title */
+.job-referral__title {
+    font-size: 2em;
+    font-weight: 600;
+    color: #bb86fc;
+    margin-bottom: 10px;
+}
+
+/* Job description and location */
+.job-referral__description,
+.job-referral__location {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    color: #c5c5c5;
+}
+
+/* Apply button */
+.job-referral__apply-button {
+    background-color: #bb86fc;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.job-referral__apply-button:hover {
+    background-color: #9b6cff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading and error messages */
+.job-referral__loading,
+.job-referral__not-found {
+    text-align: center;
+    font-size: 1.1em;
+    color: #e0e0e0;
+    margin: 20px 0;
+}

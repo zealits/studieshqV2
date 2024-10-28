@@ -16,6 +16,8 @@ import PandaLogin from "./pages/PandaLogin";
 import Sidebar from "./components/Sidebar";
 import AddGig from "./pages/AddGig";
 import AllJobs from "./pages/AllJobs.js";
+import JobReferralPage from "./pages/JobReferralPage.js";
+import ProjectReferralPage from "./pages/ProjectReferralPage.js";
 import JobDetails from "./pages/JobDetails.js";
 import AdminDashboard from "./pages/AdminDashboard.js";
 import Loading from "./components/Loading.js";
@@ -213,6 +215,8 @@ function App() {
                       <Route path="/message" element={<Message />} />
                       <Route path="/knowledge-bank" element={<KnowledgeBank />} />
                       <Route path="/support" element={<Support />} />
+                      {/* Add the referral landing page route */}
+                
                     </>
                   )}
 
@@ -242,6 +246,8 @@ function App() {
             )}
 
             {/* Redirect to the home page if no matching route */}
+            <Route path="/share/job/:jobId" element={<JobReferralPage />} />
+            <Route path="/share/project/:projectId" element={<ProjectReferralPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

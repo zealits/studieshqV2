@@ -1,178 +1,215 @@
-/* Container styling */
+/* AvailableProjects.css */
+
 .available-projects {
-   width: 80vw;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-    font-family: 'Arial', sans-serif;
+  width: 80vw;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1E1E1E; /* Dark background */
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.available-projects__title {
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #BB86FC; /* Purple for title */
+  text-align: center;
+}
+
+.available-projects__loading,
+.available-projects__error {
+  text-align: center;
+  font-size: 1.2em;
+  color: #e74c3c; /* Red for error messages */
+  margin: 20px 0;
+}
+
+.available-projects__no-projects,
+.available-projects__no-jobs {
+  text-align: center;
+  font-size: 1.2em;
+  color: #999; /* Grey for no data messages */
+}
+
+.available-projects__projects-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.available-projects__project-item {
+  background-color: #232323; /* Darker background for project item */
+  border: 1px solid #444; /* Darker border */
+  border-radius: 8px;
+  /* padding: 15px; */
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.available-projects__job-item {
+  padding: 15px 15px;
+  position: relative; /* For absolute positioning of the buttons */
+  background-color: #2a2a2a; /* Default background for job items */
+  transition: background-color 0.2s; /* Smooth transition for background color */
+}
+
+.available-projects__job-item:nth-child(odd) {
+  background-color: #282828; /* Slightly lighter shade */
+}
+
+.available-projects__job-item:hover {
+  background-color: #3c3c3c; /* Darker shade on hover */
+}
+
+
+.available-projects__project-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(187, 134, 252, 0.3); /* Purple shadow on hover */
+}
+
+.available-projects__project-title {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #BB86FC; /* Purple for project title */
+}
+
+.available-projects__project-description {
+  font-size: 1em;
+  margin-bottom: 10px;
+  color: #E0E0E0; /* Light gray for description */
+}
+
+.available-projects__project-deadline,
+.available-projects__project-budget {
+  font-size: 0.9em;
+  color: #666; /* Medium grey */
+  margin-bottom: 10px;
+}
+
+.available-projects__jobs-title {
+  font-size: 1.2em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #BB86FC; /* Purple for jobs title */
+}
+
+.available-projects__jobs-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.available-projects__project-item {
+  background-color: #232323; /* Darker background for project item */
+  border: 1px solid #444; /* Darker border */
+  border-radius: 8px;
+  padding: 20px; /* Increased padding for better spacing */
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; /* Include background color in transition */
+  position: relative; /* Allow for absolute positioning within */
+}
+
+.available-projects__project-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(187, 134, 252, 0.4); /* Purple shadow on hover */
+}
+
+.available-projects__job-item:first-child {
+  border-top: none; /* Remove top border for the first job */
+}
+
+.available-projects__job-title {
+  font-weight: 600;
+  color: #BB86FC; /* Purple for job title */
+  margin-bottom: 5px; /* Added margin for better spacing */
+}
+
+.available-projects__job-location {
+  font-size: 0.9em;
+  color: #888; /* Light grey for location */
+}
+
+.available-projects__job-referral {
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+.available-projects__job-description {
+  font-size: 0.9em;
+  color: #E0E0E0; /* Light gray for job description */
+}
+
+/* Button container to manage spacing */
+.available-projects__button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin: 10px; /* Space above buttons */
+}
+
+.available-projects__apply-button,
+.available-projects__refer-button,
+.available-projects__resume-button {
+  background-color: #BB86FC; /* Purple for buttons */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.available-projects__apply-button:hover,
+.available-projects__refer-button:hover,
+.available-projects__resume-button:hover {
+  background-color: #9b6cff; /* Lighter purple on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+  .available-projects {
+    width: 95vw; /* Adjust width for smaller screens */
   }
-  
-  /* Title styling */
+
   .available-projects__title {
-    font-size: 2.5rem;
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 20px;
-    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+    font-size: 1.5em; /* Adjust title size */
   }
-  
-  /* Loading and error message styling */
-  .available-projects__loading,
-  .available-projects__error {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #e74c3c; /* Error color */
-  }
-  
-  /* No projects message styling */
-  .available-projects__no-projects {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #b0b0b0;
-  }
-  
-  /* Projects list styling */
-  .available-projects__projects-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  /* Project item styling */
-  .available-projects__project-item {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    background: #333333;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  /* Project item hover effect */
-  .available-projects__project-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-  }
-  
-  /* Project title styling */
-  .available-projects__project-title {
-    font-size: 1.5rem;
-    color: #f39c12; /* Orange color */
-    margin-bottom: 5px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* Project description styling */
-  .available-projects__project-description {
-    font-size: 1rem;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  
-  /* Project budget styling */
-  .available-projects__project-budget {
-    font-size: 1.1rem;
-    color: #e67e22; /* Bright orange color */
-    margin: 5px 0;
-  }
-  
-  /* Project deadline styling */
-  .available-projects__project-deadline {
-    font-size: 1rem;
-    color: #cccccc; /* Light gray color */
-    margin: 5px 0;
-  }
-  
-  /* Jobs title styling */
-  .available-projects__jobs-title {
-    font-size: 1.2rem;
-    color: #e67e22; /* Bright orange color */
-    margin-top: 15px;
-  }
-  
-  /* No jobs message styling */
-  .available-projects__no-jobs {
-    font-size: 1rem;
-    color: #b0b0b0;
-  }
-  
-  /* Jobs list styling */
-  .available-projects__jobs-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  /* Job item styling */
-  .available-projects__job-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    background: #444444;
-    transition: background 0.3s, transform 0.3s;
-  }
-  
-  /* Job item hover effect */
-  .available-projects__job-item:hover {
-    background: #555555;
-    transform: scale(1.02);
-  }
-  
-  /* Job title styling */
+
   .available-projects__job-title {
-    font-size: 1.2rem;
-    color: #f39c12; /* Orange color */
+    font-size: 1.1em; /* Adjust job title size */
   }
-  
-  /* Job location styling */
-  .available-projects__job-location {
-    font-size: 0.9rem;
-    color: #cccccc; /* Light gray color */
-  }
-  
-  /* Job description styling */
-  .available-projects__job-description {
-    font-size: 0.9rem;
-    color: #ffffff; /* White for better visibility */
-  }
-  
-  /* Button styling */
-  .available-projects__apply-button,
-  .available-projects__refer-button,
-  .available-projects__resume-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e67e22; /* Bright orange color */
-    color: #fff;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-right: 10px; /* Space between buttons */
-  }
-  
-  /* Button hover effect */
-  .available-projects__apply-button:hover,
-  .available-projects__refer-button:hover,
-  .available-projects__resume-button:hover {
-    background-color: #d35400; /* Darker orange on hover */
-    transform: translateY(-2px);
-  }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    .available-projects {
-      padding: 15px;
-    }
-  
-    .available-projects__title {
-      font-size: 1.8rem;
-    }
-  
-    .available-projects__project-title {
-      font-size: 1.3rem;
-    }
-  }
-  
+}
+
+
+.share-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Background overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.share-modal__content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.share-modal__close-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #ff5555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

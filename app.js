@@ -23,6 +23,7 @@ const pdfRoutes = require("./routes/pdfRoutes");
 const contractRoutes = require("./routes/contractRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const projectRoutes = require("./routes/projectRoute");
+const referralRoutes = require("./routes/referralRoutes");
 // app.use("/api/z1",product);
 
 // app.use("/aak/l1", venue);
@@ -35,6 +36,7 @@ app.use("/aak/l1", pdfRoutes);
 app.use("/aak/l1", contractRoutes);
 app.use("/aak/l1", jobRoutes);
 app.use("/aak/l1", projectRoutes);
+app.use("/aak/l1", referralRoutes);
 
 app.use(express.static(path.join(__dirname, "./frontend/build")));
 

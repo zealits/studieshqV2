@@ -56,6 +56,7 @@ exports.getAllJobs = async (req, res) => {
 // Get a single job
 exports.getSingleJob = async (req, res) => {
   try {
+    console.log(req.params);
     const job = await Job.findById(req.params.id);
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });

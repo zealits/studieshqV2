@@ -29,6 +29,7 @@
     "path": "^0.12.7",
     "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.4",
+    "react-share": "^5.1.0",
     "speakeasy": "^2.0.0",
     "validator": "^13.11.0"
   }
