@@ -13,6 +13,7 @@ const ProjectReferrals = () => {
       try {
         const response = await axios.get("/aak/l1/projects-with-referrals");
         const projectsData = response.data;
+        console.log(response.data);
         setProjects(projectsData);
         prepareChartData(projectsData);
       } catch (error) {
@@ -91,8 +92,8 @@ const ProjectReferrals = () => {
           <ul className="project-referrals__list">
             {project.projectReferrals.map((referral, idx) => (
               <li key={idx} className="project-referrals__list-item">
-                <span className="referral__referred-by">Referred By: {referral.referredBy.name}</span>
-                <span className="referral__referred-user">Referred User: {referral.referredUser.name}</span>
+                <span className="referral__referred-by">Referred By: {referral.referredBy.firstName}</span>
+                <span className="referral__referred-user">Referred User: {referral.referredUser.firstName}</span>
                 <span className="referral__status">Status: {referral.status}</span>
                 <span className="referral__date">Date: {new Date(referral.referralDate).toLocaleDateString()}</span>
               </li>
@@ -107,8 +108,8 @@ const ProjectReferrals = () => {
               <ul className="project-referrals__list">
                 {jobItem.jobReferrals.map((jobReferral, refIdx) => (
                   <li key={refIdx} className="project-referrals__list-item">
-                    <span className="referral__referred-by">Referred By: {jobReferral.referredBy.name}</span>
-                    <span className="referral__referred-user">Referred User: {jobReferral.referredUser.name}</span>
+                    <span className="referral__referred-by">Referred By: {jobReferral.referredBy.firstName}</span>
+                    <span className="referral__referred-user">Referred User: {jobReferral.referredUser.firstName}</span>
                     <span className="referral__status">Status: {jobReferral.status}</span>
                     <span className="referral__date">
                       Date: {new Date(jobReferral.referralDate).toLocaleDateString()}
