@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ProjectReferrals.css";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
+import "./ProjectReferrals.css";
+
+// Register the components with Chart.js
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
 
 const ProjectReferrals = () => {
   const [projects, setProjects] = useState([]);
@@ -24,7 +28,7 @@ const ProjectReferrals = () => {
   }, []);
 
   const prepareChartData = (projectsData) => {
-    // Bar chart data: count referrals per project
+    // Bar chart data
     const projectTitles = projectsData.map((project) => project.title);
     const referralCounts = projectsData.map((project) => project.projectReferrals.length);
 
@@ -41,7 +45,7 @@ const ProjectReferrals = () => {
       ],
     });
 
-    // Pie chart data: job-level referral status distribution
+    // Pie chart data
     const statusCounts = { pending: 0, applied: 0, hired: 0 };
     projectsData.forEach((project) => {
       project.selectedJobs.forEach((job) => {
@@ -66,27 +70,99 @@ const ProjectReferrals = () => {
     <div className="project-referrals">
       <h2 className="project-referrals__title">Project Referrals</h2>
 
-      {/* Bar Chart for Project-Level Referral Counts */}
-      {barChartData && (
-        <div className="project-referrals__chart">
-          <h3>Referrals per Project</h3>
-          <Bar data={barChartData} options={{ responsive: true }} />
-        </div>
-      )}
+      <div className="project-referrals__charts-row">
+        {/* Bar Chart */}
+        {barChartData && (
+          <div className="project-referrals__chart project-referrals__chart--bar">
+            <h3>Referrals per Project</h3>
+            <Bar
+              data={barChartData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                  padding: 20,
+                },
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: "Projects",
+                    },
+                    ticks: {
+                      autoSkip: true,
+                      maxTicksLimit: 10,
+                    },
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: "Referrals",
+                    },
+                    beginAtZero: true,
+                  },
+                },
+                interaction: {
+                  mode: "nearest",
+                  intersect: true,
+                },
+                plugins: {
+                  tooltip: {
+                    enabled: true,
+                    mode: "index",
+                    intersect: false,
+                    callbacks: {
+                      label: function (tooltipItem) {
+                        return `Project: ${tooltipItem.label}, Referrals: ${tooltipItem.raw}`;
+                      },
+                    },
+                  },
+                  legend: {
+                    display: true,
+                    position: "top",
+                  },
+                },
+              }}
+            />
+          </div>
+        )}
 
-      {/* Pie Chart for Job-Level Referral Status Distribution */}
-      {pieChartData && (
-        <div className="project-referrals__chart">
-          <h3>Job-Level Referral Status</h3>
-          <Pie data={pieChartData} options={{ responsive: true }} />
-        </div>
-      )}
+        {/* Pie Chart */}
+        {pieChartData && (
+          <div className="project-referrals__chart project-referrals__chart--pie">
+            <h3>Job-Level Referral Status</h3>
+            <Pie
+              data={pieChartData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "50%",
+                layout: { padding: 20 },
+                plugins: {
+                  legend: { position: "bottom" },
+                  tooltip: {
+                    callbacks: {
+                      label: (tooltipItem) => `${tooltipItem.raw} Referrals`,
+                    },
+                  },
+                },
+                animations: {
+                  tension: { duration: 800, easing: "easeOutBounce" },
+                },
+              }}
+              style={{ width: "300px", height: "300px" }}
+            />
+          </div>
+        )}
+      </div>
 
       {/* Referral Data Table */}
       {projects.map((project) => (
         <div key={project._id} className="project-referrals__project">
           <h3 className="project-referrals__project-title">{project.title}</h3>
-          <p className="project-referrals__project-description">Referral Budget: <strong>${project.budget}</strong></p>
+          <p className="project-referrals__project-description">
+            Referral Budget: <strong>${project.budget}</strong>
+          </p>
 
           <h4 className="project-referrals__section-title">Project-Level Referrals</h4>
           <ul className="project-referrals__list">

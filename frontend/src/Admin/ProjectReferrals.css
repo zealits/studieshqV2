@@ -126,6 +126,8 @@
 
 .project-referrals__chart {
     padding: 20px;
+    width: 500px;
+    height: 500px;
     margin: 24px 0;
     background-color: #292929;
     border-radius: 12px;
@@ -160,3 +162,35 @@
         padding: 8px; /* More comfortable padding */
     }
 }
+
+
+.project-referrals__charts-row {
+    display: flex;
+    justify-content: space-around; /* Space between charts */
+    gap: 20px; /* Add some gap between the charts */
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap; /* Allows charts to wrap on smaller screens */
+  }
+  
+  .project-referrals__chart {
+    background-color: #f9f9f9; /* Light background for chart container */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px; /* Allows charts to shrink or grow within container */
+    max-width: 45%; /* Adjusts max width to ensure both charts fit on one row */
+  }
+  
+  .project-referrals__chart--bar,
+  .project-referrals__chart--pie {
+    text-align: center;
+  }
+  
+  .project-referrals__chart h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
