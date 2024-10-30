@@ -1,84 +1,142 @@
-/* src/components/ManageJobs.css */
+/* ManageJobs.css */
+
+/* Main container */
 .manage-jobs-container {
-    background-color: #f0f0f0; /* Light gray background */
+    /* max-width: 1000px;
+     */
+     width: 80vw;
+    margin: 0 auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
-}
-  
-.manage-jobs-title {
-    color: #333333; /* Darker gray for headings */
-    text-align: center;
-}
-  
-.manage-fetch-jobs-button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #666666; /* Medium gray button */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-  
-.manage-fetch-jobs-button:hover {
-    background-color: #555555; /* Darker gray on hover */
-}
-  
-.manage-jobs-list {
-    list-style: none;
-    padding: 0;
-}
-  
-.manage-job-item {
-    background-color: #ffffff; /* White background for job items */
-    border: 1px solid #cccccc; /* Light gray border */
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-}
-  
-.manage-job-title {
-    color: #444444; /* Gray color for job titles */
-}
-  
-.manage-job-summary {
-    color: #666666; /* Darker gray for descriptions */
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.manage-loading {
+/* Page title */
+.manage-jobs-title {
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #bb86fc;
+    margin-bottom: 20px;
     text-align: center;
-    color: #666666; /* Adjust color as needed */
+}
+
+/* Action buttons container */
+.manage-jobs-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.manage-create-job-button,
+.manage-sync-workday-button {
+    background-color: #bb86fc;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.manage-create-job-button:hover,
+.manage-sync-workday-button:hover {
+    background-color: #9b6cff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading and error messages */
+.manage-loading,
+.manage-error {
+    text-align: center;
+    font-size: 1.1em;
+    color: #e0e0e0;
+    margin: 20px 0;
 }
 
 .manage-error {
-    color: red; /* Highlight error in red */
-    text-align: center;
+    color: #ff4a4a;
 }
 
-.manage-no-jobs {
-    text-align: center;
+/* Jobs list styling */
+.manage-jobs-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
 }
-.manage-jobs-actions {
-    margin-bottom: 20px; /* Adjust spacing below the buttons */
-    display: flex; /* Use flexbox for alignment */
-    justify-content: flex-start; /* Align buttons to the start */
-    gap: 20px; /* Increase the gap between buttons */
-  }
-  
-  .manage-create-job-button,
-  .manage-sync-workday-button {
-    padding: 10px 15px; /* Adjust padding */
-    background-color: #808080; /* Gray background */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition on hover */
-  }
-  
-  .manage-create-job-button:hover,
-  .manage-sync-workday-button:hover {
-    background-color: #696969; /* Darker gray on hover */
-  }
-  
+
+.job-item {
+    background-color: #282828;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.job-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(187, 134, 252, 0.3);
+}
+
+/* Link styling */
+.job-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 20px;
+}
+
+/* Job details */
+.job-content {
+    padding: 10px;
+}
+
+.job-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #bb86fc;
+    margin-bottom: 8px;
+}
+
+.job-company,
+.job-location,
+.job-salary,
+.job-summary,
+.job-posted-date {
+    font-size: 1em;
+    line-height: 1.5;
+    color: #c5c5c5;
+    margin: 5px 0;
+}
+
+/* Bold labels for job attributes */
+.job-company strong,
+.job-location strong,
+.job-salary strong,
+.job-summary strong,
+.job-posted-date strong {
+    color: #bb86fc;
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+    .manage-jobs-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .job-title {
+        font-size: 1.2em;
+    }
+
+    .manage-create-job-button,
+    .manage-sync-workday-button {
+        font-size: 0.95em;
+        padding: 10px;
+    }
+}

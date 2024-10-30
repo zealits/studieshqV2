@@ -42,7 +42,7 @@ exports.deleteJob = async (req, res) => {
 // Get all jobs
 exports.getAllJobs = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = 1000;
     const apiFeature = new ApiFeatures(Job.find(), req.query).search().filter().pagination(resultPerPage);
 
     const jobs = await apiFeature.query;

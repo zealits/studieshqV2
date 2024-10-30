@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import './ManageJobs.css'; 
+import "./ManageJobs.css";
 
 const ManageJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -10,17 +10,17 @@ const ManageJobs = () => {
 
   // Function to fetch jobs
   const fetchJobs = async () => {
-    setLoading(true); 
-    setError(null); 
+    setLoading(true);
+    setError(null);
     try {
       console.log("Fetching jobs...");
-      const response = await axios.get('/aak/l1/jobs'); 
-      setJobs(response.data.jobs); 
+      const response = await axios.get("/aak/l1/jobs");
+      setJobs(response.data.jobs);
     } catch (error) {
-      console.error('Error fetching jobs:', error.message);
+      console.error("Error fetching jobs:", error.message);
       setError("Failed to fetch jobs");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -44,7 +44,7 @@ const ManageJobs = () => {
   return (
     <div className="manage-jobs-container">
       <h1 className="manage-jobs-title">Manage Jobs</h1>
-      
+
       {/* Buttons for creating a new job and syncing with Workday */}
       <div className="manage-jobs-actions">
         <button onClick={handleCreateJob} className="manage-create-job-button">
@@ -54,7 +54,7 @@ const ManageJobs = () => {
           Sync with Workday API
         </button>
       </div>
-      
+
       {loading && <div className="manage-loading">Loading...</div>}
       {error && <div className="manage-error">{error}</div>}
       <ul className="manage-jobs-list">

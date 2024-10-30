@@ -14,13 +14,13 @@ const ManageProject = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/aak/l1/admin/projects", {
+      const response = await axios.get("/aak/l1/user/projects", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data); // Check if the data is structured correctly
-      setProjects(response.data.gigs || []); // Make sure to access gigs
+      console.log(response.data);
+      setProjects(response.data.projects || []);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -29,29 +29,10 @@ const ManageProject = () => {
     }
   };
 
-  //   const handleDelete = async () => {
-  //   if (studyToDelete) {
-  //     setLoadingAction(true);
-  //     try {
-  //       await axios.delete(`/aak/l1/admin/gig/${studyToDelete._id}`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       // setGigs(gigs.filter((gig) => gig._id !== studyToDelete._id));
-  //     } catch (error) {
-  //       setError("Error deleting study");
-  //     } finally {
-  //       setLoadingAction(false);
-
-  //     }
-  //   }
-  // };
-
   // Expose the fetch function to be called from AddGig component
   useEffect(() => {
     window.refreshProjects = fetchProjects;
-    fetchProjects(); // Fetch projects on component mount
+    fetchProjects();
 
     // Clean up to avoid memory leaks
     return () => {
@@ -59,33 +40,46 @@ const ManageProject = () => {
     };
   }, [token]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="error-message">{error}</div>;
+  if (loading) return <div className="manage-projects__loading">Loading...</div>;
+  if (error) return <div className="manage-projects__error-message">{error}</div>;
 
   return (
     <div className="manage-projects">
-      <h1>Existing Projects</h1>
+      <h1 className="manage-projects__title">Manage Projects</h1>
       {projects.length === 0 ? (
-        <p>No projects available</p>
+        <p className="manage-projects__no-projects">No projects available</p>
       ) : (
         projects.map((project) => (
-          <div key={project._id} className="project-card">
-            <h2 className="project-title">{project.title}</h2>
-            {project.description && <p className="project-description">Description: {project.description}</p>}
-            <p className="project-deadline">Deadline: {new Date(project.deadline).toLocaleDateString()}</p>
-            <p className="project-budget">Budget: ${project.budget}</p>
-            <div className="project-jobs">
-              <h3>Selected Jobs:</h3>
+          <div key={project._id} className="manage-projects__project-card">
+            <h2 className="manage-projects__project-title">{project.title}</h2>
+            {project.description && (
+              <p className="manage-projects__project-description">
+                Description: {project.description}
+              </p>
+            )}
+            <p className="manage-projects__project-deadline">
+              Deadline: {new Date(project.deadline).toLocaleDateString()}
+            </p>
+            <p className="manage-projects__project-budget">
+              Referral Gift: ${project.budget}
+            </p>
+            <div className="manage-projects__project-jobs">
+              <h3 className="manage-projects__project-jobs-title">Selected Jobs:</h3>
               {project.selectedJobs && project.selectedJobs.length > 0 ? (
-                <ul>
+                <ul className="manage-projects__job-list">
                   {project.selectedJobs.map((job) => (
-                    <li key={job._id} className="project-job-item ">
-                      {job.jobTitle}
+                    <li key={job._id} className="manage-projects__job-item">
+                      <p className="manage-projects__job-title">{job.job.jobTitle}</p>
+                      <p className="manage-projects__job-location">{job.job.location}</p>
+                      <p className="manage-projects__job-description">{job.job.jobDescription}</p>
+                      <p className="manage-projects__job-referral">
+                        Referral Gift: <strong>${job.referralAmount}</strong>
+                      </p>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>No jobs selected for this project.</p>
+                <p className="manage-projects__no-selected-jobs">No jobs selected for this project.</p>
               )}
             </div>
           </div>

@@ -1,107 +1,164 @@
+/* ManageStudies.css */
 
-
+/* General container styling */
 .manage-projects {
-  width: 1200px; /* Set a max width for larger screens */
-  margin: 20px auto; /* Center container */
-  padding: 20px;
- 
- 
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background to match with lighter theme */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
-
-.error-message {
-  color: #ff4d4d; /* Red for error messages */
-  font-weight: bold;
+/* Page title */
+.manage-projects__title {
+  font-size: 2rem;
+  color: #333; /* Dark shade for main title */
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
-.project-card {
-  background-color: #f9f9f9; /* Light grey background for cards */
-  border: 1px solid #e0e0e0; /* Border for cards */
-  border-radius: 8px; /* Rounded corners for cards */
-  padding: 20px; /* Padding for card content */
-  margin-bottom: 20px; /* Space between cards */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
-  display: flex; /* Flexbox for layout */
-  flex-direction: column; /* Column direction */
-  justify-content: space-between; /* Space items */
+/* Loading and Error messages */
+.manage-projects__loading,
+.manage-projects__error-message {
+  color: #666;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 2rem 0;
 }
 
-.project-card:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+/* Project card styling */
+.manage-projects__project-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd; /* Light border for separation */
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.project-title {
+.manage-projects__project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Elevation effect on hover */
+}
+
+/* Project title and description */
+.manage-projects__project-title {
   font-size: 1.8rem;
-  color: #000000; /* Blue for titles */
-  margin: 0 0 10px; /* Margin below title */
-  text-align: center; /* Center title */
+  color: #333; /* Dark title color for focus */
+  margin-bottom: 0.5rem;
 }
 
-.project-description,
-.project-deadline,
-.project-budget {
-  font-size: 1rem; /* Standard font size for other texts */
-  color: #555; /* Dark grey for description and details */
-  margin: 5px 0; /* Margin around text */
+.manage-projects__project-description {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
-.project-jobs {
-  margin-top: 15px; /* Space above selected jobs section */
+/* Deadline and budget */
+.manage-projects__project-deadline,
+.manage-projects__project-budget {
+  font-size: 1rem;
+  color: #444;
+  margin: 0.3rem 0;
 }
 
-.project-jobs h3 {
-  font-size: 1.2rem; /* Slightly larger font for section headings */
-  color: #333; /* Dark color for section headings */
-  margin-bottom: 10px; /* Space below heading */
-  text-align: left; /* Align left */
+.manage-projects__project-deadline {
+  font-weight: 600;
+  color: #d9534f; /* Slightly red color for emphasis on deadline */
 }
 
-.project-job-item {
-  list-style-type: none; /* Remove default list style */
-  display: inline-block;
-  margin-left: 20px; /* Indent job items */
-  color: #555; /* Grey for job items */
-  background-color: white;
-  font-size: 0.9rem; /* Smaller font for job items */
-  line-height: 1.5; /* Increased line height for readability */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
-  padding: 10px; /* Add padding for better spacing */
-  border-radius: 35px; /* Rounded corners for job items */
+.manage-projects__project-budget {
+  font-weight: 600;
+  color: #5cb85c; /* Green shade for budget */
 }
 
-.project-job-item:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+/* Selected jobs section */
+.manage-projects__project-jobs {
+  margin-top: 1.5rem;
 }
 
+.manage-projects__project-jobs-title {
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
 
-/* project-job-item :before {
-  content: "•"; 
- 
-  color: #007bff; 
-  font-size: 20px;
-  font-weight: bold; 
-  margin-right: 5px; 
-} */
+/* Job list */
+.manage-projects__job-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
-/* Responsive styles */
+.manage-projects__job-item {
+  background-color: #f3f3f3;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0.7rem 0;
+  transition: box-shadow 0.2s ease;
+}
+
+.manage-projects__job-item:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Job title and location */
+.manage-projects__job-title {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.manage-projects__job-location {
+  color: #777;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Job description */
+.manage-projects__job-description {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Referral gift styling */
+.manage-projects__job-referral {
+  font-size: 1rem;
+  color: #5cb85c; /* Matching green for referral amount */
+  font-weight: bold;
+}
+
+/* No selected jobs message */
+.manage-projects__no-selected-jobs,
+.manage-projects__no-projects {
+  color: #777;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .manage-projects {
-    padding: 15px; /* Reduced padding for smaller screens */
+    padding: 1rem;
   }
 
-  .project-card {
-    padding: 15px; /* Less padding for cards on smaller screens */
+  .manage-projects__title {
+    font-size: 1.8rem;
   }
 
-  .manage-projects h1 {
-    font-size: 2rem; /* Smaller heading on smaller screens */
+  .manage-projects__project-title {
+    font-size: 1.5rem;
   }
 
-  .project-title {
-    font-size: 1.6rem; /* Smaller title font size */
+  .manage-projects__job-title {
+    font-size: 1.1rem;
   }
 }
