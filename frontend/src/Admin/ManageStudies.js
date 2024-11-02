@@ -29,6 +29,31 @@ const ManageProject = () => {
     }
   };
 
+  const handleDeleteProject = async (projectId) => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      setLoadingAction(true);
+      try {
+        await axios.delete(`/aak/l1/user/projects/${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProjects(projects.filter((project) => project._id !== projectId));
+        setLoadingAction(false);
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        setError("Error deleting project");
+        setLoadingAction(false);
+      }
+    }
+  };
+
+  const handleEditProject = (projectId) => {
+    // Logic to open an edit modal or navigate to an edit page
+    console.log("Edit project with ID:", projectId);
+    // Open a modal or navigate to an edit form
+  };
+
   // Expose the fetch function to be called from AddGig component
   useEffect(() => {
     window.refreshProjects = fetchProjects;
@@ -81,6 +106,21 @@ const ManageProject = () => {
               ) : (
                 <p className="manage-projects__no-selected-jobs">No jobs selected for this project.</p>
               )}
+            </div>
+            <div className="manage-projects__actions">
+              <button
+                className="manage-projects__edit-button"
+                onClick={() => handleEditProject(project._id)}
+              >
+                Edit
+              </button>
+              <button
+                className="manage-projects__delete-button"
+                onClick={() => handleDeleteProject(project._id)}
+                disabled={loadingAction}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))
