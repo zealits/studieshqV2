@@ -282,7 +282,7 @@
   background: none; /* Keep the background transparent */
   border: none;
   cursor: pointer;
-  margin: 0 5px; /* Add margin between buttons */
+  margin: 0 10px; /* Add margin between buttons */
   color: inherit; /* Inherit the color for brand icons */
   transition: transform 0.3s;
 }

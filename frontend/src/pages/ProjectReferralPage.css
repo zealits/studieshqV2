@@ -98,7 +98,7 @@
   }
   
   /* Modal styling */
-  .share-modal {
+  /* .share-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -120,31 +120,9 @@
     max-width: 400px;
     text-align: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
+  } */
   
-  /* Social media share buttons */
-  .share-button {
-    display: inline-block;
-    margin: 10px 0;
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #ffffff;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-  }
   
-  .share-button.facebook { background-color: #4267B2; }
-  .share-button.whatsapp { background-color: #25D366; }
-  .share-button.linkedin { background-color: #0077B5; }
-  .share-button.twitter { background-color: #1DA1F2; }
-  
-  .share-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
   
   /* Close button in modal */
   .share-modal__close-button {

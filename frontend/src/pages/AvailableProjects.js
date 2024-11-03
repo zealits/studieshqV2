@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FacebookShareButton, WhatsappShareButton, LinkedinShareButton, TwitterShareButton } from "react-share";
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "./AvailableProjects.css";
 
@@ -118,16 +119,24 @@ const AvailableProjects = () => {
             <h3>Share this Project</h3>
             <p>Share the project or job with your friends:</p>
             <FacebookShareButton url={referralLink}>
-              <button className="share-button facebook">Share on Facebook</button>
+              <button className="share-button facebook">
+                <FaFacebook />
+              </button>
             </FacebookShareButton>
             <WhatsappShareButton url={referralLink}>
-              <button className="share-button whatsapp">Share on WhatsApp</button>
+              <button className="share-button whatsapp">
+                <FaWhatsapp />
+              </button>
             </WhatsappShareButton>
             <LinkedinShareButton url={referralLink}>
-              <button className="share-button linkedin">Share on LinkedIn</button>
+              <button className="share-button linkedin">
+                <FaLinkedin /> 
+              </button>
             </LinkedinShareButton>
             <TwitterShareButton url={referralLink}>
-              <button className="share-button twitter">Share on Twitter</button>
+              <button className="share-button twitter">
+                <FaTwitter /> 
+              </button>
             </TwitterShareButton>
             <button onClick={closeModal} className="share-modal__close-button">
               Close

@@ -213,3 +213,26 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Social media share buttons */
+.share-button {
+  display: inline-block;
+  width: 40px;
+  padding: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.share-button.facebook { background-color: #4267B2; }
+.share-button.whatsapp { background-color: #25D366; }
+.share-button.linkedin { background-color: #0077B5; }
+.share-button.twitter { background-color: #1DA1F2; }
+
+.share-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
