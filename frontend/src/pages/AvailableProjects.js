@@ -123,7 +123,7 @@ const AvailableProjects = () => {
                 <FaFacebook />
               </button>
             </FacebookShareButton>
-            <WhatsappShareButton url={referralLink}>
+            <WhatsappShareButton uv rl={referralLink}>
               <button className="share-button whatsapp">
                 <FaWhatsapp />
               </button>
