@@ -73,6 +73,8 @@ const ProjectReferralPage = () => {
   if (error) return <div>{error}</div>;
   if (!projectDetails) return <div>Project not found</div>;
 
+
+  
   return (
     <div className="project-referral">
       <h2>{projectDetails.title}</h2>

@@ -62,7 +62,6 @@ exports.trackReferral = async (req, res) => {
   }
 };
 
-
 exports.getProjectsWithReferrals = async (req, res) => {
   try {
     const projects = await Project.find()

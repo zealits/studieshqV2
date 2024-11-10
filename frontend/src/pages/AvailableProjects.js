@@ -123,21 +123,30 @@ const AvailableProjects = () => {
                 <FaFacebook />
               </button>
             </FacebookShareButton>
-            <WhatsappShareButton uv rl={referralLink}>
+            <WhatsappShareButton url={referralLink}>
               <button className="share-button whatsapp">
                 <FaWhatsapp />
               </button>
             </WhatsappShareButton>
             <LinkedinShareButton url={referralLink}>
               <button className="share-button linkedin">
-                <FaLinkedin /> 
+                <FaLinkedin />
               </button>
             </LinkedinShareButton>
             <TwitterShareButton url={referralLink}>
               <button className="share-button twitter">
-                <FaTwitter /> 
+                <FaTwitter />
               </button>
             </TwitterShareButton>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(referralLink);
+                alert("Referral link copied to clipboard!");
+              }}
+              className="share-button copy-link"
+            >
+              Copy Link
+            </button>
             <button onClick={closeModal} className="share-modal__close-button">
               Close
             </button>
