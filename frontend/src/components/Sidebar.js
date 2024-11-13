@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css"; // Ensure you import the CSS
 import { useDispatch } from "react-redux";
 import { logout } from "../Services/Actions/userAction";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   FaHome,
@@ -17,10 +18,12 @@ import {
   FaAngleRight,
   FaAngleLeft,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
+  const isActive = (path) => location.pathname === path;
+
   const [isOpen, setIsOpen] = useState(true); // Sidebar open initially
 
   const toggleSidebar = () => {
@@ -42,7 +45,7 @@ const Sidebar = () => {
       </div>
       <ul className="nav-list">
         <li>
-          <Link to="/" className="linke">
+          <Link to="/" className={`linke ${isActive("/") ? "active" : ""}`}>
             <i className="bx bx-grid-alt">
               <FaHome className="icon " />
             </i>
@@ -51,7 +54,7 @@ const Sidebar = () => {
           <span className="tooltip">Home</span>
         </li>
         <li>
-          <Link to="/my-gigs" className="linke">
+          <Link to="/my-gigs" className={`linke ${isActive("/my-gigs") ? "active" : ""}`}>
             <i className="bx bx-user">
               <FaBriefcase className="icon " />
             </i>
@@ -60,7 +63,7 @@ const Sidebar = () => {
           <span className="tooltip">My studies</span>
         </li>
         <li>
-          <Link to="/available-projects" className="linke">
+          <Link to="/available-projects" className={`linke ${isActive("/available-projects") ? "active" : ""}`}>
             <i className="bx bx-chat">
               <FaTasks className="icon " />
             </i>
@@ -69,7 +72,7 @@ const Sidebar = () => {
           <span className="tooltip">Projects</span>
         </li>
         <li>
-          <Link to="/available-jobs" className="linke">
+          <Link to="/available-jobs" className={`linke ${isActive("/available-jobs") ? "active" : ""}`}>
             <i className="bx bx-chat">
               <FaBriefcase className="icon" />
             </i>
@@ -79,7 +82,7 @@ const Sidebar = () => {
         </li>
 
         <li>
-          <Link to="/profile" className="linke">
+          <Link to="/profile" className={`linke ${isActive("/profile") ? "active" : ""}`}>
             <i className="bx bx-pie-chart-alt-2">
               <FaUser className="icon " />
             </i>
@@ -88,7 +91,7 @@ const Sidebar = () => {
           <span className="tooltip">Profile</span>
         </li>
         <li>
-          <Link to="/earnings" className="linke">
+          <Link to="/earnings" className={`linke ${isActive("/earnings") ? "active" : ""}`}>
             <i className="bx bx-folder">
               <FaMoneyBill className="icon " />
             </i>
@@ -106,7 +109,7 @@ const Sidebar = () => {
           <span className="tooltip">Preferences</span>
         </li> */}
         <li>
-          <Link to="/message" className="linke">
+          <Link to="/message" className={`linke ${isActive("/message") ? "active" : ""}`}>
             <i className="bx bx-heart">
               <FaEnvelope className="icon " />
             </i>
