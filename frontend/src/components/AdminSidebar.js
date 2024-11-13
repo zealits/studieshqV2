@@ -2,26 +2,29 @@ import React, { useState } from "react";
 import "./Sidebar.css"; // Ensure you import the CSS
 import { useDispatch } from "react-redux";
 import { logout } from "../Services/Actions/userAction";
+import { Link, useLocation } from "react-router-dom";
 
 import {
-  FaHome, 
-  FaBook, 
-  FaUsers, 
-  FaTasks, 
-  FaChartBar, 
-  FaPlusCircle, 
-  FaHeadset, 
-  FaSignOutAlt, 
+  FaHome,
+  FaBook,
+  FaUsers,
+  FaTasks,
+  FaChartBar,
+  FaPlusCircle,
+  FaHeadset,
+  FaSignOutAlt,
   FaAngleRight,
   FaAngleLeft,
   FaFileInvoiceDollar,
-  FaBriefcase
+  FaBriefcase,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const AdminSidebar = () => {
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true); // Sidebar open initially
+  const isActive = (path) => location.pathname === path;
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -42,7 +45,7 @@ const AdminSidebar = () => {
       </div>
       <ul className="nav-list">
         <li>
-          <Link to="/admin-dashboard" className="linke">
+          <Link to="/admin-dashboard" className={`linke ${isActive("/") ? "active" : ""}`}>
             <i>
               <FaHome className="icon" />
             </i>
@@ -52,7 +55,7 @@ const AdminSidebar = () => {
           <span className="tooltip">Dashboard</span>
         </li>
         <li>
-          <Link to="/managestudies" className="linke">
+          <Link to="/managestudies" className={`linke ${isActive("/managestudies") ? "active" : ""}`}>
             <i>
               <FaBook className="icon" />
             </i>
@@ -62,7 +65,7 @@ const AdminSidebar = () => {
           <span className="tooltip">Manage Projects</span>
         </li>
         <li>
-          <Link to="/manageuser" className="linke">
+          <Link to="/manageuser" className={`linke ${isActive("/manageuser") ? "active" : ""}`}>
             <i>
               <FaUsers className="icon" />
             </i>
@@ -72,7 +75,7 @@ const AdminSidebar = () => {
           <span className="tooltip">Manage Users</span>
         </li>
         <li>
-          <Link to="/managepayout" className="linke">
+          <Link to="/managepayout" className={`linke ${isActive("/managepayout") ? "active" : ""}`}>
             <i>
               <FaTasks className="icon" />
             </i>
@@ -82,16 +85,16 @@ const AdminSidebar = () => {
           <span className="tooltip">Manage Payout</span>
         </li>
         <li>
-  <Link to="/managejobs" className="linke">
-    <i>
-      <FaBriefcase className="icon" /> {/* Use FaBriefcase icon here */}
-    </i>
-    <span className="links_name">Manage Jobs</span>
-  </Link>
-  <span className="tooltip">Manage Jobs</span>
-</li>
+          <Link to="/managejobs" className={`linke ${isActive("/managejobs") ? "active" : ""}`}>
+            <i>
+              <FaBriefcase className="icon" /> {/* Use FaBriefcase icon here */}
+            </i>
+            <span className="links_name">Manage Jobs</span>
+          </Link>
+          <span className="tooltip">Manage Jobs</span>
+        </li>
         <li>
-          <Link to="/analytics" className="linke">
+          <Link to="/analytics" className={`linke ${isActive("/analytics") ? "active" : ""}`}>
             <i>
               <FaChartBar className="icon" />
             </i>
@@ -101,17 +104,17 @@ const AdminSidebar = () => {
           <span className="tooltip">Analytics</span>
         </li>
         <li>
-  <Link to="/create-invoice" className="linke">
-    <i>
-      <FaFileInvoiceDollar className="icon" /> {/* Icon for invoice */}
-    </i>
-    <span className="links_name">Create Invoice</span>
-  </Link>
-  <span className="tooltip">Create Invoice</span>
-</li>
+          <Link to="/create-invoice" className={`linke ${isActive("/create-invoice") ? "active" : ""}`}>
+            <i>
+              <FaFileInvoiceDollar className="icon" /> {/* Icon for invoice */}
+            </i>
+            <span className="links_name">Create Invoice</span>
+          </Link>
+          <span className="tooltip">Create Invoice</span>
+        </li>
 
         <li>
-          <Link to="/managePdf" className="linke">
+          <Link to="/managePdf" className={`linke ${isActive("/managePdf") ? "active" : ""}`}>
             <i>
               <FaBook className="icon" />
             </i>
@@ -121,7 +124,7 @@ const AdminSidebar = () => {
           <span className="tooltip">Manage Contract</span>
         </li>
         <li>
-          <Link to="/addstudies" className="linke">
+          <Link to="/addstudies" className={`linke ${isActive("/addstudies") ? "active" : ""}`}>
             <i>
               {" "}
               <FaPlusCircle className="icon" />
