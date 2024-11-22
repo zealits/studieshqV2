@@ -30,21 +30,17 @@ const ManageProject = () => {
   };
 
   const handleDeleteProject = async (projectId) => {
-    if (window.confirm("Are you sure you want to delete this project?")) {
-      setLoadingAction(true);
-      try {
-        await axios.delete(`/aak/l1/user/projects/${projectId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProjects(projects.filter((project) => project._id !== projectId));
-        setLoadingAction(false);
-      } catch (error) {
-        console.error("Error deleting project:", error);
-        setError("Error deleting project");
-        setLoadingAction(false);
-      }
+    try {
+      // Send a DELETE request to the backend
+      const response = await axios.delete(`/aak/l1/projects/${projectId}`);
+
+      // Handle the response
+      console.log("Project deleted successfully:", response.data);
+      return response.data; // Return the data for further processing if needed
+    } catch (error) {
+      // Handle errors
+      console.error("Error deleting project:", error.response?.data || error.message);
+      throw error; // Rethrow the error for higher-level handling if needed
     }
   };
 
@@ -78,16 +74,12 @@ const ManageProject = () => {
           <div key={project._id} className="manage-projects__project-card">
             <h2 className="manage-projects__project-title">{project.title}</h2>
             {project.description && (
-              <p className="manage-projects__project-description">
-                Description: {project.description}
-              </p>
+              <p className="manage-projects__project-description">Description: {project.description}</p>
             )}
             <p className="manage-projects__project-deadline">
               Deadline: {new Date(project.deadline).toLocaleDateString()}
             </p>
-            <p className="manage-projects__project-budget">
-              Referral Gift: ${project.budget}
-            </p>
+            <p className="manage-projects__project-budget">Referral Gift: ${project.budget}</p>
             <div className="manage-projects__project-jobs">
               <h3 className="manage-projects__project-jobs-title">Selected Jobs:</h3>
               {project.selectedJobs && project.selectedJobs.length > 0 ? (
@@ -108,10 +100,7 @@ const ManageProject = () => {
               )}
             </div>
             <div className="manage-projects__actions">
-              <button
-                className="manage-projects__edit-button"
-                onClick={() => handleEditProject(project._id)}
-              >
+              <button className="manage-projects__edit-button" onClick={() => handleEditProject(project._id)}>
                 Edit
               </button>
               <button
