@@ -16,14 +16,19 @@ const ProjectReferrals = () => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get("/aak/l1/projects-with-referrals");
-        const projectsData = response.data;
-        console.log(response.data);
-        setProjects(projectsData);
-        prepareChartData(projectsData);
+        if (response && response.data) {
+          const projectsData = response.data;
+          console.log(response.data);
+          setProjects(projectsData);
+          prepareChartData(projectsData);
+        } else {
+          console.error("API returned no data or unexpected structure.");
+        }
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
     };
+
     fetchProjects();
   }, []);
 
