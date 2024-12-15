@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Route Imports
 // const product = require("./routes/productRoute");
-// const venue = require("./routes/venueRoute");
+
 const user = require("./routes/userRoute");
 const company = require("./routes/companyRoute");
 const serviceDetail = require("./routes/serviceDetailRoute");
