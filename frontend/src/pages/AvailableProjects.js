@@ -56,6 +56,12 @@ const AvailableProjects = () => {
     }
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(referralLink).then(() => {
+      alert("Referral link copied to clipboard!");
+    });
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -138,7 +144,10 @@ const AvailableProjects = () => {
                 <FaTwitter />
               </button>
             </TwitterShareButton>
-            <button
+            <p className="referralLink-css" onClick={copyToClipboard} title="Click to copy">
+              {referralLink}
+            </p>
+            {/* <button
               onClick={() => {
                 navigator.clipboard.writeText(referralLink);
                 alert("Referral link copied to clipboard!");
@@ -146,7 +155,7 @@ const AvailableProjects = () => {
               className="share-button copy-link"
             >
               Copy Link
-            </button>
+            </button> */}
             <button onClick={closeModal} className="share-modal__close-button">
               Close
             </button>

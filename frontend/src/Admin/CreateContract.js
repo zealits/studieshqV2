@@ -6,12 +6,31 @@ import "./CreateContract.css";
 const CreateContract = () => {
   // State to hold form data
   const [formData, setFormData] = useState({
-    userId: "", // Example: Replace with the actual user ID from your app's state or context
-    jobTitle: "",
-    projectDetails: "",
-    freelanceStudyDetails: "",
-    signature: "",
-    filename: "", // New field to store the filename
+    applicantName: "",
+    applicantAddress: "",
+    projectName: "",
+    projectDescription: "",
+    jobRoles: [], // Array to store multiple job roles
+    jobResponsibilities: [], // Array to store multiple responsibilities
+    salary: "",
+    paymentFrequency: "",
+    benefits: [], // Array to store multiple benefits
+    confidentialityAgreement: false, // Boolean
+    intellectualPropertyAgreement: false, // Boolean
+    performanceMetrics: "",
+    terminationConditions: "",
+    disputeResolutionMethod: "",
+    noticePeriod: "",
+    signatureDate: "",
+    signedByApplicant: false,
+    signedByEmployer: false,
+    employerDetails: {
+      employerName: "",
+      employerSignature: "",
+      employerRepresentative: "",
+      employerAddress: "",
+    },
+    status: "Pending", // Default status
   });
 
   const [contracts, setContracts] = useState([]);
@@ -20,9 +39,27 @@ const CreateContract = () => {
   const sigCanvas = useRef({});
 
   // Function to handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (e, field) => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      setFormData({
+        ...formData,
+        [name]: checked,
+      });
+    } else if (name === "jobRoles" || name === "jobResponsibilities" || name === "benefits") {
+      // For fields that are arrays
+      const newArray = value.split(",").map((item) => item.trim());
+      setFormData({
+        ...formData,
+        [name]: newArray,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   // Function to handle digital signature
@@ -42,8 +79,8 @@ const CreateContract = () => {
     e.preventDefault();
 
     // Ensure the filename ends with .pdf
-    const filename = formData.filename.endsWith(".pdf") ? formData.filename : `${formData.filename}.pdf`;
-    const updatedFormData = { ...formData, filename };
+    // const filename = formData.filename.endsWith(".pdf") ? formData.filename : `${formData.filename}.pdf`;
+    const updatedFormData = { ...formData };
 
     try {
       // Send form data to backend
@@ -88,91 +125,197 @@ const CreateContract = () => {
     <div>
       <div className="create-contract-container">
         <h2 className="create-contract-title">Create Contract</h2>
+
         <form className="create-contract-form" onSubmit={handleSubmit}>
           <div className="create-contract-field">
-            <label htmlFor="userId" className="create-contract-label">
-              User ID:
+            <label htmlFor="projectName" className="create-contract-label">
+              Project Name:
             </label>
             <input
-              id="userId"
+              id="projectName"
               type="text"
-              name="userId"
-              value={formData.userId}
+              name="projectName"
+              value={formData.projectName}
               onChange={handleChange}
               required
               className="create-contract-input"
             />
           </div>
+
           <div className="create-contract-field">
-            <label htmlFor="jobTitle" className="create-contract-label">
-              Job Title:
-            </label>
-            <input
-              id="jobTitle"
-              type="text"
-              name="jobTitle"
-              value={formData.jobTitle}
-              onChange={handleChange}
-              required
-              className="create-contract-input"
-            />
-          </div>
-          <div className="create-contract-field">
-            <label htmlFor="projectDetails" className="create-contract-label">
-              Project Details:
+            <label htmlFor="projectDescription" className="create-contract-label">
+              Project Description:
             </label>
             <textarea
-              id="projectDetails"
-              name="projectDetails"
-              value={formData.projectDetails}
-              onChange={handleChange}
-              required
-              className="create-contract-textarea"
-            />
-          </div>
-          <div className="create-contract-field">
-            <label htmlFor="freelanceStudyDetails" className="create-contract-label">
-              Freelance Study Details:
-            </label>
-            <textarea
-              id="freelanceStudyDetails"
-              name="freelanceStudyDetails"
-              value={formData.freelanceStudyDetails}
-              onChange={handleChange}
-              className="create-contract-textarea"
-            />
-          </div>
-          <div className="create-contract-field">
-            <label htmlFor="filename" className="create-contract-label">
-              Filename:
-            </label>
-            <input
-              id="filename"
-              type="text"
-              name="filename"
-              value={formData.filename}
+              id="projectDescription"
+              name="projectDescription"
+              value={formData.projectDescription}
               onChange={handleChange}
               required
               className="create-contract-input"
             />
           </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="jobRoles" className="create-contract-label">
+              Job Roles (Separate multiple roles with commas):
+            </label>
+            <input
+              id="jobRoles"
+              type="text"
+              name="jobRoles"
+              value={formData.jobRoles.join(", ")} // Display array as comma-separated string
+              onChange={(e) => handleChange(e, "jobRoles")}
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="jobResponsibilities" className="create-contract-label">
+              Job Responsibilities (Separate multiple with commas):
+            </label>
+            <input
+              id="jobResponsibilities"
+              type="text"
+              name="jobResponsibilities"
+              value={formData.jobResponsibilities.join(", ")} // Display array as comma-separated string
+              onChange={(e) => handleChange(e, "jobResponsibilities")}
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="salary" className="create-contract-label">
+              Salary:
+            </label>
+            <input
+              id="salary"
+              type="text"
+              name="salary"
+              value={formData.salary}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="paymentFrequency" className="create-contract-label">
+              Payment Frequency:
+            </label>
+            <input
+              id="paymentFrequency"
+              type="text"
+              name="paymentFrequency"
+              value={formData.paymentFrequency}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="benefits" className="create-contract-label">
+              Benefits (Separate with commas):
+            </label>
+            <input
+              id="benefits"
+              type="text"
+              name="benefits"
+              value={formData.benefits.join(", ")} // Display array as comma-separated string
+              onChange={(e) => handleChange(e, "benefits")}
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="confidentialityAgreementText" className="create-contract-label">
+              Confidentiality Agreement:
+            </label>
+            <textarea
+              id="confidentialityAgreementText"
+              name="confidentialityAgreementText"
+              value={formData.confidentialityAgreementText}
+              onChange={handleChange}
+              className="create-contract-input"
+              placeholder="Enter details of the Confidentiality Agreement"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="intellectualPropertyAgreementText" className="create-contract-label">
+              Intellectual Property Agreement:
+            </label>
+            <textarea
+              id="intellectualPropertyAgreementText"
+              name="intellectualPropertyAgreementText"
+              value={formData.intellectualPropertyAgreementText}
+              onChange={handleChange}
+              className="create-contract-input"
+              placeholder="Enter details of the Intellectual Property Agreement"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="performanceMetrics" className="create-contract-label">
+              Performance Metrics:
+            </label>
+            <textarea
+              id="performanceMetrics"
+              name="performanceMetrics"
+              value={formData.performanceMetrics}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="terminationConditions" className="create-contract-label">
+              Termination Conditions:
+            </label>
+            <textarea
+              id="terminationConditions"
+              name="terminationConditions"
+              value={formData.terminationConditions}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="disputeResolutionMethod" className="create-contract-label">
+              Dispute Resolution Method:
+            </label>
+            <input
+              id="disputeResolutionMethod"
+              type="text"
+              name="disputeResolutionMethod"
+              value={formData.disputeResolutionMethod}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
+          <div className="create-contract-field">
+            <label htmlFor="noticePeriod" className="create-contract-label">
+              Notice Period:
+            </label>
+            <input
+              id="noticePeriod"
+              type="text"
+              name="noticePeriod"
+              value={formData.noticePeriod}
+              onChange={handleChange}
+              required
+              className="create-contract-input"
+            />
+          </div>
+
           {/* Uncomment and use SignatureCanvas if required */}
-          {/* <div className="create-contract-signature">
-            <label className="create-contract-label">Signature:</label>
-            <SignatureCanvas
-              penColor="blue"
-              canvasProps={{ width: 300, height: 200, className: "create-contract-signatureCanvas" }}
-              ref={sigCanvas}
-            />
-            <div className="create-contract-signature-buttons">
-              <button type="button" className="create-contract-save-button" onClick={handleSaveSignature}>
-                Save Signature
-              </button>
-              <button type="button" className="create-contract-clear-button" onClick={handleClearSignature}>
-                Clear Signature
-              </button>
-            </div>
-          </div> */}
+
           <button type="submit" className="create-contract-submit-button">
             Create Contract
           </button>
@@ -185,19 +328,8 @@ const CreateContract = () => {
           return (
             <div key={contract._id} className="contract-item">
               <p>
-                <strong>User ID:</strong> {contract.userId}
-              </p>
-              <p>
-                <strong>Job Title:</strong> {contract.jobTitle}
-              </p>
-              <p>
-                <strong>Project Details:</strong> {contract.projectDetails}
-              </p>
-              <p>
-                <strong>Freelance Study Details:</strong> {contract.freelanceStudyDetails}
-              </p>
-              <p>
-                <strong>Filename:</strong> {contract.filename}
+                <strong>Project Title:</strong> {contract.projectDetails ? contract.projectDetails.projectName : "N/A"}{" "}
+                {/* Accessing projectDetails object */}
               </p>
 
               {/* Display PDF if it exists */}
@@ -221,3 +353,27 @@ const CreateContract = () => {
 };
 
 export default CreateContract;
+
+{
+  /* <div className="create-contract-signature">
+            <label className="create-contract-label">Signature:</label>
+            <SignatureCanvas
+              penColor="blue"
+              canvasProps={{ width: 300, height: 200, className: "create-contract-signatureCanvas" }}
+              ref={sigCanvas}
+            />
+            <div className="create-contract-signature-buttons">
+              <button type="button" className="create-contract-save-button" onClick={handleSaveSignature}>
+                Save Signature
+              </button>
+              <button type="button" className="create-contract-clear-button" onClick={handleClearSignature}>
+                Clear Signature
+              </button>
+            </div>
+          </div> */
+}
+
+
+
+
+

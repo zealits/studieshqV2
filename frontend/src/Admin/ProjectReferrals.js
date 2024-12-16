@@ -75,92 +75,7 @@ const ProjectReferrals = () => {
     <div className="project-referrals">
       <h2 className="project-referrals__title">Project Referrals</h2>
 
-      <div className="project-referrals__charts-row">
-        {/* Bar Chart */}
-        {barChartData && (
-          <div className="project-referrals__chart project-referrals__chart--bar">
-            <h3>Referrals per Project</h3>
-            <Bar
-              data={barChartData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                  padding: 20,
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Projects",
-                    },
-                    ticks: {
-                      autoSkip: true,
-                      maxTicksLimit: 10,
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: "Referrals",
-                    },
-                    beginAtZero: true,
-                  },
-                },
-                interaction: {
-                  mode: "nearest",
-                  intersect: true,
-                },
-                plugins: {
-                  tooltip: {
-                    enabled: true,
-                    mode: "index",
-                    intersect: false,
-                    callbacks: {
-                      label: function (tooltipItem) {
-                        return `Project: ${tooltipItem.label}, Referrals: ${tooltipItem.raw}`;
-                      },
-                    },
-                  },
-                  legend: {
-                    display: true,
-                    position: "top",
-                  },
-                },
-              }}
-            />
-          </div>
-        )}
-
-        {/* Pie Chart */}
-        {pieChartData && (
-          <div className="project-referrals__chart project-referrals__chart--pie">
-            <h3>Job-Level Referral Status</h3>
-            <Pie
-              data={pieChartData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: "50%",
-                layout: { padding: 20 },
-                plugins: {
-                  legend: { position: "bottom" },
-                  tooltip: {
-                    callbacks: {
-                      label: (tooltipItem) => `${tooltipItem.raw} Referrals`,
-                    },
-                  },
-                },
-                animations: {
-                  tension: { duration: 800, easing: "easeOutBounce" },
-                },
-              }}
-              style={{ width: "300px", height: "300px" }}
-            />
-          </div>
-        )}
-      </div>
-
+      
       {/* Referral Data Table */}
       {projects.map((project) => (
         <div key={project._id} className="project-referrals__project">
@@ -207,3 +122,91 @@ const ProjectReferrals = () => {
 };
 
 export default ProjectReferrals;
+
+
+
+{/* <div className="project-referrals__charts-row">
+       
+       {barChartData && (
+         <div className="project-referrals__chart project-referrals__chart--bar">
+           <h3>Referrals per Project</h3>
+           <Bar
+             data={barChartData}
+             options={{
+               responsive: true,
+               maintainAspectRatio: false,
+               layout: {
+                 padding: 20,
+               },
+               scales: {
+                 x: {
+                   title: {
+                     display: true,
+                     text: "Projects",
+                   },
+                   ticks: {
+                     autoSkip: true,
+                     maxTicksLimit: 10,
+                   },
+                 },
+                 y: {
+                   title: {
+                     display: true,
+                     text: "Referrals",
+                   },
+                   beginAtZero: true,
+                 },
+               },
+               interaction: {
+                 mode: "nearest",
+                 intersect: true,
+               },
+               plugins: {
+                 tooltip: {
+                   enabled: true,
+                   mode: "index",
+                   intersect: false,
+                   callbacks: {
+                     label: function (tooltipItem) {
+                       return `Project: ${tooltipItem.label}, Referrals: ${tooltipItem.raw}`;
+                     },
+                   },
+                 },
+                 legend: {
+                   display: true,
+                   position: "top",
+                 },
+               },
+             }}
+           />
+         </div>
+       )}
+
+   
+       {pieChartData && (
+         <div className="project-referrals__chart project-referrals__chart--pie">
+           <h3>Job-Level Referral Status</h3>
+           <Pie
+             data={pieChartData}
+             options={{
+               responsive: true,
+               maintainAspectRatio: false,
+               cutout: "50%",
+               layout: { padding: 20 },
+               plugins: {
+                 legend: { position: "bottom" },
+                 tooltip: {
+                   callbacks: {
+                     label: (tooltipItem) => `${tooltipItem.raw} Referrals`,
+                   },
+                 },
+               },
+               animations: {
+                 tension: { duration: 800, easing: "easeOutBounce" },
+               },
+             }}
+             style={{ width: "300px", height: "300px" }}
+           />
+         </div>
+       )}
+     </div> */}

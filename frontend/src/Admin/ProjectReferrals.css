@@ -96,7 +96,7 @@
 }
 
 .referral__referred-user {
-    color: #333;
+    color: #ffff00;
 }
 
 .referral__status {
@@ -110,6 +110,7 @@
 }
 
 .project-referrals__job {
+    color:white;
     padding: 16px;
     background: var(--darker-color);
     border: 1px solid var(--border-color);

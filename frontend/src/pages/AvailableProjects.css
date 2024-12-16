@@ -265,3 +265,33 @@
   margin-top: 15px;
   text-align: center;
 }
+
+
+.referralLink-css {
+  margin-top: 20px;
+  width: 260px;
+  display: inline-block; /* Ensure proper layout */
+  padding: 10px 15px; /* Add some padding */
+  font-size: 16px; /* Set a readable font size */
+  color: #007bff; /* Use a link-like color */
+  background-color: #f9f9f9; /* Subtle background */
+  border: 1px solid #ddd; /* Light border for contrast */
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word; /* Handle long text wrapping */
+  overflow-wrap: break-word;
+  cursor: pointer; /* Change cursor on hover */
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.referralLink-css:hover {
+  color: #fff; /* Change text color on hover */
+  background-color: #007bff; /* Highlight background */
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Add a shadow effect */
+}
+
+.referralLink-css:active {
+  background-color: #0056b3; /* Darker blue on click */
+  transform: scale(0.98); /* Add a subtle press effect */
+}

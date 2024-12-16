@@ -8,51 +8,175 @@ const path = require("path");
 
 exports.createContract = async (req, res) => {
   try {
-    const { userId, jobTitle, projectDetails, freelanceStudyDetails, signature, filename } = req.body;
+    console.log(req.body);
 
-    // Generate PDF
+    // Extract data from the request body
+    const {
+      applicantName,
+      applicantAddress,
+      projectName,
+      projectDescription,
+      jobRoles,
+      jobResponsibilities,
+      salary,
+      paymentFrequency,
+      benefits,
+      confidentialityAgreement,
+      intellectualPropertyAgreement,
+      performanceMetrics,
+      terminationConditions,
+      disputeResolutionMethod,
+      noticePeriod,
+      signatureDate,
+      signedByApplicant,
+      signedByEmployer,
+      employerDetails,
+      status,
+      confidentialityAgreementText,
+      intellectualPropertyAgreementText,
+    } = req.body;
+
+    // Create a PDF document
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([600, 400]);
+    const page = pdfDoc.addPage([600, 800]); // Set page size (width, height)
+    const { width, height } = page.getSize();
 
-    page.drawText(`Contract for ${jobTitle}`, { x: 50, y: 350, size: 15 });
-    page.drawText(`Project Details: ${projectDetails}`, { x: 50, y: 320, size: 12 });
-    page.drawText(`Freelance Study Details: ${freelanceStudyDetails}`, { x: 50, y: 300, size: 12 });
+    // Add text to the PDF
+    page.drawText(`Contract for Project: ${projectName}`, { x: 50, y: height - 50, size: 15 });
+    page.drawText(`Applicant Name: ${applicantName}`, { x: 50, y: height - 70, size: 12 });
+    page.drawText(`Applicant Address: ${applicantAddress}`, { x: 50, y: height - 90, size: 12 });
+    page.drawText(`Project Description: ${projectDescription}`, { x: 50, y: height - 110, size: 12 });
+    page.drawText(`Job Roles: ${jobRoles.join(", ")}`, { x: 50, y: height - 130, size: 12 });
+    page.drawText(`Job Responsibilities: ${jobResponsibilities.join(", ")}`, { x: 50, y: height - 150, size: 12 });
+    page.drawText(`Salary: ${salary}`, { x: 50, y: height - 170, size: 12 });
+    page.drawText(`Payment Frequency: ${paymentFrequency}`, { x: 50, y: height - 190, size: 12 });
+    page.drawText(`Benefits: ${benefits.join(", ")}`, { x: 50, y: height - 210, size: 12 });
+    page.drawText(`Confidentiality Agreement: ${confidentialityAgreement ? "Yes" : "No"}`, {
+      x: 50,
+      y: height - 230,
+      size: 12,
+    });
+    page.drawText(`Intellectual Property Agreement: ${intellectualPropertyAgreement ? "Yes" : "No"}`, {
+      x: 50,
+      y: height - 250,
+      size: 12,
+    });
+    page.drawText(`Performance Metrics: ${performanceMetrics}`, { x: 50, y: height - 270, size: 12 });
+    page.drawText(`Termination Conditions: ${terminationConditions}`, { x: 50, y: height - 290, size: 12 });
+    page.drawText(`Dispute Resolution Method: ${disputeResolutionMethod}`, { x: 50, y: height - 310, size: 12 });
+    page.drawText(`Notice Period: ${noticePeriod}`, { x: 50, y: height - 330, size: 12 });
+    page.drawText(`Signature Date: ${signatureDate}`, { x: 50, y: height - 350, size: 12 });
+    page.drawText(`Signed by Applicant: ${signedByApplicant ? "Yes" : "No"}`, { x: 50, y: height - 370, size: 12 });
+    page.drawText(`Signed by Employer: ${signedByEmployer ? "Yes" : "No"}`, { x: 50, y: height - 390, size: 12 });
+    page.drawText(`Employer Name: ${employerDetails.employerName}`, { x: 50, y: height - 410, size: 12 });
+    page.drawText(`Employer Signature: ${employerDetails.employerSignature}`, { x: 50, y: height - 430, size: 12 });
+    page.drawText(`Employer Representative: ${employerDetails.employerRepresentative}`, {
+      x: 50,
+      y: height - 450,
+      size: 12,
+    });
+    page.drawText(`Employer Address: ${employerDetails.employerAddress}`, { x: 50, y: height - 470, size: 12 });
+    page.drawText(`Contract Status: ${status}`, { x: 50, y: height - 490, size: 12 });
+    page.drawText(`Confidentiality Agreement Text: ${confidentialityAgreementText}`, {
+      x: 50,
+      y: height - 510,
+      size: 12,
+    });
+    page.drawText(`Intellectual Property Agreement Text: ${intellectualPropertyAgreementText}`, {
+      x: 50,
+      y: height - 530,
+      size: 12,
+    });
 
-    // Embed the signature as an image
-    // if (signature) {
-    //   const base64Data = signature.replace(/^data:image\/png;base64,/, "");
-    //   try {
-    //     const signatureImage = await pdfDoc.embedPng(Buffer.from(base64Data, "base64"));
-    //     page.drawImage(signatureImage, { x: 50, y: 250, width: 100, height: 50 });
-    //   } catch (error) {
-    //     console.error("Error embedding PNG image:", error.message);
-    //     return res.status(400).json({ message: "Invalid signature image data" });
-    //   }
-    // }
-
+    // Save the PDF
     const pdfBytes = await pdfDoc.save();
     const pdfBuffer = Buffer.from(pdfBytes);
 
-    // console.log("adsfd : ", pdfBytes);
-    // Save PDF data to MongoDB
+    // Create and save the contract in the database
     const contract = new Contract({
-      filename,
-      userId,
-      jobTitle,
-      projectDetails,
-      freelanceStudyDetails,
-      // signature,
-      pdfData: pdfBuffer, // Store PDF binary data
+      applicantName,
+      applicantAddress,
+      projectDetails: { projectName, projectDescription }, // Correctly structure projectDetails
+      jobRole: jobRoles, // Use jobRole array from the schema
+      jobResponsibilities,
+      compensation: {
+        salary,
+        paymentFrequency,
+        benefits,
+      }, // Correctly structure compensation
+      confidentialityAgreement,
+      intellectualPropertyAgreement,
+      performanceMetrics,
+      terminationConditions,
+      disputeResolutionMethod,
+      noticePeriod,
+      signatureDate,
+      signedByApplicant,
+      signedByEmployer,
+      employerDetails,
+      status,
+      pdfData: pdfBuffer, // Assuming PDF data is passed in request
     });
 
     await contract.save();
 
-    res.status(201).json({ message: "Contract created successfully", contract });
+    // Send the PDF as base64 in response (or save it to a file/DB as needed)
+    res.status(201).json({
+      message: "Contract created successfully",
+      contractPdf: pdfBuffer.toString("base64"), // Return PDF as base64
+    });
   } catch (error) {
-    console.error("Error creating contract:", error); // Log the error to see more details
+    console.error("Error creating contract:", error);
     res.status(500).json({ message: "Error creating contract", error: error.message });
   }
 };
+
+// exports.createContract = async (req, res) => {
+//   try {
+//     console.log(req.body);
+//     // const { userId, jobTitle, projectDetails, freelanceStudyDetails, signature, filename } = req.body;
+
+//     // Generate PDF
+//     // const pdfDoc = await PDFDocument.create();
+//     // const page = pdfDoc.addPage([600, 400]);
+
+//     // page.drawText(`Contract for ${jobTitle}`, { x: 50, y: 350, size: 15 });
+//     // page.drawText(`Project Details: ${projectDetails}`, { x: 50, y: 320, size: 12 });
+//     // page.drawText(`Freelance Study Details: ${freelanceStudyDetails}`, { x: 50, y: 300, size: 12 });
+
+//     // Embed the signature as an image
+//     // if (signature) {
+//     //   const base64Data = signature.replace(/^data:image\/png;base64,/, "");
+//     //   try {
+//     //     const signatureImage = await pdfDoc.embedPng(Buffer.from(base64Data, "base64"));
+//     //     page.drawImage(signatureImage, { x: 50, y: 250, width: 100, height: 50 });
+//     //   } catch (error) {
+//     //     console.error("Error embedding PNG image:", error.message);
+//     //     return res.status(400).json({ message: "Invalid signature image data" });
+//     //   }
+//     // }
+
+//     // const pdfBytes = await pdfDoc.save();
+//     // const pdfBuffer = Buffer.from(pdfBytes);
+
+//     // console.log("adsfd : ", pdfBytes);
+//     // Save PDF data to MongoDB
+//     // const contract = new Contract({
+//     //   filename,
+//     //   userId,
+//     //   jobTitle,
+
+//     //   pdfData: pdfBuffer, // Store PDF binary data
+//     // });
+
+//     // await contract.save();
+
+//     res.status(201).json({ message: "Contract created successfully", contract });
+//   } catch (error) {
+//     console.error("Error creating contract:", error); // Log the error to see more details
+//     res.status(500).json({ message: "Error creating contract", error: error.message });
+//   }
+// };
 
 // Get a contract by ID
 exports.getContractById = async (req, res) => {

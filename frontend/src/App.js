@@ -37,6 +37,7 @@ import TwoFactorAuthPage from "./components/TwoFactorAuthPage.js";
 import "./App.css"; // Import the CSS for layout
 import axios from "axios";
 import CreateContract from "./Admin/CreateContract.js";
+import ManageContract from "./Admin/ManageContract.js";
 import UpdateContract from "./Admin/updateContract.js";
 import CreateProject from "./Admin/CreateProject.js";
 
@@ -178,7 +179,7 @@ function App() {
                       <Route path="/jobs/:id" element={<JobDetails isAdmin={true} />} />
                       <Route exact path="/managepayout" element={<ManagePayout />} />
                       <Route exact path="/managePdf" element={<CreateContract />} />
-                      <Route exact path="/create-invoice" element={<AddGig />} />
+                      <Route exact path="/create-invoice" element={<ManageContract />} />
                       <Route path="/addstudies" element={<CreateProject />} />
                       {/* <Route path="/analytics" element={<UpdateContract />} /> */}
                       {/* <Route path="/analytics" element={<AllJobs />} /> */}
