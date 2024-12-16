@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login, register } from "../Services/Actions/userAction.js";
 import "./PandaLogin.css";
@@ -21,6 +21,17 @@ const PandaLogin = () => {
   const [lastName, setLastName] = useState("");
 
   const [popupMessage, setPopupMessage] = useState(""); // Modal state
+
+  const dispatch = useDispatch();
+  // Set the initial view based on referral or query params
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isReferral = params.get("referral") === "true"; // Check query param
+    const referringUserId = localStorage.getItem("referringUserId"); // Check localStorage
+    if (isReferral || referringUserId) {
+      setSignUp(true); // Show SignUp page
+    }
+  }, []);
 
   const sendOtpToEmail = () => {
     fetch("/aak/l1/send-otp", {
@@ -57,8 +68,6 @@ const PandaLogin = () => {
       })
       .catch((error) => console.error("Error:", error));
   };
-
-  const dispatch = useDispatch();
 
   const handleToggle = () => {
     setSignUp(!signUp);
