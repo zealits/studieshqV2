@@ -197,6 +197,35 @@
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.selected-jobs-headings {
+    display: flex;
+    justify-content: space-between; /* Distribute space between items */
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #333;
+    border-bottom: 2px solid #555;
+    text-align: center;
+    align-items: center; /* Ensure proper vertical alignment */
+}
+
+/* Align .heading-job to the left, .heading-referral to the center, and .heading-action to the right */
+.heading-job {
+    text-align: left;  /* Align left above the job element */
+    padding-left: 30px;  /* Add some space from the left */
+}
+
+.heading-referral {
+    text-align: center;  /* Keep centered above the referral input */
+    padding: 0 10px;  /* Add space on both sides */
+}
+
+.heading-action {
+    text-align: right;  /* Align right above the remove button */
+    padding-right: 30px;  /* Add some space from the right */
+}
+
 /* Individual Selected Job Item */
 .selected-job-item {
     display: flex;

@@ -156,6 +156,11 @@ const CreateProject = () => {
 
           <h3>Selected Jobs</h3>
           <div className="selected-jobs">
+            <div className="selected-jobs-headings">
+              <span className="heading-job">Job</span>
+              <span className="heading-referral">Referral Amount</span>
+              <span className="heading-action">Action</span>
+            </div>
             {selectedJobs.map((job) => (
               <div key={job.id} className="selected-job-item">
                 <label>{job.jobTitle}</label>
