@@ -35,6 +35,7 @@ const CreateProject = () => {
     const fetchContracts = async () => {
       try {
         const response = await axios.get("/aak/l1/contracts");
+        console.log(response.data);
         setPdfs(response.data);
       } catch (error) {
         console.error("Error fetching contracts:", error);
@@ -148,7 +149,7 @@ const CreateProject = () => {
               <option value="">Select Contract</option>
               {pdfs.map((pdf) => (
                 <option key={pdf._id} value={pdf._id}>
-                  {pdf.filename}
+                  {pdf.projectDetails.projectName}
                 </option>
               ))}
             </select>
