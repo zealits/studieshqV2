@@ -2,14 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import "./ManageStudies.css"; // Ensure this CSS file exists for custom styles
+import { FacebookShareButton, WhatsappShareButton, LinkedinShareButton, TwitterShareButton } from "react-share";
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const ManageProject = () => {
+  const { user } = useSelector((state) => state.user);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [studyToDelete, setStudyToDelete] = useState(null);
   const [loadingAction, setLoadingAction] = useState(false);
   const token = useSelector((state) => state.user.token);
+  const [referralLink, setReferralLink] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const referProject = async (projectId) => {
+    try {
+      const response = await axios.post("aak/l1/generate-link", { projectId, referringUserId: user._id });
+      setReferralLink(response.data.referralLink);
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error generating project referral link:", error);
+      alert("Failed to generate project referral link.");
+    }
+  };
 
   const fetchProjects = async () => {
     setLoading(true);
@@ -61,6 +77,16 @@ const ManageProject = () => {
     };
   }, [token]);
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(referralLink).then(() => {
+      alert("Referral link copied to clipboard!");
+    });
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   if (loading) return <div className="manage-projects__loading">Loading...</div>;
   if (error) return <div className="manage-projects__error-message">{error}</div>;
 
@@ -110,9 +136,56 @@ const ManageProject = () => {
               >
                 Delete
               </button>
+              <button onClick={() => referProject(project._id)} className="available-projects__refer-project-button">
+                Share
+              </button>
             </div>
           </div>
         ))
+      )}
+
+      {showModal && (
+        <div className="share-modal">
+          <div className="share-modal__content">
+            <h3>Share this Project</h3>
+            <p>Share the project or job with your friends:</p>
+            <FacebookShareButton url={referralLink}>
+              <button className="share-button facebook">
+                <FaFacebook />
+              </button>
+            </FacebookShareButton>
+            <WhatsappShareButton url={referralLink}>
+              <button className="share-button whatsapp">
+                <FaWhatsapp />
+              </button>
+            </WhatsappShareButton>
+            <LinkedinShareButton url={referralLink}>
+              <button className="share-button linkedin">
+                <FaLinkedin />
+              </button>
+            </LinkedinShareButton>
+            <TwitterShareButton url={referralLink}>
+              <button className="share-button twitter">
+                <FaTwitter />
+              </button>
+            </TwitterShareButton>
+            <p className="referralLink-css" onClick={copyToClipboard} title="Click to copy">
+              {referralLink}
+            </p>
+            {/* <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(referralLink);
+                      alert("Referral link copied to clipboard!");
+                    }}
+                    className="share-button copy-link"
+                  >
+                    Copy Link
+                  </button> */}
+            <button onClick={closeModal} className="share-modal__close-button">
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
