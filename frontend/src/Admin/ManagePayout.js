@@ -19,22 +19,13 @@ const ManagePayout = () => {
       gigs: [
         {
           _id: "gig1",
-          title: "Design Logo",
-          status: "active",
+          title: "Project Manager",
+          status: "Applied",
           paymentStatus: "requested",
           budget: 20,
           giftCardOption: "amazon",
           userSelectedGiftCardOption: "amazon",
-        },
-        {
-          _id: "gig2",
-          title: "Develop Website",
-          status: "completed",
-          paymentStatus: "approved",
-          budget: 30,
-          giftCardOption: "paypal",
-          userSelectedGiftCardOption: "paypal",
-        },
+        }
       ],
     },
     {
@@ -44,8 +35,8 @@ const ManagePayout = () => {
       gigs: [
         {
           _id: "gig3",
-          title: "Content Writing",
-          status: "active",
+          title: "Data Analyst",
+          status: "Payment Pending",
           paymentStatus: "not requested",
           budget: 50,
           giftCardOption: "none",
@@ -60,31 +51,13 @@ const ManagePayout = () => {
       gigs: [
         {
           _id: "gig4",
-          title: "SEO Optimization",
-          status: "completed",
+          title: "Customer Support Agent",
+          status: "Applied",
           paymentStatus: "approved",
           budget: 40,
           giftCardOption: "visa",
           userSelectedGiftCardOption: "visa",
-        },
-        {
-          _id: "gig5",
-          title: "Create Social Media Ads",
-          status: "active",
-          paymentStatus: "requested",
-          budget: 50,
-          giftCardOption: "mastercard",
-          userSelectedGiftCardOption: "mastercard",
-        },
-        {
-          _id: "gig6",
-          title: "Video Editing",
-          status: "completed",
-          paymentStatus: "not requested",
-          budget: 40,
-          giftCardOption: "none",
-          userSelectedGiftCardOption: "",
-        },
+        }
       ],
     },
   ];
