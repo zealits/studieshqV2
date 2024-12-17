@@ -41,9 +41,10 @@ const AdminSidebar = () => {
       <div className="logo-details">
         <i className="bx bxl-codepen"></i>
         <div className="logo_name">
-          <img src={ConcentrixLogo} className="concentrix_logo" alt="Concentrix Logo" />
+          studiesHQ
+          {/* <img src={ConcentrixLogo} className="concentrix_logo" alt="Concentrix Logo" />
           <span className="plus-sign"></span>
-          <img src={AgilelabsLogo} className="agilelabs_logo" alt="Agile Labs Logo" />
+          <img src={AgilelabsLogo} className="agilelabs_logo" alt="Agile Labs Logo" /> */}
         </div>
 
         <i className={`bx bx-menu ${isOpen ? "rotate" : ""}`} id="btn" onClick={toggleSidebar}>

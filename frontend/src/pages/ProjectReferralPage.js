@@ -83,7 +83,7 @@ const ProjectReferralPage = () => {
       <p>Budget: ${projectDetails.budget}</p>
 
       <button onClick={referProject} className="project-referral__refer-button">
-        Refer This Project
+       Apply
       </button>
 
       <h3>Available Jobs</h3>
@@ -96,7 +96,7 @@ const ProjectReferralPage = () => {
               <p>Description: {job.job.jobDescription}</p>
               <p>Referral Gift: ${job.referralAmount}</p>
               <button onClick={() => referJob(job.job._id)} className="project-referral__refer-job-button">
-                Refer This Job
+              Apply
               </button>
             </li>
           ))}

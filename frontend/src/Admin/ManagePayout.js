@@ -9,7 +9,87 @@ import { FaEdit } from "react-icons/fa";
 
 const ManagePayout = () => {
   const dispatch = useDispatch();
-  const { users, loading } = useSelector((state) => state.admin);
+  const { loading } = useSelector((state) => state.admin);
+
+  const users = [
+    {
+      _id: "user1",
+      name: "John Doe",
+      email: "john.doe@example.com",
+      gigs: [
+        {
+          _id: "gig1",
+          title: "Design Logo",
+          status: "active",
+          paymentStatus: "requested",
+          budget: 100,
+          giftCardOption: "amazon",
+          userSelectedGiftCardOption: "amazon",
+        },
+        {
+          _id: "gig2",
+          title: "Develop Website",
+          status: "completed",
+          paymentStatus: "approved",
+          budget: 500,
+          giftCardOption: "paypal",
+          userSelectedGiftCardOption: "paypal",
+        },
+      ],
+    },
+    {
+      _id: "user2",
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      gigs: [
+        {
+          _id: "gig3",
+          title: "Content Writing",
+          status: "active",
+          paymentStatus: "not requested",
+          budget: 200,
+          giftCardOption: "none",
+          userSelectedGiftCardOption: "",
+        },
+      ],
+    },
+    {
+      _id: "user3",
+      name: "Mike Johnson",
+      email: "mike.johnson@example.com",
+      gigs: [
+        {
+          _id: "gig4",
+          title: "SEO Optimization",
+          status: "completed",
+          paymentStatus: "approved",
+          budget: 300,
+          giftCardOption: "visa",
+          userSelectedGiftCardOption: "visa",
+        },
+        {
+          _id: "gig5",
+          title: "Create Social Media Ads",
+          status: "active",
+          paymentStatus: "requested",
+          budget: 150,
+          giftCardOption: "mastercard",
+          userSelectedGiftCardOption: "mastercard",
+        },
+        {
+          _id: "gig6",
+          title: "Video Editing",
+          status: "completed",
+          paymentStatus: "not requested",
+          budget: 400,
+          giftCardOption: "none",
+          userSelectedGiftCardOption: "",
+        },
+      ],
+    },
+  ];
+  
+
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");

@@ -291,6 +291,7 @@ const ManageUser = () => {
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Country</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -308,6 +309,7 @@ const ManageUser = () => {
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
+                  <td>{user.country}</td>
                   <td>
                     <button className="btn btn-update" onClick={() => handleEditUser(user)}>
                       <FontAwesomeIcon icon={faEdit} /> Update
