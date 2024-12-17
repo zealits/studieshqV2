@@ -22,7 +22,7 @@ const ManagePayout = () => {
           title: "Design Logo",
           status: "active",
           paymentStatus: "requested",
-          budget: 100,
+          budget: 20,
           giftCardOption: "amazon",
           userSelectedGiftCardOption: "amazon",
         },
@@ -31,7 +31,7 @@ const ManagePayout = () => {
           title: "Develop Website",
           status: "completed",
           paymentStatus: "approved",
-          budget: 500,
+          budget: 30,
           giftCardOption: "paypal",
           userSelectedGiftCardOption: "paypal",
         },
@@ -47,7 +47,7 @@ const ManagePayout = () => {
           title: "Content Writing",
           status: "active",
           paymentStatus: "not requested",
-          budget: 200,
+          budget: 50,
           giftCardOption: "none",
           userSelectedGiftCardOption: "",
         },
@@ -63,7 +63,7 @@ const ManagePayout = () => {
           title: "SEO Optimization",
           status: "completed",
           paymentStatus: "approved",
-          budget: 300,
+          budget: 40,
           giftCardOption: "visa",
           userSelectedGiftCardOption: "visa",
         },
@@ -72,7 +72,7 @@ const ManagePayout = () => {
           title: "Create Social Media Ads",
           status: "active",
           paymentStatus: "requested",
-          budget: 150,
+          budget: 50,
           giftCardOption: "mastercard",
           userSelectedGiftCardOption: "mastercard",
         },
@@ -81,7 +81,7 @@ const ManagePayout = () => {
           title: "Video Editing",
           status: "completed",
           paymentStatus: "not requested",
-          budget: 400,
+          budget: 40,
           giftCardOption: "none",
           userSelectedGiftCardOption: "",
         },
@@ -289,8 +289,8 @@ const ManagePayout = () => {
             <tr>
               <th>Name</th>
               <th>Email</th>
-              <th>Study Title</th>
-              <th>Study Status</th>
+              <th>Job Title</th>
+              <th>Job Status</th>
               <th>Payment Status</th>
               <th>Budget</th>
               <th>Payout Option</th>
@@ -335,7 +335,7 @@ const ManagePayout = () => {
                     ) : (
                       <>
                         ${gig.budget}{" "}
-                        <FaEdit className="edit-icon" onClick={() => handleBudgetEdit(user._id, gig._id)} />
+                        {/* <FaEdit className="edit-icon" onClick={() => handleBudgetEdit(user._id, gig._id)} /> */}
                       </>
                     )}
                   </td>
