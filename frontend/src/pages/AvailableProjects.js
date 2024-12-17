@@ -4,6 +4,7 @@ import { FacebookShareButton, WhatsappShareButton, LinkedinShareButton, TwitterS
 import { FaFacebook, FaWhatsapp, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "./AvailableProjects.css";
+import Popup from "./Popup";
 
 const AvailableProjects = () => {
   const { user } = useSelector((state) => state.user);

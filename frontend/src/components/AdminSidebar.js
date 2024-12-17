@@ -3,6 +3,8 @@ import "./Sidebar.css"; // Ensure you import the CSS
 import { useDispatch } from "react-redux";
 import { logout } from "../Services/Actions/userAction";
 import { Link, useLocation } from "react-router-dom";
+import ConcentrixLogo from "../Assets/photos/concentrix.png";
+import AgilelabsLogo from "../Assets/photos/AgileLabs.png";
 
 import {
   FaHome,
@@ -38,7 +40,12 @@ const AdminSidebar = () => {
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="logo-details">
         <i className="bx bxl-codepen"></i>
-        <div className="logo_name">StudiesHQ</div>
+        <div className="logo_name">
+          <img src={ConcentrixLogo} className="concentrix_logo" alt="Concentrix Logo" />
+          <span className="plus-sign"></span>
+          <img src={AgilelabsLogo} className="agilelabs_logo" alt="Agile Labs Logo" />
+        </div>
+
         <i className={`bx bx-menu ${isOpen ? "rotate" : ""}`} id="btn" onClick={toggleSidebar}>
           {isOpen ? <FaAngleLeft id="btn" className="icon" /> : <FaAngleRight id="btn" className="icon" />}
         </i>

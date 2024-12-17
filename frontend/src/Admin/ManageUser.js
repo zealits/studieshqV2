@@ -250,9 +250,8 @@ const ManageUser = () => {
         <h1>Manage Users</h1>
       </div>
       <div className={`action-bar`}>
-
         <span className="selected-count">{selectedUsers.length} Selected</span>
-        
+
         <div className="search-box-wrapper">
           <input
             type="text"
@@ -267,14 +266,13 @@ const ManageUser = () => {
         </div>
 
         <div className="action-icons">
-          <button className="action-icon" title="Share">
+          {/* <button className="action-icon" title="Share">
             <FontAwesomeIcon icon={faShareAlt} />
-          </button>
+          </button> */}
           <button className="action-icon delete-selected" title="Delete Selected" onClick={handleDeleteSelectedUsers}>
             <FontAwesomeIcon icon={faTrashAlt} />
           </button>
         </div>
-
       </div>
 
       {filteredUsers.length > 0 ? (
