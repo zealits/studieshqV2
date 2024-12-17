@@ -148,11 +148,14 @@ const CreateProject = () => {
             >
               <option value="">Select Contract</option>
               {pdfs && pdfs.length > 0 ? (
-                pdfs.map((pdf) => (
-                  <option key={pdf._id} value={pdf._id}>
-                    {pdf.projectDetails.projectName}
-                  </option>
-                ))
+                pdfs.map((pdf) => {
+                  const projectName = pdf.projectDetails?.projectName || "Unnamed Project";
+                  return (
+                    <option key={pdf._id} value={pdf._id}>
+                      {projectName}
+                    </option>
+                  );
+                })
               ) : (
                 <option disabled>No Contracts Available</option>
               )}
