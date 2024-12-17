@@ -147,11 +147,15 @@ const CreateProject = () => {
               className="add-contract-input"
             >
               <option value="">Select Contract</option>
-              {pdfs.map((pdf) => (
-                <option key={pdf._id} value={pdf._id}>
-                  {pdf.projectDetails.projectName}
-                </option>
-              ))}
+              {pdfs && pdfs.length > 0 ? (
+                pdfs.map((pdf) => (
+                  <option key={pdf._id} value={pdf._id}>
+                    {pdf.projectDetails.projectName}
+                  </option>
+                ))
+              ) : (
+                <option disabled>No Contracts Available</option>
+              )}
             </select>
           </div>
 
