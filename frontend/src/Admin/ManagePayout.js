@@ -25,7 +25,7 @@ const ManagePayout = () => {
           budget: 20,
           giftCardOption: "amazon",
           userSelectedGiftCardOption: "amazon",
-        }
+        },
       ],
     },
     {
@@ -39,7 +39,7 @@ const ManagePayout = () => {
           status: "Payment Pending",
           paymentStatus: "not requested",
           budget: 50,
-          giftCardOption: "none",
+          giftCardOption: "amazon",
           userSelectedGiftCardOption: "",
         },
       ],
@@ -57,11 +57,10 @@ const ManagePayout = () => {
           budget: 40,
           giftCardOption: "visa",
           userSelectedGiftCardOption: "visa",
-        }
+        },
       ],
     },
   ];
-  
 
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
