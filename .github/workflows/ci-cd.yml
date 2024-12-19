@@ -80,5 +80,9 @@ jobs:
             cd ..
 
             # Restart the application using PM2
-            pm2 restart concentrix-app  || pm2 start npm --name "concentrix-app " -- run dev
+            if pm2 list | grep -q "concentrix-app"; then
+             pm2 restart concentrix-app
+            else
+             pm2 start npm --name "concentrix-app" -- run dev
+            fi
           EOF
