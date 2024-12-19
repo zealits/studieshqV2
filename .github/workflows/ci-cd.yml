@@ -81,8 +81,13 @@ jobs:
 
             # Restart the application using PM2
             if pm2 list | grep -q "concentrix-app"; then
-             pm2 restart concentrix-app
+              echo "Restarting concentrix-app"
+              pm2 restart concentrix-app
             else
-             pm2 start npm --name "concentrix-app" -- run dev
+              echo "Starting concentrix-app"
+              pm2 start npm --name "concentrix-app" -- run dev
             fi
+
+            # Check the status of PM2 processes
+            pm2 list
           EOF
